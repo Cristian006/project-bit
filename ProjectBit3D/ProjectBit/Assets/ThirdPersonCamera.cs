@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class ThirdPersonCamera : MonoBehaviour {
-    //different comments for differences
+
     public GameObject target;
     public float damping = 10f;
     float offset = 5f;
