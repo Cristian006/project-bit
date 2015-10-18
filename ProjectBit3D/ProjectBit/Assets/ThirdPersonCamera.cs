@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class ThirdPersonCamera : MonoBehaviour {
-
+    //new comment to make differences so the pull request doesn't go through automatically.  Hope this works
     public GameObject target;
     public float damping = 1;
     Vector3 offset;
