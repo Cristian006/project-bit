@@ -26,12 +26,6 @@ public class ThirdPersonMovement : MonoBehaviour {
         float _zMov = Input.GetAxisRaw("Vertical");     //-1 or 1
         
         float turn = Input.GetAxisRaw("Mouse X");
-        if (turn > .25)
-            turn = 1;
-        else if (turn < -.25)
-            turn = -1;
-        else
-            turn = 0;
         turn *= turningSpeed * Time.fixedDeltaTime;
 
         Vector3 _movVertical = transform.forward * _zMov + transform.right * _xMov;
