@@ -31,4 +31,12 @@ public class Weapon : MonoBehaviour
             usable = false;
         }
     }
+
+    void OnTriggerEnter(Collider outside)
+    {
+        Entity enemy = (Entity)outside.gameObject.GetComponent("Entity");
+        if(enemy.name=="Entity")
+            enemy.TakeDamage(10);
+    }
+
 }
