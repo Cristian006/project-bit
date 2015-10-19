@@ -6,7 +6,7 @@ public class ThirdPersonMovement : MonoBehaviour {
     [SerializeField]
     float speed = 5f;
     [SerializeField]
-    float turningSpeed = 60;
+    float turningSpeed = 600;
 
     Rigidbody rb;
 
@@ -24,10 +24,11 @@ public class ThirdPersonMovement : MonoBehaviour {
         
         float _xMov = Input.GetAxisRaw("Horizontal");   //-1 or 1
         float _zMov = Input.GetAxisRaw("Vertical");     //-1 or 1
+        
+        float turn = Input.GetAxisRaw("Mouse X");
+        turn *= turningSpeed * Time.fixedDeltaTime;
 
-        float turn = _xMov * turningSpeed * Time.fixedDeltaTime;
-
-        Vector3 _movVertical = transform.forward * _zMov;
+        Vector3 _movVertical = transform.forward * _zMov + transform.right * _xMov;
 
         // Final movement vector
         Vector3 _velocity = (_movVertical).normalized * speed;
