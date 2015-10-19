@@ -71,25 +71,4 @@ public class GridGenerator : MonoBehaviour
             gridGenerated = !gridGenerated;
         }
     }
-    /*
-    public void GenerateGridOld()
-    {
-        int x = 0;
-        int z = 0;
-        for (int i = 0; i < height; i++)
-        {
-            z = 0;
-            plane = (GameObject)Instantiate(tilePrefab, new Vector3(x, 0, z), Quaternion.identity);
-            plane.transform.SetParent(grid.transform, true);
-            for (int j = 0; j < height; j++)
-            {
-                z += (int)height;
-                plane = (GameObject)Instantiate(tilePrefab, new Vector3(x, 0, z), Quaternion.identity);
-                plane.transform.SetParent(grid.transform, true);
-            }
-            x += (int)width;
-        }
-        gridGenerated = !gridGenerated;
-    }
-    */
 }
