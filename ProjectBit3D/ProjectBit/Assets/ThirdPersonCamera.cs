@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class ThirdPersonCamera : MonoBehaviour {
 
@@ -23,7 +22,6 @@ public class ThirdPersonCamera : MonoBehaviour {
         //Vector3 position = Vector3.Slerp(transform.position, desiredPosition, Time.deltaTime * damping);
         // transform.position = position;
         transform.position = desiredPosition;
-
         transform.LookAt(target.transform.position);
     }
 }
