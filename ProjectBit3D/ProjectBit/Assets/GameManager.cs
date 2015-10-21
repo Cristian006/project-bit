@@ -25,4 +25,9 @@ public class GameManager : MonoBehaviour
 	void Update () {
 	
 	}
+
+    void Random()
+    {
+
+    }
 }
