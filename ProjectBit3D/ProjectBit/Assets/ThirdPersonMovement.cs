@@ -9,30 +9,33 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField]
     private float lookSensitivity = 3f;
 
-    public Button switchButt;
+    Button switchButt;
 
     private ThirdPersonMotor motor;
 
     //If is AI only use high view camera not third person camera
-    public bool isAI;
+    [HideInInspector]
+    public bool isAI = false;
 
     public Camera myCam;
     public Camera WorldCam;
 
     void Awake()
     {
-        switchButt = GameObject.FindGameObjectWithTag("switchView").GetComponent<Button>();
-        WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
-      
+        
     }
 
     void Start()
     {
+        switchButt = GameObject.FindGameObjectWithTag("switchView").GetComponent<Button>();
+        WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
         motor = GetComponent<ThirdPersonMotor>();
-        PlayerSetUp();
         switchButt.onClick.AddListener(() => {
             Switch();
         });
+        Debug.Log(GameManager.gm.Mobile());
+        isAI = GameManager.gm.Mobile();
+        PlayerSetUp();
     }
 
     void Update()
@@ -79,39 +82,36 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (isAI)
         {
-            if(!WorldCam.isActiveAndEnabled)
-            {
-                WorldCam.enabled = true;
-            }
+         //   myCam.enabled = true;
             if(myCam.isActiveAndEnabled)
             {
-                myCam.enabled = false;
+                myCam.gameObject.SetActive(false);
             }
         }
         else
         {
-            if (WorldCam.isActiveAndEnabled)
+            if(WorldCam.isActiveAndEnabled)
             {
-                WorldCam.enabled = false;
-            }
-            if (!myCam.isActiveAndEnabled)
-            {
-                myCam.enabled = true;
+                WorldCam.gameObject.SetActive(false);
             }
         }
     }
-
+    /// <summary>
+    /// Switching CameraView
+    /// </summary>
     public void Switch()
     {
-        if(myCam.isActiveAndEnabled)
+        if(myCam.gameObject.activeInHierarchy)
         {
-            myCam.enabled = !myCam.enabled;
-            WorldCam.enabled = !WorldCam.enabled;
+            myCam.gameObject.SetActive(false);
+            WorldCam.gameObject.SetActive(true);
         }
-        else if(WorldCam.isActiveAndEnabled)
+        else if(WorldCam.gameObject.activeInHierarchy)
         {
-            WorldCam.enabled = !WorldCam.enabled;
-            myCam.enabled = !myCam.enabled;
+            //WorldCam.enabled = !WorldCam.enabled;
+            //myCam.enabled = !myCam.enabled;
+            WorldCam.gameObject.SetActive(false);
+            myCam.gameObject.SetActive(true);
         }
     }
 }

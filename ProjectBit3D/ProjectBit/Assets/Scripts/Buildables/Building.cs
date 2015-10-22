@@ -5,9 +5,7 @@ public class Building : Selectable
 {
     public int hitPoints;
     public int buildingsize;
-
-    Camera cam;
-
+    
     public enum BuildingState
     {
         Placed,         //Set on ground
@@ -26,7 +24,6 @@ public class Building : Selectable
 
     void Start()
     {
-        cam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
        // rend = GetComponent<Renderer>();
     }
 
@@ -50,13 +47,4 @@ public class Building : Selectable
         //Destroy Building
     }
  
-
-    void OnMouseDrag()
-    {
-        transform.position = new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, transform.position.y, cam.ScreenToWorldPoint(Input.mousePosition).z);
-    }
-     void OnMouseExit()
-    {
-       // rend.material.color = Color.white;
-    }
 }

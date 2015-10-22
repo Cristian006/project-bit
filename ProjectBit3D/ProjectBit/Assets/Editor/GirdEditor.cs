@@ -13,12 +13,15 @@ public class GridEditor : EditorWindow
     //tile prefab
     public GameObject lightTile = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/GridTiles/LightTile.prefab", typeof(GameObject));
     public GameObject darkTile = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/GridTiles/DarkTile.prefab", typeof(GameObject));
-    public GameObject tile;
-    public static GameObject[,] gridArray = new GameObject[50,50];
+    public GameObject townHall = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Buildings/TownHall.prefab", typeof(GameObject));
+    public GameObject refrenceObject;
+   
     float zoffset = 0;
     float yoffset = -0.5f;
     float xoffset = 0;
     public GameObject Grid;
+
+    public static GameObject[,] gridArray;
 
     // Add menu item named "My Window" to the Window menu
     [MenuItem("Window/Grid Editor")]
@@ -43,28 +46,29 @@ public class GridEditor : EditorWindow
 
     public void GenerateGrid()
     {
+        gridArray = new GameObject[gridsize, gridsize];
         if(!GridHasBeenGenerated)
         {
             for (int x = 0; x < gridsize; x++)
             {
                 if (x % 2 == 0)
                 {
-                    tile = (GameObject)PrefabUtility.InstantiatePrefab(lightTile);
-                    tile.transform.position = new Vector3(xoffset + x, yoffset, zoffset);
-                    tile.transform.rotation = Quaternion.identity;
+                    refrenceObject = (GameObject)PrefabUtility.InstantiatePrefab(lightTile);
+                    refrenceObject.transform.position = new Vector3(xoffset + x, yoffset, zoffset);
+                    refrenceObject.transform.rotation = Quaternion.identity;
                     //tile = (GameObject)Instantiate(lightTile, new Vector3(xoffset + x, yoffset, zoffset), Quaternion.identity);
                 }
                 else
                 {
-                    tile = (GameObject)PrefabUtility.InstantiatePrefab(darkTile);
-                    tile.transform.position = new Vector3(xoffset + x, yoffset, zoffset);
-                    tile.transform.rotation = Quaternion.identity;
+                    refrenceObject = (GameObject)PrefabUtility.InstantiatePrefab(darkTile);
+                    refrenceObject.transform.position = new Vector3(xoffset + x, yoffset, zoffset);
+                    refrenceObject.transform.rotation = Quaternion.identity;
                     //tile = (GameObject)Instantiate(darkTile, new Vector3(xoffset + x, yoffset, zoffset), Quaternion.identity);
                 }
 
-                tile.transform.SetParent(Grid.transform);
+                refrenceObject.transform.SetParent(Grid.transform);
 
-                gridArray[x, 0] = tile;
+                gridArray[x, 0] = refrenceObject;
 
                 for (int z = 1; z < gridsize; z++)
                 {
@@ -72,42 +76,51 @@ public class GridEditor : EditorWindow
                     {
                         if (z % 2 == 0)
                         {
-                            tile = (GameObject)PrefabUtility.InstantiatePrefab(lightTile);
-                            tile.transform.position = new Vector3(xoffset + x, yoffset, zoffset + z);
-                            tile.transform.rotation = Quaternion.identity;
+                            refrenceObject = (GameObject)PrefabUtility.InstantiatePrefab(lightTile);
+                            refrenceObject.transform.position = new Vector3(xoffset + x, yoffset, zoffset + z);
+                            refrenceObject.transform.rotation = Quaternion.identity;
                             //tile = (GameObject)Instantiate(lightTile, new Vector3(xoffset + x, yoffset, zoffset + z), Quaternion.identity);
                         }
                         else
                         {
-                            tile = (GameObject)PrefabUtility.InstantiatePrefab(darkTile);
-                            tile.transform.position = new Vector3(xoffset + x, yoffset, zoffset + z);
-                            tile.transform.rotation = Quaternion.identity;
+                            refrenceObject = (GameObject)PrefabUtility.InstantiatePrefab(darkTile);
+                            refrenceObject.transform.position = new Vector3(xoffset + x, yoffset, zoffset + z);
+                            refrenceObject.transform.rotation = Quaternion.identity;
                         }
-                        tile.transform.SetParent(Grid.transform);
+                        refrenceObject.transform.SetParent(Grid.transform);
                     }
                     else
                     {
                         if (z % 2 == 0)
                         {
                             //tile = (GameObject)Instantiate(darkTile, new Vector3(xoffset + x, yoffset, zoffset + z), Quaternion.identity);
-                            tile = (GameObject)PrefabUtility.InstantiatePrefab(darkTile);
-                            tile.transform.position = new Vector3(xoffset + x, yoffset, zoffset + z);
-                            tile.transform.rotation = Quaternion.identity;
+                            refrenceObject = (GameObject)PrefabUtility.InstantiatePrefab(darkTile);
+                            refrenceObject.transform.position = new Vector3(xoffset + x, yoffset, zoffset + z);
+                            refrenceObject.transform.rotation = Quaternion.identity;
                         }
 
                         else
                         {
                             // tile = (GameObject)Instantiate(lightTile, new Vector3(xoffset + x, yoffset, zoffset + z), Quaternion.identity);
-                            tile = (GameObject)PrefabUtility.InstantiatePrefab(lightTile);
-                            tile.transform.position = new Vector3(xoffset + x, yoffset, zoffset + z);
-                            tile.transform.rotation = Quaternion.identity;
+                            refrenceObject = (GameObject)PrefabUtility.InstantiatePrefab(lightTile);
+                            refrenceObject.transform.position = new Vector3(xoffset + x, yoffset, zoffset + z);
+                            refrenceObject.transform.rotation = Quaternion.identity;
                         }
-                        tile.transform.SetParent(Grid.transform);
+                        refrenceObject.transform.SetParent(Grid.transform);
                     }
-                    gridArray[x, z] = tile;
+                    gridArray[x, z] = refrenceObject;
                 }
             }
             GridHasBeenGenerated = true;
+            GenerateStructures();
         }
+    }
+
+    public void GenerateStructures()
+    {
+        refrenceObject = (GameObject)PrefabUtility.InstantiatePrefab(townHall);
+        Vector3 townHallPos = gridArray[Random.Range(10, 20), Random.Range(20, 30)].transform.position;
+        //ADDING IN THE 0.5 YOFFSET TO POSITION ABOVE THE ACTUAL COORDINATES
+        refrenceObject.transform.position = new Vector3(townHallPos.x, townHallPos.y + Mathf.Abs(yoffset), townHallPos.z);
     }
 }

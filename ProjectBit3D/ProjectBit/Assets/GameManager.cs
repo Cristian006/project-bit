@@ -9,25 +9,64 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameObject player;
     public Transform spawnPoint;
+    
+    Plane plane = new Plane(Vector3.up, Vector3.zero);
 
     GridGenerator gg;
+
+    public Camera worldCam;
+    public Vector3 mousePos;
+    
+    public bool Mobile()
+    {
+#if UNITY_EDITOR
+        return true;
+#elif UNITY_ANDROID || UNITY_IOS
+        return true;
+#elif UNITY_STANDALONE
+        return false;
+#else
+        return false;
+#endif
+    }
+
+    private bool mouseIsOverABuilding;
+
+    public bool isMouseOnABuilding
+    {
+        get { return mouseIsOverABuilding; }
+        set { mouseIsOverABuilding = value; }
+    }
+
     void Awake()
     {
         gm = this;
         gg = GetComponent<GridGenerator>();
-        player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+       // player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 	// Use this for initialization
 	void Start () {
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
 
-    void Random()
-    {
+        Ray ray = worldCam.ScreenPointToRay(Input.mousePosition);
 
+        float distance = 0;
+        if(plane.Raycast(ray, out distance))
+        {
+            mousePos = ray.GetPoint(distance);
+            Debug.DrawRay(ray.origin, ray.direction * distance, Color.green);
+        }
+        else
+        {
+            Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
+        }
+
+       
     }
+
+    
 }

@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class BuildingPlacement : MonoBehaviour {
-	
+public class BuildingPlacement : MonoBehaviour
+{
 	public float scrollSensitivity;
 	
 	private PlaceableBuilding placeableBuilding;
@@ -18,14 +18,16 @@ public class BuildingPlacement : MonoBehaviour {
 		
 		Vector3 m = Input.mousePosition;
 		m = new Vector3(m.x,m.y,transform.position.y);
-        Vector3 p =  GetComponent<Camera>().ScreenToWorldPoint(m);
+        Vector3 p = GameManager.gm.mousePos;//GetComponent<Camera>().ScreenToWorldPoint(m);
 
-		if (currentBuilding != null && !hasPlaced) {
+        if (currentBuilding != null && !hasPlaced) {
 			
 			currentBuilding.position = new Vector3(p.x,0,p.z);
 			
-			if (Input.GetMouseButtonDown(0)) {
-				if (IsLegalPosition()) {
+			if (Input.GetMouseButtonDown(0))
+            {
+				if (IsLegalPosition())
+                {
 					hasPlaced = true;	
 				}
 			}
@@ -51,14 +53,17 @@ public class BuildingPlacement : MonoBehaviour {
 	}
 
 
-	bool IsLegalPosition() {
-		if (placeableBuilding.colliders.Count > 0) {
+	bool IsLegalPosition()
+    {
+		if (placeableBuilding.colliders.Count > 0)
+        {
 			return false;	
 		}
 		return true;
 	}
 	
-	public void SetItem(GameObject b) {
+	public void SetItem(GameObject b)
+    {
 		hasPlaced = false;
 		currentBuilding = ((GameObject)Instantiate(b)).transform;
 		placeableBuilding = currentBuilding.GetComponent<PlaceableBuilding>();
