@@ -334,7 +334,7 @@ public class AIPath : MonoBehaviour {
 		} else {
 			tr.Translate (dir*Time.deltaTime, Space.World);
 		}
-	}
+    }
 
 	/** Point to where the AI is heading.
 	  * Filled in by #CalculateVelocity */
@@ -343,7 +343,8 @@ public class AIPath : MonoBehaviour {
 	 * Filled in by #CalculateVelocity */
 	protected Vector3 targetDirection;
 
-	protected float XZSqrMagnitude (Vector3 a, Vector3 b) {
+	protected float XZSqrMagnitude (Vector3 a, Vector3 b)
+    {
 		float dx = b.x-a.x;
 		float dz = b.z-a.z;
 		return dx*dx + dz*dz;
@@ -396,8 +397,8 @@ public class AIPath : MonoBehaviour {
 
 
 		dir = targetPosition-currentPosition;
-		dir.y = 0;
-		float targetDist = dir.magnitude;
+		dir.y = 0; 
+        float targetDist = dir.magnitude;
 
 		float slowdown = Mathf.Clamp01 (targetDist / slowdownDistance);
 

@@ -23,7 +23,7 @@ public class AI : MonoBehaviour
         targetPosition = GameObject.FindGameObjectWithTag("Player").transform;
         Debug.Log(targetPosition.position);
         //Start a new path to the targetPosition, return the result to the OnPathComplete function
-        seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);
+        seeker.StartPath(transform.position, transform.position + transform.forward * 10, OnPathComplete);
     }
     public void OnPathComplete(Path p)
     {
