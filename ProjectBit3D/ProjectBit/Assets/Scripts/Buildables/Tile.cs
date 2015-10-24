@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Tile : MonoBehaviour
 {
-	public enum tileState
+    public enum tileState
     {
         free,
         used

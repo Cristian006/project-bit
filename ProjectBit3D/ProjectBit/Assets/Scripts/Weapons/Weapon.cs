@@ -15,8 +15,6 @@ public class Weapon : Destructible
 
     bool fix = false;
     bool usable = true;
-    bool repairable = true;
-    public bool meleeWeapon = true;
 
     public void TakeDamage(float damage)
     {
@@ -32,25 +30,17 @@ public class Weapon : Destructible
         if (fix)
         {
             usable = false;
-            repairable = true;
         }
     }
 
-    public void Repare()
+    //TODO
+    //weapon hits armor
+    //deal damage to:
+    //  Armor
+    //  Entity
+    //if no armor just damage entity
+    void OnTriggerEnter(Collider armor)
     {
-        if (repairable)
-        {
-            //Repair code goes here
-        }
     }
 
-    void OnTriggerEnter(Collider outside)
-    {
-        if (meleeWeapon)
-        {
-            Entity enemy = (Entity)outside.gameObject.GetComponent("Entity");
-            if (enemy.name == "Entity")
-                enemy.TakeDamage(10);
-        }
-    }
 }

@@ -20,7 +20,7 @@ public class AI : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         controller = GetComponent<CharacterController>();
-       // targetPosition = GameObject.FindGameObjectWithTag("Player").transform;
+        targetPosition = GameObject.FindGameObjectWithTag("Player").transform;
         Debug.Log(targetPosition.position);
         //Start a new path to the targetPosition, return the result to the OnPathComplete function
         seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);

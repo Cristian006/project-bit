@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Entity : Destructible {
     //constants
-    private float HPCONSTANT            = 100f; //*str for health
-    private float MPCONSTANT            = 10f;  //*int for max mp
-    private float STAMINACONSTANT       = 10f;  //*endurance*agility for max stamina
-    private float HPREGENCONSTANT       = 5f;   //*endurance for health regen
-    private float MPREGENCONSTANT       = 0.5f; //*wisdom for mana regen
-    private float STAMINAREGENCONSTANT  = 2f;   //*str*endurance for stamina regen
+    private float HPCONSTANT = 100f; //*str for health
+    private float MPCONSTANT = 10f;  //*int for max mp
+    private float STAMINACONSTANT = 10f;  //*endurance*agility for max stamina
+    private float HPREGENCONSTANT = 5f;   //*endurance for health regen
+    private float MPREGENCONSTANT = 0.5f; //*wisdom for mana regen
+    private float STAMINAREGENCONSTANT = 2f;   //*str*endurance for stamina regen
 
     //basic stats
     private int _strength;
@@ -23,7 +23,7 @@ public class Entity : Destructible {
 
 
     //Properties
-        //primary
+    //primary
     public int Strength
     {
         get { return _strength; }
@@ -49,8 +49,8 @@ public class Entity : Destructible {
         get { return _strength; }
         protected set { _strength = Mathf.FloorToInt(Mathf.Clamp(value, 1, Mathf.Infinity)); }
     }
-        //secondary read-only so that display objects can find out these values for display
-        //Internal changes will directly use the fields with dot notation
+    //secondary read-only so that display objects can find out these values for display
+    //Internal changes will directly use the fields with dot notation
     public int MaxHealth { get { return _health.Max; } }
     public int MaxMana { get { return _mana.Max; } }
     public int MaxStamina { get { return _stamina.Max; } }
@@ -65,7 +65,8 @@ public class Entity : Destructible {
 
 
     //constructors
-    void Start(){
+    void Start()
+    {
         Strength = 0;
         Intelligence = 0;
         Agility = 0;
@@ -81,9 +82,9 @@ public class Entity : Destructible {
     //private methods
     private void calculateStats()
     {
-        _health.Current=_health.Max =(int) HPCONSTANT * Strength;
-        _mana.Current=_mana.Max = (int)MPCONSTANT * Intelligence;
-        _stamina.Current=_stamina.Max = (int)STAMINACONSTANT * Endurance * Agility;
+        _health.Current = _health.Max = (int)HPCONSTANT * Strength;
+        _mana.Current = _mana.Max = (int)MPCONSTANT * Intelligence;
+        _stamina.Current = _stamina.Max = (int)STAMINACONSTANT * Endurance * Agility;
         _health.Regeneration = HPREGENCONSTANT * Endurance;
         _mana.Regeneration = MPREGENCONSTANT * Wisdom;
         _stamina.Regeneration = STAMINAREGENCONSTANT * Strength * Endurance;
@@ -92,7 +93,8 @@ public class Entity : Destructible {
 
 
     //public methods
-    public void TakeDamage(float damage) {
+    public void TakeDamage(float damage)
+    {
         _health.Current -= damage;
         if (CurrentHealth <= 0)
         {
@@ -100,8 +102,10 @@ public class Entity : Destructible {
         }
     }
 
-    public void Death() {
+    public void Death()
+    {
         //Kill Entity
+        Debug.Log("Im hit");
         Destroy(this.gameObject);//either this isn't working or something isn't going right with weapon collision
     }
 }

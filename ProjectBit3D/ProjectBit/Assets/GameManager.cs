@@ -9,10 +9,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameObject player;
     public Transform spawnPoint;
-    
-    Plane plane = new Plane(Vector3.up, Vector3.zero);
 
-    GridGenerator gg;
+    Plane plane = new Plane(Vector3.up, Vector3.zero);
 
     public Camera worldCam;
     public Vector3 mousePos;
@@ -41,12 +39,12 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         gm = this;
-        gg = GetComponent<GridGenerator>();
-       // player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+        player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 	// Use this for initialization
-	void Start () {
-        
+	void Start ()
+    {
+            
     }
 	
 	// Update is called once per frame

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GridEditor : EditorWindow
 {
-    string myString = "Grid Name";
+    string myString = "Name";
     bool groupEnabled;
     bool myBool = true;
     int gridsize = 1;
@@ -34,7 +34,7 @@ public class GridEditor : EditorWindow
     void OnGUI()
     {
         GUILayout.Label("Grid Settings", EditorStyles.boldLabel);
-        myString = EditorGUILayout.TextField("Grid Name", myString);
+        myString = EditorGUILayout.TextField("Name", myString);
         maxGridSize = EditorGUILayout.IntField("Max Grid Size", maxGridSize);
         Grid = (GameObject)EditorGUILayout.ObjectField("Grid", Grid, typeof(GameObject), true);
         gridsize = (int)EditorGUILayout.Slider("Grid Size", gridsize, 1, maxGridSize);
@@ -112,10 +112,11 @@ public class GridEditor : EditorWindow
                 }
             }
             GridHasBeenGenerated = true;
-            GenerateStructures();
+     //       GenerateStructures();
         }
     }
 
+    /*
     public void GenerateStructures()
     {
         refrenceObject = (GameObject)PrefabUtility.InstantiatePrefab(townHall);
@@ -123,4 +124,5 @@ public class GridEditor : EditorWindow
         //ADDING IN THE 0.5 YOFFSET TO POSITION ABOVE THE ACTUAL COORDINATES
         refrenceObject.transform.position = new Vector3(townHallPos.x, townHallPos.y + Mathf.Abs(yoffset), townHallPos.z);
     }
+    */
 }
