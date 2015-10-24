@@ -11,7 +11,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     Button switchButt;
 
-    private ThirdPersonMotor motor;
+    private MovementMotor motor;
+    private ThirdPersonMotor m;
 
     //If is AI only use high view camera not third person camera
     [HideInInspector]
@@ -29,7 +30,8 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         switchButt = GameObject.FindGameObjectWithTag("switchView").GetComponent<Button>();
         WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
-        motor = GetComponent<ThirdPersonMotor>();
+        motor = GetComponent<MovementMotor>();
+        m = GetComponent<ThirdPersonMotor>();
         switchButt.onClick.AddListener(() => {
             Switch();
         });
@@ -57,7 +59,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 _velocity = (_movHorizontal + _movVertical).normalized * speed;
 
             //Apply movement
-            motor.Move(_velocity);
+            motor.Velocity = _velocity;
 
             //Calculate rotation as a 3D vector (turning around)
             float _yRot = Input.GetAxisRaw("Mouse X");
@@ -65,7 +67,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 _rotation = new Vector3(0f, _yRot, 0f) * lookSensitivity;
 
             //Apply rotation
-            motor.Rotate(_rotation);
+            m.Rotate(_rotation);
 
             //Calculate camera rotation as a 3D vector (turning around)
             float _xRot = Input.GetAxisRaw("Mouse Y");
@@ -73,7 +75,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 _cameraRotation = new Vector3(_xRot, 0f, 0f) * lookSensitivity;
 
             //Apply camera rotation
-            motor.RotateCamera(_cameraRotation);
+            m.RotateCamera(_cameraRotation);
         }
         
     }

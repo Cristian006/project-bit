@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public bool Mobile()
     {
 #if UNITY_EDITOR
-        return true;
+        return false;
 #elif UNITY_ANDROID || UNITY_IOS
         return true;
 #elif UNITY_STANDALONE

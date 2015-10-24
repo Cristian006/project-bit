@@ -4,7 +4,6 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 public class MovementMotor : MonoBehaviour
 {
-
     Rigidbody rb;
     private Vector3 velocity = Vector3.zero;
     private float rotation = 0f;
