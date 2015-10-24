@@ -1,5 +1,11 @@
 using UnityEngine;
 
+
+
+//Deprecated
+//Use MovementMotor instead
+
+
 [RequireComponent(typeof(Rigidbody))]
 public class ThirdPersonMotor : MonoBehaviour
 {
