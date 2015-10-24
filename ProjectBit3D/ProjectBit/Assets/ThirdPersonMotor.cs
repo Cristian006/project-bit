@@ -3,18 +3,20 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ThirdPersonMotor : MonoBehaviour
 {
-    Rigidbody rb;
-    private Vector3 velocity = Vector3.zero;
-    private float rotation = 0f;
+    [SerializeField]
+    private Camera cam;
 
-    void Awake()
+    private Vector3 velocity = Vector3.zero;
+    private Vector3 rotation = Vector3.zero;
+    private Vector3 cameraRotation = Vector3.zero;
+
+    private Rigidbody rb;
+
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
-    // Use this for initialization
-    void Start () {
-	
-	}
+
     // Gets a movement vector
     public void Move(Vector3 _velocity)
     {
@@ -22,18 +24,25 @@ public class ThirdPersonMotor : MonoBehaviour
     }
 
     // Gets a rotational vector
-    public void Rotate(float _rotation)
+    public void Rotate(Vector3 _rotation)
     {
         rotation = _rotation;
     }
 
-    // Update is called once per frame
-    void FixedUpdate ()
+    // Gets a rotational vector for the camera
+    public void RotateCamera(Vector3 _cameraRotation)
+    {
+        cameraRotation = _cameraRotation;
+    }
+
+    // Run every physics iteration
+    void FixedUpdate()
     {
         PerformMovement();
         PerformRotation();
     }
 
+    //Perform movement based on velocity variable
     void PerformMovement()
     {
         if (velocity != Vector3.zero)
@@ -42,8 +51,14 @@ public class ThirdPersonMotor : MonoBehaviour
         }
     }
 
+    //Perform rotation
     void PerformRotation()
     {
-        transform.Rotate(0, rotation, 0);
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
+        if (cam != null)
+        {
+            cam.transform.Rotate(-cameraRotation);
+        }
     }
+
 }
