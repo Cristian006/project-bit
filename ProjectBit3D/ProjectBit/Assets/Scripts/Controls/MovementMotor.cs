@@ -25,7 +25,7 @@ public class MovementMotor : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // FixedUpdate is called once per fixed framerate

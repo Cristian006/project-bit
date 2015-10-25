@@ -10,7 +10,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 
     void Start()
     {
-        target = GameManager.gm.player;
+      //  target = GameManager.gm.player;
        // offset = Vector3.Magnitude( transform.position - target.transform.position);
     }
 
