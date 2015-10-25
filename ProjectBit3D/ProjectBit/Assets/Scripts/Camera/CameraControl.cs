@@ -2,16 +2,17 @@
 using UnityEngine.UI;
 
 public class CameraControl : MonoBehaviour {
-    Button switchButt;
+    public Button switchButt;
 
 
     public Camera myCam;
     public Camera WorldCam;
     // Use this for initialization
-    void Awake () {
+    void Start() {
 
         switchButt = GameObject.FindGameObjectWithTag("switchView").GetComponent<Button>();
         WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
+        myCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
         switchButt.onClick.AddListener(() => {
             Switch();
@@ -21,14 +22,13 @@ public class CameraControl : MonoBehaviour {
 
     public void Switch()
     {
-        if (myCam.gameObject.GetComponent<ThirdPersonCamera>().enabled)
+        if (myCam.gameObject.activeInHierarchy)
         {
-            myCam.gameObject.GetComponent<ThirdPersonCamera>().enabled = false;
+            myCam.gameObject.SetActive(false);
             WorldCam.gameObject.SetActive(true);
         }
         else if (WorldCam.gameObject.activeInHierarchy)
         {
-            myCam.gameObject.GetComponent<ThirdPersonCamera>().enabled = true;
             //WorldCam.enabled = !WorldCam.enabled;
             //myCam.enabled = !myCam.enabled;
             WorldCam.gameObject.SetActive(false);
