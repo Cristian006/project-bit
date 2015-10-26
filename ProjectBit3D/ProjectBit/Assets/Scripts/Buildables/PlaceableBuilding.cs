@@ -23,6 +23,7 @@ public class PlaceableBuilding : MonoBehaviour
     {
         if (c.tag == "Building")
         {
+            Destroy(c.gameObject);
             colliders.Add(c);
         }
     }

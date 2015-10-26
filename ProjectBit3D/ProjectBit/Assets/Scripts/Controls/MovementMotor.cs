@@ -4,7 +4,6 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 public class MovementMotor : MonoBehaviour
 {
-
     Rigidbody rb;
     private Vector3 velocity = Vector3.zero;
     private float rotation = 0f;
@@ -26,7 +25,8 @@ public class MovementMotor : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
+        rb.constraints = (RigidbodyConstraints) 80;
     }
 
     // FixedUpdate is called once per fixed framerate

@@ -13,6 +13,11 @@ public class AstarSmoothFollow2 : MonoBehaviour {
 	public bool followBehind = true;
 	public float rotationDamping = 10.0f;
 	public bool staticOffset = false;
+
+    void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 	
 	void LateUpdate () {
 		Vector3 wantedPosition;

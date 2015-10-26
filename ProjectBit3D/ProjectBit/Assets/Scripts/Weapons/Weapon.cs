@@ -6,7 +6,11 @@ using System.Collections;
 /// </summary>
 public class Weapon : Destructible
 {
+    public Collider lastHit;
+    int hitCount=0;
+
     private float _durability;
+
     public float durability
     {
         get { return _durability; }
@@ -41,6 +45,39 @@ public class Weapon : Destructible
     //if no armor just damage entity
     void OnTriggerEnter(Collider armor)
     {
+        if (armor.gameObject.tag == "armor")
+        {
+            lastHit = armor;
+            Debug.Log("weaponHit");
+            Armor hit = armor.gameObject.GetComponent<Armor>();
+            if (hit != null)
+            {
+                hit.TakeDamage(10);
+                Debug.Log("ADamage");
+            }
+            Entity enemy = armor.gameObject.GetComponent<Entity>();
+            if (enemy == null)
+                return;
+            enemy.TakeDamage(10);
+            if (hitCount == 1)
+                Debug.Log("another hit");
+            Debug.Log(hitCount);
+            hitCount++;
+        }
+        else if (armor.gameObject.tag == "Entity")
+        {
+            armor.gameObject.GetComponent<Entity>().TakeDamage(10);
+            Debug.Log("EDamage");
+        }
+
+        //The Important part
+        Destructible[] list = armor.gameObject.GetComponents<Destructible>();
+        Debug.Log("items"+list.Length);
+        for(int i = 0; i < list.Length; i++)
+        {
+            list[i].TakeDamage(10);
+        }
+
     }
 
 }

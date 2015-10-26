@@ -5,7 +5,7 @@ public class SecondaryStat{
 
 
     private int _max;
-    private float _current;
+    private int _current;
     private float _regeneration;
 
     public int Max
@@ -13,10 +13,10 @@ public class SecondaryStat{
         get { return _max; }
         set { _max = Mathf.FloorToInt(Mathf.Clamp(value, 1, Mathf.Infinity)); }
     }
-    public float Current
+    public int Current
     {
         get { return _current; }
-        set { _current = Mathf.Clamp(value, 0, _max); }
+        set { _current = Mathf.FloorToInt(Mathf.Clamp(value, 0, _max)); }
     }
     public float Regeneration
     {
@@ -27,11 +27,13 @@ public class SecondaryStat{
 
 
     void Start () {
-	    
+        _max = 0;
+        _current = 0;
+        _regeneration = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Current += Regeneration;
+        Current += (int) Regeneration;
 	}
 }

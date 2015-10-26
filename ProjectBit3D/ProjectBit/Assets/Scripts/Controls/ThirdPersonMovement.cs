@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(ThirdPersonMotor))]
+[RequireComponent(typeof(MovementMotor))]
 public class ThirdPersonMovement : MonoBehaviour
 {
     [SerializeField]
@@ -9,17 +8,9 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField]
     private float lookSensitivity = 3f;
 
-    Button switchButt;
-
-    private ThirdPersonMotor motor;
-
-    //If is AI only use high view camera not third person camera
-    [HideInInspector]
-    public bool isAI = false;
-
-    public Camera myCam;
-    public Camera WorldCam;
-
+  
+    private MovementMotor motor;
+    
     void Awake()
     {
         
@@ -27,91 +18,35 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Start()
     {
-        switchButt = GameObject.FindGameObjectWithTag("switchView").GetComponent<Button>();
-        WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
-        motor = GetComponent<ThirdPersonMotor>();
-        switchButt.onClick.AddListener(() => {
-            Switch();
-        });
-        Debug.Log(GameManager.gm.Mobile());
-        isAI = GameManager.gm.Mobile();
-        PlayerSetUp();
+        motor = gameObject.GetComponent<MovementMotor>();
     }
 
     void Update()
     {
-        if(isAI)
-        {
-            //AI CODE
-        }
-        else
-        {
-            //Calculate movement velocity as a 3D vector
-            float _xMov = Input.GetAxisRaw("Horizontal");
-            float _zMov = Input.GetAxisRaw("Vertical");
+        //Calculate movement velocity as a 3D vector
+        float _xMov = Input.GetAxisRaw("Horizontal");
+        float _zMov = Input.GetAxisRaw("Vertical");
 
-            Vector3 _movHorizontal = transform.right * _xMov;
-            Vector3 _movVertical = transform.forward * _zMov;
+        Vector3 _moveStrafe = transform.right * _xMov;
+        Vector3 _movForward = transform.forward * _zMov;
 
-            // Final movement vector
-            Vector3 _velocity = (_movHorizontal + _movVertical).normalized * speed;
+        // Final movement vector
+        Vector3 _velocity = (_moveStrafe + _movForward).normalized * speed;
 
-            //Apply movement
-            motor.Move(_velocity);
+        //Apply movement
+        motor.Velocity = _velocity;
 
-            //Calculate rotation as a 3D vector (turning around)
-            float _yRot = Input.GetAxisRaw("Mouse X");
+        //Calculate rotation as a 3D vector (turning around)
+        float _yRot = Input.GetAxisRaw("Mouse X");
 
-            Vector3 _rotation = new Vector3(0f, _yRot, 0f) * lookSensitivity;
+        //Apply rotation
+        motor.Rotation = _yRot;
 
-            //Apply rotation
-            motor.Rotate(_rotation);
-
-            //Calculate camera rotation as a 3D vector (turning around)
-            float _xRot = Input.GetAxisRaw("Mouse Y");
-
-            Vector3 _cameraRotation = new Vector3(_xRot, 0f, 0f) * lookSensitivity;
-
-            //Apply camera rotation
-            motor.RotateCamera(_cameraRotation);
-        }
         
     }
 
-    public void PlayerSetUp()
-    {
-        if (isAI)
-        {
-         //   myCam.enabled = true;
-            if(myCam.isActiveAndEnabled)
-            {
-                myCam.gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            if(WorldCam.isActiveAndEnabled)
-            {
-                WorldCam.gameObject.SetActive(false);
-            }
-        }
-    }
     /// <summary>
     /// Switching CameraView
     /// </summary>
-    public void Switch()
-    {
-        if(myCam.gameObject.activeInHierarchy)
-        {
-            myCam.gameObject.SetActive(false);
-            WorldCam.gameObject.SetActive(true);
-        }
-        else if(WorldCam.gameObject.activeInHierarchy)
-        {
-            //WorldCam.enabled = !WorldCam.enabled;
-            //myCam.enabled = !myCam.enabled;
-            WorldCam.gameObject.SetActive(false);
-            myCam.gameObject.SetActive(true);
-        }
-    }
+
 }

@@ -6,13 +6,13 @@ public class BuildingPlacement : MonoBehaviour
 
     public float scrollSensitivity;
 
-    private PlaceableBuilding placeableBuilding;
+    private Building placeableBuilding;
     private Transform currentBuilding;
     private bool hasPlaced;
 
     public LayerMask buildingsMask;
 
-    private PlaceableBuilding placeableBuildingOld;
+    private Building placeableBuildingOld;
 
     // Update is called once per frame
     void Update()
@@ -24,7 +24,14 @@ public class BuildingPlacement : MonoBehaviour
 
         if (currentBuilding != null && !hasPlaced)
         {
-
+            if (IsLegalPosition())
+            {
+                currentBuilding.GetComponent<Renderer>().material.color = Color.green;
+            }
+            else if (!IsLegalPosition())
+            {
+                currentBuilding.GetComponent<Renderer>().material.color = Color.red;
+            }
             currentBuilding.position = new Vector3(p.x, 0, p.z);
 
             if (Input.GetMouseButtonDown(0))
@@ -37,6 +44,8 @@ public class BuildingPlacement : MonoBehaviour
         }
         else
         {
+            
+
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit hit = new RaycastHit();
@@ -47,8 +56,8 @@ public class BuildingPlacement : MonoBehaviour
                     {
                         placeableBuildingOld.SetSelected(false);
                     }
-                    hit.collider.gameObject.GetComponent<PlaceableBuilding>().SetSelected(true);
-                    placeableBuildingOld = hit.collider.gameObject.GetComponent<PlaceableBuilding>();
+                    hit.collider.gameObject.GetComponent<Building>().SetSelected(true);
+                    placeableBuildingOld = hit.collider.gameObject.GetComponent<Building>();
                 }
                 else
                 {
@@ -75,6 +84,6 @@ public class BuildingPlacement : MonoBehaviour
     {
         hasPlaced = false;
         currentBuilding = ((GameObject)Instantiate(b)).transform;
-        placeableBuilding = currentBuilding.GetComponent<PlaceableBuilding>();
+        placeableBuilding = currentBuilding.GetComponent<Building>();
     }
 }

@@ -68,11 +68,12 @@ public class AIPath : MonoBehaviour {
 	 */
 	public float turningSpeed = 5;
 
-	/** Distance from the target point where the AI will start to slow down.
+    
+    /** Distance from the target point where the AI will start to slow down.
 	 * Note that this doesn't only affect the end point of the path
  	 * but also any intermediate points, so be sure to set #forwardLook and #pickNextWaypointDist to a higher value than this
  	 */
-	public float slowdownDistance = 0.6F;
+    public float slowdownDistance = 0.6F;
 
 	/** Determines within what range it will switch to target the next waypoint in the path */
 	public float pickNextWaypointDist = 2;
@@ -140,6 +141,8 @@ public class AIPath : MonoBehaviour {
 		}
 	}
 
+    
+
 	/** Holds if the Start function has been run.
 	 * Used to test if coroutines should be started in OnEnable to prevent calculating paths
 	 * in the awake stage (or rather before start on frame 0).
@@ -166,8 +169,11 @@ public class AIPath : MonoBehaviour {
 	 * \see OnEnable
 	 * \see RepeatTrySearchPath
 	 */
-	protected virtual void Start () {
-		startHasRun = true;
+	protected virtual void Start ()
+    {
+
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        startHasRun = true;
 		OnEnable ();
 	}
 
@@ -326,11 +332,14 @@ public class AIPath : MonoBehaviour {
 		//Rotate towards targetDirection (filled in by CalculateVelocity)
 		RotateTowards (targetDirection);
 
+        Debug.LogWarning(dir);
+
 		if (navController != null) {
 		} else if (controller != null) {
 			controller.SimpleMove (dir);
 		} else if (rigid != null) {
-			rigid.AddForce (dir);
+            rigid.MovePosition(dir);
+			//rigid.AddForce (dir);
 		} else {
 			tr.Translate (dir*Time.deltaTime, Space.World);
 		}
