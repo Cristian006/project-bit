@@ -1,9 +1,7 @@
 using UnityEngine;
-using System.Collections;
 
 public class BuildingManager : MonoBehaviour
 {
-
     public GameObject[] buildings;
     private BuildingPlacement buildingPlacement;
 

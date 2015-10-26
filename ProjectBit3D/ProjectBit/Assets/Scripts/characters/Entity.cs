@@ -64,9 +64,9 @@ public class Entity : Destructible {
 
 
     //constructors
-    void Start()
+    void Awake()
     {
-        gameObject.tag = "Entity";
+        //gameObject.tag = "Entity";
         Strength = 0;
         Intelligence = 0;
         Agility = 0;
@@ -95,6 +95,7 @@ public class Entity : Destructible {
     //public methods
     public override void TakeDamage(int damage)
     {
+        Debug.Log(gameObject.name);
         _health.Current -= damage;
         if (CurrentHealth <= 0)
         {

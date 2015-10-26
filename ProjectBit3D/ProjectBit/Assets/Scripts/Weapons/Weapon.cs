@@ -9,19 +9,24 @@ public class Weapon : Destructible
     public Collider lastHit;
     int hitCount=0;
 
-    private float _durability;
+    int totalhits = 0;
+
+    //Max amount of hits a weapon can take before it breaks
+    private float _durability = 100;
+    public int maxDura = 100;
 
     public float durability
     {
         get { return _durability; }
-        set { _durability = Mathf.Clamp(value, 0, Mathf.Infinity); }
+        set { _durability = Mathf.Clamp(value, 0, maxDura); }
     }
 
     bool fix = false;
     bool usable = true;
 
-    public void TakeDamage(float damage)
+    public override void TakeDamage(int damage)
     {
+        durability -= damage;
         if (durability <= 0)
         {
             fix = true;
@@ -63,20 +68,29 @@ public class Weapon : Destructible
                 Debug.Log("another hit");
             Debug.Log(hitCount);
             hitCount++;
+            totalhits++;
         }
-        else if (armor.gameObject.tag == "Entity")
+        else if (armor.gameObject.tag == "Enemy" || armor.gameObject.tag == "Player")
         {
             armor.gameObject.GetComponent<Entity>().TakeDamage(10);
-            Debug.Log("EDamage");
+
+            Debug.Log(gameObject.name);
+            totalhits++;
+        }
+        else
+        {
+            //The Important part
+            Destructible[] list = armor.gameObject.GetComponents<Destructible>();
+            Debug.Log("items" + list.Length);
+            for (int i = 0; i < list.Length; i++)
+            {
+                list[i].TakeDamage(10);
+            }
+            totalhits++;
         }
 
-        //The Important part
-        Destructible[] list = armor.gameObject.GetComponents<Destructible>();
-        Debug.Log("items"+list.Length);
-        for(int i = 0; i < list.Length; i++)
-        {
-            list[i].TakeDamage(10);
-        }
+        TakeDamage(totalhits);
+        
 
     }
 

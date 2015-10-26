@@ -1,24 +1,26 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraControl : MonoBehaviour {
+public class CameraControl : MonoBehaviour
+{
     public Button switchButt;
-
-
+    
     public Camera myCam;
     public Camera WorldCam;
     // Use this for initialization
-    void Start() {
-
-        switchButt = GameObject.FindGameObjectWithTag("switchView").GetComponent<Button>();
+    void Start()
+    {
         WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
         myCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-
-        switchButt.onClick.AddListener(() => {
-            Switch();
-        });
     }
-	
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            Switch();
+        }
+    }
 
     public void Switch()
     {
@@ -29,8 +31,6 @@ public class CameraControl : MonoBehaviour {
         }
         else if (WorldCam.gameObject.activeInHierarchy)
         {
-            //WorldCam.enabled = !WorldCam.enabled;
-            //myCam.enabled = !myCam.enabled;
             WorldCam.gameObject.SetActive(false);
             myCam.gameObject.SetActive(true);
         }
