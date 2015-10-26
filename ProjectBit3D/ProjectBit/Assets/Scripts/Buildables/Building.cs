@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class Building : Selectable
 {
-    public int hitPoints;
     public int buildingsize = 3;
 
     [HideInInspector]
@@ -102,4 +101,6 @@ public class Building : Selectable
     {
         // rend.material.color = Color.white;
     }
+    
+
 }

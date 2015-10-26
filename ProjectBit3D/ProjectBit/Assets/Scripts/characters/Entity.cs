@@ -17,7 +17,6 @@ public class Entity : Destructible {
     private int _wisdom;
 
     //derived stats
-    private SecondaryStat _health;
     private SecondaryStat _mana;
     private SecondaryStat _stamina;
 
@@ -67,6 +66,7 @@ public class Entity : Destructible {
     //constructors
     void Start()
     {
+        gameObject.tag = "Entity";
         Strength = 0;
         Intelligence = 0;
         Agility = 0;
@@ -93,7 +93,7 @@ public class Entity : Destructible {
 
 
     //public methods
-    public void TakeDamage(float damage)
+    public override void TakeDamage(int damage)
     {
         _health.Current -= damage;
         if (CurrentHealth <= 0)

@@ -7,7 +7,9 @@ public class TownHall : Building
     // Use this for initialization
     void Start()
     {
-        hitPoints = 1000;
+        _health = new SecondaryStat();
+        maxHealth = 100;
+        health = 100;
     }
 
     // Update is called once per frame
