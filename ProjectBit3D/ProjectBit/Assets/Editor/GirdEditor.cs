@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class GridEditor : EditorWindow
 {
-    string myString = "Name";
     bool groupEnabled;
     bool myBool = true;
     int gridsize = 1;
@@ -21,7 +20,9 @@ public class GridEditor : EditorWindow
     float xoffset = 0;
     public GameObject Grid;
 
-    public static GameObject[,] gridArray;
+    public GameManager gm;
+
+    public GameObject[,] gridArray;
 
     // Add menu item named "My Window" to the Window menu
     [MenuItem("Window/Grid Editor")]
@@ -34,7 +35,7 @@ public class GridEditor : EditorWindow
     void OnGUI()
     {
         GUILayout.Label("Grid Settings", EditorStyles.boldLabel);
-        myString = EditorGUILayout.TextField("Name", myString);
+        gm = (GameManager)EditorGUILayout.ObjectField("GameManager", gm, typeof(GameManager), true);
         maxGridSize = EditorGUILayout.IntField("Max Grid Size", maxGridSize);
         Grid = (GameObject)EditorGUILayout.ObjectField("Grid", Grid, typeof(GameObject), true);
         gridsize = (int)EditorGUILayout.Slider("Grid Size", gridsize, 1, maxGridSize);
@@ -45,7 +46,7 @@ public class GridEditor : EditorWindow
     }
 
     public void GenerateGrid()
-    {
+    {        
         gridArray = new GameObject[gridsize, gridsize];
         if(!GridHasBeenGenerated)
         {
@@ -110,9 +111,13 @@ public class GridEditor : EditorWindow
                     }
                     gridArray[x, z] = refrenceObject;
                 }
+                Debug.Log(gridArray.Length);
             }
             GridHasBeenGenerated = true;
+            gm.GridFloor = gridArray;
+                        
      //       GenerateStructures();
+            
         }
     }
 

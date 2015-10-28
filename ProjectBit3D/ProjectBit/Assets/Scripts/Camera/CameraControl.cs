@@ -3,8 +3,6 @@ using UnityEngine.UI;
 
 public class CameraControl : MonoBehaviour
 {
-    public Button switchButt;
-    
     public Camera myCam;
     public Camera WorldCam;
     // Use this for initialization

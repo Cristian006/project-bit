@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class GridGenerator : MonoBehaviour
 {
     public static GridGenerator g;
@@ -21,7 +22,6 @@ public class GridGenerator : MonoBehaviour
     [HideInInspector]
     public bool gridGenerated = false;
     bool firstTime = true;
-    bool structuresGenerated = false;
 
     public int gridsize = 10;
     public GameObject[,] gridArray = new GameObject[50, 50];
@@ -75,31 +75,7 @@ public class GridGenerator : MonoBehaviour
                 gridArray[x, z] = tile;
             }
         }
-        if (firstTime)
-        {
-            GenerateStructures();
-        }
-        else
-        {
-            tile = null;
-            gridGenerated = true;
-        }
-    }
-
-    public void GenerateStructures()
-    {
-        if (!structuresGenerated)
-        {
-            //Instantiate Home Building
-            Instantiate(testBuiding, new Vector3((int)Random.Range(10, 20), 0, (int)Random.Range(10, 20)), Quaternion.identity);
-            firstTime = false;
-            gridGenerated = true;
-        }
-    }
-
-    public void Update()
-    {
-        //if (gridGenerated)
-        // Debug.Log(gridArray[5, 10].name);
+        tile = null;
+        gridGenerated = true;
     }
 }

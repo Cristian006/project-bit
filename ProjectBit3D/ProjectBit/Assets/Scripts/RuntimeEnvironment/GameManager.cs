@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
 
     public GameObject PlayerPrefab;
+
+    public GameObject[,] GridFloor;
+
     [HideInInspector]
     public GameObject player;
     public Transform spawnPoint;
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         gm = this;
         player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+        
     }
 	// Use this for initialization
 	void Start ()
