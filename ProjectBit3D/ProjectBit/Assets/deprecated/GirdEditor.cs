@@ -46,7 +46,10 @@ public class GridEditor : EditorWindow
     }
 
     public void GenerateGrid()
-    {        
+    {
+        GridScriptableObjectClass asset = ScriptableObject.CreateInstance<GridScriptableObjectClass>();
+        AssetDatabase.CreateAsset(asset, "Assets/Scripts/Experimental/gridScriptableObject.asset");
+        
         gridArray = new GameObject[gridsize, gridsize];
         if(!GridHasBeenGenerated)
         {
@@ -114,10 +117,11 @@ public class GridEditor : EditorWindow
                 Debug.Log(gridArray.Length);
             }
             GridHasBeenGenerated = true;
-            gm.GridFloor = gridArray;
-                        
-     //       GenerateStructures();
-            
+            asset.gridArray = gridArray;
+            Debug.Log(asset.gridArray.Length);
+            AssetDatabase.SaveAssets();
+            //       GenerateStructures();
+
         }
     }
 

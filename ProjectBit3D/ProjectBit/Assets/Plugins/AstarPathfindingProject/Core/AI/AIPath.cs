@@ -172,7 +172,7 @@ public class AIPath : MonoBehaviour {
 	protected virtual void Start ()
     {
 
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        //target = GameObject.FindGameObjectWithTag("Player").transform;
         startHasRun = true;
 		OnEnable ();
 	}

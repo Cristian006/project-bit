@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
 {
-    public static GridGenerator g;
-
     //grid
     public GameObject Grid;
 
@@ -12,9 +10,7 @@ public class GridGenerator : MonoBehaviour
     public GameObject darkTile;
     //refrence plane;
     GameObject tile;
-
-    public GameObject testBuiding;
-
+    
     float zoffset = 0;
     float yoffset = -0.5f;
     float xoffset = 0;
@@ -24,17 +20,10 @@ public class GridGenerator : MonoBehaviour
     bool firstTime = true;
 
     public int gridsize = 10;
-    public GameObject[,] gridArray = new GameObject[50, 50];
-
-
-    void Awake()
-    {
-        g = this;
-        GenerateGrid();
-    }
-
+    public GameObject[,] gridArray;
     public void GenerateGrid()
     {
+        gridArray = new GameObject[gridsize, gridsize];
         for (int x = 0; x < gridsize; x++)
         {
             if (x % 2 == 0)

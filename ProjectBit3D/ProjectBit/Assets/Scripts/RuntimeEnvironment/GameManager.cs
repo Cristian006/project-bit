@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerPrefab;
 
     public GameObject[,] GridFloor;
+    public GridScriptableObjectClass grid;
+
+    public GridGenerator gg;
 
     [HideInInspector]
     public GameObject player;
@@ -17,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public Camera worldCam;
     public Vector3 mousePos;
-    
+
     public bool Mobile()
     {
 #if UNITY_EDITOR
@@ -41,23 +44,25 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        GetComponent<GridGenerator>().GenerateGrid();
+        GridFloor = GetComponent<GridGenerator>().gridArray;
         gm = this;
         player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
-        
     }
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
-            
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
 
         Ray ray = worldCam.ScreenPointToRay(Input.mousePosition);
 
         float distance = 0;
-        if(plane.Raycast(ray, out distance))
+        if (plane.Raycast(ray, out distance))
         {
             mousePos = ray.GetPoint(distance);
             Debug.DrawRay(ray.origin, ray.direction * distance, Color.green);
@@ -66,9 +71,5 @@ public class GameManager : MonoBehaviour
         {
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
         }
-
-       
     }
-
-    
 }
