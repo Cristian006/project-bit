@@ -6,25 +6,33 @@ using System.Collections;
 /// </summary>
 public class Destructible : MonoBehaviour
 {
-    protected SecondaryStat _health;
-    //TODO create properties for health and maxhealth
+    //identity strings
+    protected string Max { get { return "Max"; } }
+    protected string Current { get { return "Current"; } }
+    protected string Regeneration { get { return "Regeneration"; } }
+    protected string Health { get { return "Health"; } }
+    protected string Mana { get { return "Mana"; } }
+    protected string Stamina { get { return "Stamina"; } }
+
+    //stats
+    protected statContainer stats;
 
     public int maxHealth
     {
-        protected set { _health.Max = value; }
-        get { return _health.Max; }
+        protected set { stats[Health,Max] = value; }
+        get { return stats[Health, Max]; }
     }
 
     public int health
     {
-        protected set { _health.Current = value; }
-        get { return _health.Current; }
+        protected set { stats[Health, Current] = value; }
+        get { return stats[Health, Current]; }
     }
 
     // Use this for initialization
     void Start()
     {
-        _health = new SecondaryStat();
+        stats= new statContainer("Entity");
     }
 
     // Update is called once per frame

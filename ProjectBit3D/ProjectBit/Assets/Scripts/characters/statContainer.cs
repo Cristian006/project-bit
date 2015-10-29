@@ -15,12 +15,7 @@ public class statContainer{
 
 
     //attributes
-    private int _str;   //dmg
-    private int _int;   //mag damage
-    private int _agi;   //speed
-    private int _end;   //stam
-    private int _con;   //hp
-    private int _wis;   //mana
+    private namedStat[] attributeList;
 
     //stats
     private SecondaryStat health; //holds health information
@@ -34,71 +29,42 @@ public class statContainer{
 
 
     //constructors
-    statContainer()
+    public statContainer()
     {
-        _str=1;
-        _int=1;   
-        _agi=1;  
-        _end=1; 
-        _con=1; 
-        _wis=1;
+        attributeList = null;
         health= new SecondaryStat();
         mana = new SecondaryStat();
         stamina = new SecondaryStat();
-        _spd = 0f;
-        _dmg = 0f;
-        _mdmg = 0f;
-        calcStats();
     }
 
-    statContainer(int[] stats)
+    public statContainer(string type)
     {
-        _str = stats[0];
-        _int = stats[1];
-        _agi = stats[2];
-        _end = stats[3];
-        _con = stats[4];
-        _wis = stats[5];
         health = new SecondaryStat();
         mana = new SecondaryStat();
         stamina = new SecondaryStat();
-        _spd = 0f;
-        _dmg = 0f;
-        _mdmg = 0f;
-        calcStats();
+        if (type == "entity")
+        {
+            constructEntity();
+        }
+    }
+    
+    private void constructEntity()
+    {
+        attributeList = new namedStat[6];
+        attributeList[0] = new namedStat("Strength");
+        attributeList[1] = new namedStat("Intelligence");
+        attributeList[2] = new namedStat("Agility");
+        attributeList[3] = new namedStat("Dexterity");
+        attributeList[4] = new namedStat("Constitution");
+        attributeList[5] = new namedStat("Wisdom");
     }
 
 
-
-
-    //properies
+    //properties
     public int this[string attribute]
     {
-        get
-        {
-            switch (attribute)
-            {
-                case "Strength": return _str;
-                case "Intelligence": return _int;
-                case "Agility": return _agi;
-                case "Endurance": return _end;
-                case "Constitutioin": return _con;
-                case "Wisdom": return _wis;
-            }
-            return -1;
-        }
-        set
-        {
-            switch (attribute)
-            {
-                case "Strength": _str=value; break;
-                case "Intelligence": _int = value; break;
-                case "Agility": _agi = value; break;
-                case "Endurance":  _end = value; break;
-                case "Constitutioin":  _con = value; break;
-                case "Wisdom": _wis = value; break;
-            }
-        }
+        get { return findAttribute(attribute).Amount; }
+        private set { findAttribute(attribute).Amount = value; }
     }
 
     
@@ -114,6 +80,15 @@ public class statContainer{
             }
             return -1;
         }
+        set
+        {
+            switch (stat)
+            {
+                case "Health": partSetter(health, part,value); break;
+                case "Mana": partSetter(mana, part,value); break;
+                case "Stamina": partSetter(stamina, part,value);break;
+            }
+        }
     }
 
     private int partChooser(SecondaryStat stat,string part)
@@ -126,17 +101,104 @@ public class statContainer{
         }
         return -1;
     }
+    private void partSetter(SecondaryStat stat,string part,int value)
+    {
+        switch (part)
+        {
+            case "Max": stat.Max=value; break;
+            case "Current": stat.Current=value; break;
+            case "Regeneration": stat.Regeneration=value; break;
+        }
+    }
+
+    //auxilary methods
+    private namedStat findAttribute(string name)
+    {
+        int n = 0;
+        int min = 0;
+        int max = attributeList.Length;
+        while(n!= min || n!=max)
+        {
+            n = (min + max) / 2;
+            if (min + 1 == max)
+                if (attributeList[max].Name.CompareTo(name) == 0)
+                    return attributeList[n];
+            int pos = attributeList[n].Name.CompareTo(name);
+            if (pos == 0)
+                return attributeList[n];
+            if (pos < 0)
+                min = n;
+            else
+                max = n;
+        }
+        return new namedStat("error",-1);
+    }
+
+    private void sortAttribute()//heapsorts the attribute list
+    {
+        int length = attributeList.Length;
+        for(int i = length/2; i > 0; i--)
+            heap(i, length);
+        for(int i = length; i > 0; i--)
+        {
+            swapAttribute(i, 0);
+            heap(0, i);
+        }
+    }
+
+    private void heap(int i,int l)
+    {
+        if (i * 2 < l) {
+            if (i * 2 + 1 < l)
+            {
+                if (attributeList[i * 2].Name.CompareTo(attributeList[i * 2 + 1]) > 0)
+                {
+                    if (attributeList[i].Name.CompareTo(attributeList[i * 2 + 1]) > 0)
+                    {
+                        swapAttribute(i, i * 2 + 1);
+                        heap(i * 2 + 1, l);
+                    }
+                }
+                else
+                    if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
+                    {
+                        swapAttribute(i, i * 2);
+                        heap(i * 2, l);
+                    }
+            }
+            else
+                if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
+                {
+                    swapAttribute(i, i * 2);
+                    heap(i * 2, l);
+                }
+        }
+        else
+            if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
+            {
+                swapAttribute(i, i * 2);
+                heap(i * 2, l);
+            }
+    }
+
+    private void swapAttribute(int i, int j)
+    {
+        namedStat h = attributeList[i];
+        attributeList[i] = attributeList[j];
+        attributeList[j] = h;
+    }
+
 
     //setting
     private void calcStats()
     {
-        health.Max = (int)(_con * CONCONS);
-        mana.Max = (int)(_wis * WISCONS);
-        stamina.Max = (int)(_end * ENDCONS);
-        _spd = (_agi * AGICONS);
-        _dmg = (_str * STRCONS);
-        _mdmg = (_int * INTCONS);
-    }
+        health.Max = (int)(this["Constitution"] * CONCONS);
+        mana.Max = (int)(this["Wisdom"] * WISCONS);
+        stamina.Max = (int)(this["Endurance"] * ENDCONS);
+        _spd = (this["Agility"] * AGICONS);
+        _dmg = (this["Strength"] * STRCONS);
+        _mdmg = (this["Intelligence"] * INTCONS);
+    }//*/
 
     public void addStat(string name,int amount)
     {
@@ -145,7 +207,7 @@ public class statContainer{
             atrPoints -= amount;
             this[name] += amount;
         }
-        calcStats();
+      //  calcStats();
     }
 
 }

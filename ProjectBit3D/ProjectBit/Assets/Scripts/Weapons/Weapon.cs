@@ -50,47 +50,15 @@ public class Weapon : Destructible
     //if no armor just damage entity
     void OnTriggerEnter(Collider armor)
     {
-        if (armor.gameObject.tag == "armor")
+       
+        //The Important part
+        Destructible[] list = armor.gameObject.GetComponents<Destructible>();
+        Debug.Log("hit#"+hitCount+"items" + list.Length);
+        for (int i = 0; i < list.Length; i++)
         {
-            lastHit = armor;
-            Debug.Log("weaponHit");
-            Armor hit = armor.gameObject.GetComponent<Armor>();
-            if (hit != null)
-            {
-                hit.TakeDamage(10);
-                Debug.Log("ADamage");
-            }
-            Entity enemy = armor.gameObject.GetComponent<Entity>();
-            if (enemy == null)
-                return;
-            enemy.TakeDamage(10);
-            if (hitCount == 1)
-                Debug.Log("another hit");
-            Debug.Log(hitCount);
-            hitCount++;
-            totalhits++;
+            list[i].TakeDamage(10);
         }
-        else if (armor.gameObject.tag == "Enemy" || armor.gameObject.tag == "Player")
-        {
-            armor.gameObject.GetComponent<Entity>().TakeDamage(10);
-
-            Debug.Log(gameObject.name);
-            totalhits++;
-        }
-        else
-        {
-            //The Important part
-            Destructible[] list = armor.gameObject.GetComponents<Destructible>();
-            Debug.Log("items" + list.Length);
-            for (int i = 0; i < list.Length; i++)
-            {
-                list[i].TakeDamage(10);
-            }
-            totalhits++;
-        }
-
-        TakeDamage(totalhits);
-        
+        hitCount++;
 
     }
 

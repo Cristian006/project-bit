@@ -7,7 +7,7 @@ public class TownHall : Building
     // Use this for initialization
     void Start()
     {
-        _health = new SecondaryStat();
+        stats = new statContainer("Building");
         maxHealth = 100;
         health = 100;
     }
