@@ -12,6 +12,6 @@ public class Hero : Entity
 
     void Update()
     {
-        Debug.Log(stats[Health,Current]);
+       // Debug.Log(stats[Health,Current]);
     }
 }

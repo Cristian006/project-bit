@@ -53,7 +53,7 @@ public class Weapon : Destructible
        
         //The Important part
         Destructible[] list = armor.gameObject.GetComponents<Destructible>();
-        Debug.Log("hit#"+hitCount+"items" + list.Length);
+        //Debug.Log("hit#"+hitCount+"items" + list.Length);
         for (int i = 0; i < list.Length; i++)
         {
             list[i].TakeDamage(10);

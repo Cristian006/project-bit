@@ -1,19 +1,20 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MovementMotor))]
+[RequireComponent(typeof(Attack))]
 public class ThirdPersonMovement : MonoBehaviour
 {
     [SerializeField]
     private float speed = 5f;
     [SerializeField]
-    private float lookSensitivity = 3f;
-
-  
+    private float lookSensitivity = 6f;
+    private Attack attack;
     private MovementMotor motor;
     
     void Awake()
     {
-        
+        lookSensitivity =  PlayerPrefs.GetFloat("LookSensitivity", 6f);
+        attack = GetComponent<Attack>();
     }
 
     void Start()
@@ -37,16 +38,15 @@ public class ThirdPersonMovement : MonoBehaviour
         motor.Velocity = _velocity;
 
         //Calculate rotation as a 3D vector (turning around)
-        float _yRot = Input.GetAxisRaw("Mouse X");
+        float _yRot = Input.GetAxisRaw("Mouse X") * lookSensitivity;
 
         //Apply rotation
         motor.Rotation = _yRot;
 
-        
+        //INPUT
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            attack.attack();
+        }
     }
-
-    /// <summary>
-    /// Switching CameraView
-    /// </summary>
-
 }

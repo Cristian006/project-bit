@@ -1,6 +1,7 @@
 using UnityEngine;
 using Pathfinding;
 
+[RequireComponent(typeof(Attack))]
 public class AI : MonoBehaviour
 {
 
@@ -17,8 +18,15 @@ public class AI : MonoBehaviour
     //The waypoint we are currently moving towards
     private int currentWaypoint = 0;
 
-    MovementMotor motor;
+    private float attackDist = 3f;
+    float distance;
+    private Attack attack;
 
+    MovementMotor motor;
+    void Awake()
+    {
+        attack = GetComponent<Attack>();
+    }
     public void Start()
     {
         motor = GetComponent<MovementMotor>();
@@ -42,6 +50,8 @@ public class AI : MonoBehaviour
     }
     public void Update()
     {
+
+        transform.LookAt(targetPosition);
         if (path == null)
         {
             //We have no path to move after yet
@@ -57,12 +67,18 @@ public class AI : MonoBehaviour
         //dir *= speed * Time.deltaTime;
         //controller.SimpleMove(dir);
         motor.Velocity = dir*speed;
+
         //Check if we are close enough to the next waypoint
         //If we are, proceed to follow the next waypoint
         if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
         {
             currentWaypoint++;
             return;
+        }
+
+        if(Vector3.Distance(transform.position, targetPosition.position) <= attackDist)
+        {
+            attack.attack();
         }
     }
 

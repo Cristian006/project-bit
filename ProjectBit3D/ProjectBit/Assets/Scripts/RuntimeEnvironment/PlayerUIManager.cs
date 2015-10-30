@@ -7,23 +7,24 @@ using System.Collections;
 /// </summary>
 public class PlayerUIManager : MonoBehaviour
 {
-    public GameObject Player;
-    public Hero hero;
-    public GameObject PlayerUI;
-
+    GameObject Player;
+    Hero hero;
+    
     public Slider HealthBar;
+    public Text health;
 
-	void Start ()
+    void Start ()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        HealthBar = GetComponentInChildren<Slider>();
         hero = Player.GetComponent<Hero>();
         HealthBar.maxValue = hero.maxHealth;
         HealthBar.value = hero.CurrentHealth;
+        health.text = HealthBar.value.ToString();
     }
 	
 	void Update ()
     {
         HealthBar.value = hero.CurrentHealth;
+        health.text = HealthBar.value.ToString();
     }
 }

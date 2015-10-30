@@ -3,9 +3,6 @@ using System.Collections;
 
 public class BuildingPlacement : MonoBehaviour
 {
-
-    public float scrollSensitivity;
-
     private Building placeableBuilding;
     private Transform currentBuilding;
     private bool hasPlaced;
@@ -17,39 +14,31 @@ public class BuildingPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-       // Vector3 m = Input.mousePosition;
-        //m = new Vector3(m.x, m.y, transform.position.y);
-        Vector3 p = GameManager.gm.mousePos;//GetComponent<Camera>().ScreenToWorldPoint(m);
+        Vector3 p = GameManager.gm.mousePos;
+        Debug.Log(hasPlaced);
+        Debug.Log(currentBuilding);
 
         if (currentBuilding != null && !hasPlaced)
         {
-            if (IsLegalPosition())
-            {
-                currentBuilding.GetComponent<Renderer>().material.color = Color.green;
-            }
-            else if (!IsLegalPosition())
-            {
-                currentBuilding.GetComponent<Renderer>().material.color = Color.red;
-            }
-            currentBuilding.position = new Vector3(p.x, 0, p.z);
+            currentBuilding.GetComponent<Building>().currentBuildingState = Building.BuildingState.Moving;
+            currentBuilding.position = new Vector3(Mathf.RoundToInt(p.x), 0, Mathf.RoundToInt(p.z));
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (IsLegalPosition())
+                currentBuilding.GetComponent<Building>().CheckState();
+                if (currentBuilding.GetComponent<Building>().currentPositionState == Building.PositionState.Possible)
                 {
                     hasPlaced = true;
+                    currentBuilding.GetComponent<Building>().currentBuildingState = Building.BuildingState.Placed;
                 }
             }
         }
         else
         {
-            
-
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit hit = new RaycastHit();
-                Ray ray = new Ray(new Vector3(p.x, 8, p.z), Vector3.down);
+                Ray ray = new Ray(new Vector3(Mathf.RoundToInt(p.x), 8, Mathf.RoundToInt(p.z)), Vector3.down);
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildingsMask))
                 {
                     if (placeableBuildingOld != null)
@@ -68,16 +57,6 @@ public class BuildingPlacement : MonoBehaviour
                 }
             }
         }
-    }
-
-
-    bool IsLegalPosition()
-    {
-        if (placeableBuilding.colliders.Count > 0)
-        {
-            return false;
-        }
-        return true;
     }
 
     public void SetItem(GameObject b)

@@ -174,11 +174,13 @@ public class statContainer{
                 }
         }
         else
+        {
             if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
             {
                 swapAttribute(i, i * 2);
                 heap(i * 2, l);
             }
+        }
     }
 
     private void swapAttribute(int i, int j)

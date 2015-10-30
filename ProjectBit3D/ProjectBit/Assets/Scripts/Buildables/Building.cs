@@ -1,19 +1,21 @@
 using UnityEngine;
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 public class Building : Selectable
 {
     public int buildingsize = 3;
-
-    [HideInInspector]
+    
     public List<Collider> colliders = new List<Collider>();
-    private bool isSelected;
+   // private bool isSelected;
     public string bName;
+
+    Renderer rend;
+    Color normal;
 
     void OnGUI()
     {
-        if (isSelected)
+        if (selectedState == SelectionState.Selected)
         {
             GUI.Button(new Rect(Screen.width / 2, Screen.height / 20, 100, 30), bName);
         }
@@ -22,26 +24,47 @@ public class Building : Selectable
 
     Camera cam;
 
+    /// <summary>
+    /// Is the building moving or placed
+    /// </summary>
     public enum BuildingState
     {
-        Placed,         //Set on ground
-        Moving          //Moving / Repositioning
+        Moving,         //Moving / Repositioning
+        Placed         //Set on ground
+                 
     }
 
+    /// <summary>
+    /// Is the positon possible or not
+    /// </summary>
     public enum PositionState
     {
-        Possible,       //Able to be placed in its current location
-        NotPossible     //Not able to be placed in its current location
+        NotPossible,       //Able to be placed in its current location
+        Possible     //Not able to be placed in its current location
     }
 
+    /// <summary>
+    /// Is the building currently Selected
+    /// </summary>
+    public enum SelectionState
+    {
+        UnSelected,
+        Selected
+    }
 
-    PositionState currentPosition = new PositionState();
-    BuildingState currentState = new BuildingState();
+    public PositionState currentPositionState = new PositionState();
+    public BuildingState currentBuildingState = new BuildingState();
+    public SelectionState selectedState = new SelectionState();
+
+    void Awake()
+    {
+        rend = GetComponentInChildren<Renderer>();
+        normal = rend.material.color;
+    }
 
     void Start()
     {
         cam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
-        // rend = GetComponent<Renderer>();
     }
 
 
@@ -49,19 +72,32 @@ public class Building : Selectable
     {
         Vector3 CurrentPos = transform.position;
         transform.position = new Vector3(Mathf.RoundToInt(CurrentPos.x), CurrentPos.y, Mathf.RoundToInt(CurrentPos.z));
+        
+        if(currentBuildingState == BuildingState.Placed)
+        {
+            ChangeColor(1);
+        }
+        else if (currentPositionState == PositionState.Possible)
+        {
+            ChangeColor(2);
+        }
+        else if (currentPositionState == PositionState.NotPossible)
+        {
+            ChangeColor(3);
+        }
+
     }
 
     public void CheckState()
     {
-        if (currentState == BuildingState.Moving)
+        
+        if (colliders.Count > 0)
         {
-            /*
-            *   check if tile bellow is free to go on
-            *
-            *   if tiles is free to go on, change building tiles to green;
-            *   else if tiles are not free to go on, change building tiles to red;
-            *
-            */
+            currentPositionState = PositionState.NotPossible;
+        }
+        else
+        {
+            currentPositionState = PositionState.Possible;
         }
     }
 
@@ -69,7 +105,6 @@ public class Building : Selectable
     {
         if (c.tag == "Building")
         {
-            Destroy(c.gameObject);
             colliders.Add(c);
         }
     }
@@ -84,7 +119,14 @@ public class Building : Selectable
 
     public void SetSelected(bool s)
     {
-        isSelected = s;
+        if (s)
+        {
+            selectedState = SelectionState.Selected;
+        }
+        else
+        {
+            selectedState = SelectionState.UnSelected;
+        }
     }
 
     public void BuildingDestroyed()
@@ -92,15 +134,39 @@ public class Building : Selectable
         //Destroy Building
     }
 
-
     void OnMouseDrag()
     {
-        transform.position = GameManager.gm.mousePos;//new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, transform.position.y, cam.ScreenToWorldPoint(Input.mousePosition).z);
+
     }
+
     void OnMouseExit()
     {
-        // rend.material.color = Color.white;
-    }
-    
 
+    }
+
+    public void ChangeColor(int color)
+    {
+        foreach (Transform child in transform)
+            changing(child.gameObject, color);
+    }
+
+    public void changing(GameObject c, int color)
+    {
+        switch (color)
+        {
+            //normal color
+            case 1:
+                c.GetComponent<Renderer>().material.color = normal;
+                break;
+            //green
+            case 2:
+                c.GetComponent<Renderer>().material.color = Color.yellow;
+                break;
+            //red
+            case 3:
+                c.GetComponent<Renderer>().material.color = Color.red;
+                break;
+        }
+
+    }
 }

@@ -10,6 +10,7 @@ public class CameraControl : MonoBehaviour
     {
         WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
         myCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        WorldCam.gameObject.SetActive(false);
     }
 
     void Update()

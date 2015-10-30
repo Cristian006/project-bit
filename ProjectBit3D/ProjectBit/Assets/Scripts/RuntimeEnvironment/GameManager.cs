@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager gm;
@@ -8,7 +7,6 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerPrefab;
 
     public GameObject[,] GridFloor;
-    public GridScriptableObjectClass grid;
 
     public GridGenerator gg;
 
@@ -58,7 +56,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         Ray ray = worldCam.ScreenPointToRay(Input.mousePosition);
 
         float distance = 0;
