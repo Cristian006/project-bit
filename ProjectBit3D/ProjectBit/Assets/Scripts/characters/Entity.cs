@@ -12,17 +12,17 @@ public class Entity : Destructible {
     }
     //secondary read-only so that display objects can find out these values for display
     //Internal changes will directly use the fields with dot notation
-    public int MaxHealth { get { return stats[Health,Max]; } }
-    public int MaxMana { get { return stats[Mana, Max]; } }
-    public int MaxStamina { get { return stats[Stamina, Max]; } }
+    public int MaxHealth { get { return (int)stats[statContainer.Health, statContainer.Max]; } }
+    public int MaxMana { get { return (int)stats[statContainer.Mana, statContainer.Max]; } }
+    public int MaxStamina { get { return (int)stats[statContainer.Stamina, statContainer.Max]; } }
 
-    public float CurrentHealth { get { return stats[Health, Current]; } private set { stats[Health, Current] = (int)value; } }
-    public float CurrentMana { get { return stats[Mana, Current]; } private set { stats[Health, Current] = (int)value; } }
-    public float CurrentStamina { get { return stats[Stamina, Current]; } private set { stats[Health, Current] = (int)value; } }
+    public float CurrentHealth { get { return stats[statContainer.Health, statContainer.Current]; } protected set { stats[statContainer.Health, statContainer.Current] = (int)value; } }
+    public float CurrentMana { get { return stats[statContainer.Mana, statContainer.Current]; } protected set { stats[statContainer.Health, statContainer.Current] = (int)value; } }
+    public float CurrentStamina { get { return stats[statContainer.Stamina, statContainer.Current]; } protected set { stats[statContainer.Health, statContainer.Current] = (int)value; } }
 
-    public float HealthRegeneration { get { return stats[Health, Regeneration]; } }
-    public float ManaRegeneration { get { return stats[Mana, Regeneration]; } }
-    public float StaminaRegeneration { get { return stats[Stamina, Regeneration]; } }
+    public float HealthRegeneration { get { return stats[statContainer.Health, statContainer.Regeneration]; } }
+    public float ManaRegeneration { get { return stats[statContainer.Mana, statContainer.Regeneration]; } }
+    public float StaminaRegeneration { get { return stats[statContainer.Stamina, statContainer.Regeneration]; } }
 
 
     //constructors
@@ -31,12 +31,8 @@ public class Entity : Destructible {
         //gameObject.tag = "Entity";
         stats = new statContainer(statContainer.Entity);
         CurrentHealth = maxHealth;
-        _mana = new SecondaryStat();
-        _stamina = new SecondaryStat();
     }
-
-
-
+    
 
     //public methods
     public override void TakeDamage(int damage)
@@ -53,6 +49,6 @@ public class Entity : Destructible {
     {
         //Kill Entity
         Debug.Log("Im hit");
-        Destroy(this.gameObject);//either this isn't working or something isn't going right with weapon collision
+        Destroy(this.gameObject);
     }
 }

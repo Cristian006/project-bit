@@ -5,7 +5,7 @@ public class Enemy : Entity {
 
 	// Use this for initialization
 	void Start () {
-        stats[Health, Max] = 100;
-        stats[Health, Current] = 100;
+        stats[statContainer.Health, statContainer.Max] = 100;
+        stats[statContainer.Health, statContainer.Current] = 100;
     }
 }

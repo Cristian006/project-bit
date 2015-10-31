@@ -6,27 +6,20 @@ using System.Collections;
 /// </summary>
 public class Destructible : MonoBehaviour
 {
-    //identity strings
-    protected string Max { get { return "Max"; } }
-    protected string Current { get { return "Current"; } }
-    protected string Regeneration { get { return "Regeneration"; } }
-    protected string Health { get { return "Health"; } }
-    protected string Mana { get { return "Mana"; } }
-    protected string Stamina { get { return "Stamina"; } }
 
     //stats
     protected statContainer stats;
 
     public int maxHealth
     {
-        protected set { stats[Health,Max] = value; }
-        get { return stats[Health, Max]; }
+        protected set { stats[statContainer.Health, statContainer.Max] = value; }
+        get { return (int)stats[statContainer.Health, statContainer.Max]; }
     }
 
     public int health
     {
-        protected set { stats[Health, Current] = value; }
-        get { return stats[Health, Current]; }
+        protected set { stats[statContainer.Health, statContainer.Current] = value; }
+        get { return (int)stats[statContainer.Health, statContainer.Current]; }
     }
 
     // Use this for initialization

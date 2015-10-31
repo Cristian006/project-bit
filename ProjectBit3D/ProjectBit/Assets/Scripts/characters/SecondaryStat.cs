@@ -3,10 +3,37 @@ using System.Collections;
 
 public class SecondaryStat{
 
-    private string name;
+    private string _name;
     private int _max;
     private int _current;
     private float _regeneration;
+
+
+    public string Name { get { return _name; } }
+
+    public float this[string name]
+    {
+        get {
+            switch (name)
+            {
+                case statContainer.Max: return Max;
+                case statContainer.Current: return Current;
+                case statContainer.Regeneration: return Regeneration;
+            }
+            return -1;
+        }
+        set
+        {
+            switch (name)
+            {
+                case statContainer.Max: Max = (int)value; break;
+                case statContainer.Current: Current = (int)Mathf.Clamp(value, 0, Max); break;
+                case statContainer.Regeneration: Regeneration = value; break;
+            }
+        }
+    }
+
+
 
     public int Max
     {
@@ -27,7 +54,7 @@ public class SecondaryStat{
 
 
     public SecondaryStat(string name) {
-        this.name = name;
+        this._name = name;
 	}
 	
 	// Update is called once per frame

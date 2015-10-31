@@ -3,13 +3,12 @@ using System.Collections;
 
 public class statContainer{
     //Constants
-    static float STRCONS = 100;
-    static float INTCONS = 100;
-    static float AGICONS = 100;
-    static float ENDCONS = 100;
-    static float CONCONS = 100;
-    static float WISCONS = 100;
-
+    const float STRCONS = 100;
+    const float INTCONS = 100;
+    const float AGICONS = 100;
+    const float ENDCONS = 100;
+    const float CONCONS = 100;
+    const float WISCONS = 100;
 
     //Type Constants
     //stat types
@@ -20,9 +19,14 @@ public class statContainer{
     public static string Endurance { get { return "dex"; } }
     public static string Wisdom { get { return "wis"; } }
 
+    public static string Level { get { return "lev"; } }
+    //Derived attributes
     public static string Health { get { return "HP"; } }
     public static string Mana { get { return "MP"; } }
     public static string Stamina { get { return "Stam"; } }
+    public const string Max = "max";
+    public const string Current = "current";
+    public const string Regeneration = "regen";
 
     //attatch type
     public static string Entity { get { return "entity"; } }
@@ -37,8 +41,8 @@ public class statContainer{
 
     //attributes
     private string Type;
-    private namedStat[] attributeList;
-    private SecondaryStat[] statList;
+    private namedStat[] StatList;
+    private SecondaryStat[] AttributeList;
 
 
     //stats
@@ -57,27 +61,33 @@ public class statContainer{
     {
         if (type == statContainer.Destructible) constructDestructible();
         if (type == statContainer.Entity) constructEntity();
-        sortAttribute();
+        if (AttributeList.Length == 0) { AttributeList = new SecondaryStat[1]; AttributeList[0] = new SecondaryStat(Health); }
+        sortStats();
     }
 
     private void constructDestructible()
     {
+        AttributeList = new SecondaryStat[1];
+        AttributeList[0] = new SecondaryStat(Health);
+        StatList = new namedStat[1];
+        StatList[0] = new namedStat(Strength);
 
     }
     
     private void constructEntity()
     {
-        statList = new SecondaryStat[3];
-        statList[0] = new SecondaryStat(statContainer.Health);
-        statList[1] = new SecondaryStat(statContainer.Mana);
-        statList[2] = new SecondaryStat(statContainer.Stamina);
-        attributeList = new namedStat[6];
-        attributeList[0] = new namedStat(statContainer.Strength);
-        attributeList[1] = new namedStat(statContainer.Intelligence);
-        attributeList[2] = new namedStat(statContainer.Agility);
-        attributeList[3] = new namedStat(statContainer.Endurance);
-        attributeList[4] = new namedStat(statContainer.Constitution);
-        attributeList[5] = new namedStat(statContainer.Wisdom);
+        AttributeList = new SecondaryStat[3];
+        AttributeList[0] = new SecondaryStat(Health);
+        AttributeList[1] = new SecondaryStat(Mana);
+        AttributeList[2] = new SecondaryStat(Stamina);
+        StatList = new namedStat[7];
+        StatList[0] = new namedStat(Strength);
+        StatList[1] = new namedStat(Intelligence);
+        StatList[2] = new namedStat(Agility);
+        StatList[3] = new namedStat(Endurance);
+        StatList[4] = new namedStat(Constitution);
+        StatList[5] = new namedStat(Wisdom);
+        StatList[6] = new namedStat(Level);
     }
 
 
@@ -89,46 +99,28 @@ public class statContainer{
     }
 
     
-    public int this[string stat,string part]
+    public float this[string stat,string part]
     {
         get
         {
-            switch (stat)
+            for (int i = 0; i < AttributeList.Length; i++)
             {
-                case "Health": return partChooser(health, part);
-                case "Mana": return partChooser(mana, part);
-                case "Stamina": return partChooser(stamina, part);
+                if (AttributeList[i].Name == stat)
+                {
+                    return AttributeList[i][part];
+                }
             }
             return -1;
         }
         set
         {
-            switch (stat)
+            for (int i = 0; i < AttributeList.Length; i++)
             {
-                case "Health": partSetter(health, part,value); break;
-                case "Mana": partSetter(mana, part,value); break;
-                case "Stamina": partSetter(stamina, part,value);break;
+                if (AttributeList[i].Name == stat)
+                {
+                    AttributeList[i][part] = value;
+                }
             }
-        }
-    }
-
-    private int partChooser(SecondaryStat stat,string part)
-    {
-        switch (part)
-        {
-            case "Max": return stat.Max;
-            case "Current": return stat.Current;
-            case "Regeneration": return (int)stat.Regeneration;
-        }
-        return -1;
-    }
-    private void partSetter(SecondaryStat stat,string part,int value)
-    {
-        switch (part)
-        {
-            case "Max": stat.Max=value; break;
-            case "Current": stat.Current=value; break;
-            case "Regeneration": stat.Regeneration=value; break;
         }
     }
 
@@ -137,16 +129,16 @@ public class statContainer{
     {
         int n = 0;
         int min = 0;
-        int max = attributeList.Length;
+        int max = StatList.Length;
         while(n!= min || n!=max)
         {
             n = (min + max) / 2;
             if (min + 1 == max)
-                if (attributeList[max].Name.CompareTo(name) == 0)
-                    return attributeList[n];
-            int pos = attributeList[n].Name.CompareTo(name);
+                if (StatList[max].Name.CompareTo(name) == 0)
+                    return StatList[n];
+            int pos = StatList[n].Name.CompareTo(name);
             if (pos == 0)
-                return attributeList[n];
+                return StatList[n];
             if (pos < 0)
                 min = n;
             else
@@ -156,12 +148,13 @@ public class statContainer{
     }
 
 
-    private void sortAttribute()//heapsorts the attribute list
+    private void sortStats()//heapsorts the attribute list
     {
-        int length = attributeList.Length;
+        int length = StatList.Length;
+        if (length == 0) return;
         for (int i = length / 2; i > 0; i--)
             heap(i, length);
-        for (int i = length; i > 0; i--)
+        for (int i = length-1; i > 0; i--)
         {
             swapAttribute(i, 0);
             heap(0, i);
@@ -174,31 +167,23 @@ public class statContainer{
         {
             if (i * 2 + 1 < l)
             {
-                if (attributeList[i * 2].Name.CompareTo(attributeList[i * 2 + 1]) > 0)
+                if (StatList[i * 2].Name.CompareTo(StatList[i * 2 + 1].Name) > 0)
                 {
-                    if (attributeList[i].Name.CompareTo(attributeList[i * 2 + 1]) > 0)
+                    if (StatList[i].Name.CompareTo(StatList[i * 2 + 1].Name) > 0)
                     {
                         swapAttribute(i, i * 2 + 1);
                         heap(i * 2 + 1, l);
                     }
                 }
                 else
-                    if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
+                    if (StatList[i].Name.CompareTo(StatList[i * 2].Name) > 0)
                 {
                     swapAttribute(i, i * 2);
                     heap(i * 2, l);
                 }
             }
             else
-                if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
-            {
-                swapAttribute(i, i * 2);
-                heap(i * 2, l);
-            }
-        }
-        else
-        {
-            if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
+                if (StatList[i].Name.CompareTo(StatList[i * 2].Name) > 0)
             {
                 swapAttribute(i, i * 2);
                 heap(i * 2, l);
@@ -208,9 +193,9 @@ public class statContainer{
 
     private void swapAttribute(int i, int j)
     {
-        namedStat h = attributeList[i];
-        attributeList[i] = attributeList[j];
-        attributeList[j] = h;
+        namedStat h = StatList[i];
+        StatList[i] = StatList[j];
+        StatList[j] = h;
     }
 
 

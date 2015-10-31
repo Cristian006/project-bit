@@ -50,8 +50,6 @@ public class Weapon : Destructible
     //if no armor just damage entity
     void OnTriggerEnter(Collider armor)
     {
-       
-        //The Important part
         Destructible[] list = armor.gameObject.GetComponents<Destructible>();
         //Debug.Log("hit#"+hitCount+"items" + list.Length);
         for (int i = 0; i < list.Length; i++)
