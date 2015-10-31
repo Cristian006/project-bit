@@ -29,7 +29,7 @@ public class Entity : Destructible {
     void Awake()
     {
         //gameObject.tag = "Entity";
-        stats = new statContainer("Entity");
+        stats = new statContainer(statContainer.Entity);
         CurrentHealth = maxHealth;
         _mana = new SecondaryStat();
         _stamina = new SecondaryStat();

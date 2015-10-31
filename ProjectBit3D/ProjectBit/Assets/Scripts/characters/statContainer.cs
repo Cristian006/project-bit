@@ -10,12 +10,36 @@ public class statContainer{
     static float CONCONS = 100;
     static float WISCONS = 100;
 
+
+    //Type Constants
+    //stat types
+    public static string Strength { get { return "str"; } }
+    public static string Intelligence { get { return "int"; } }
+    public static string Agility { get { return "agi"; } }
+    public static string Constitution { get { return "con"; } }
+    public static string Endurance { get { return "dex"; } }
+    public static string Wisdom { get { return "wis"; } }
+
+    public static string Health { get { return "HP"; } }
+    public static string Mana { get { return "MP"; } }
+    public static string Stamina { get { return "Stam"; } }
+
+    //attatch type
+    public static string Entity { get { return "entity"; } }
+    public static string Destructible { get { return "destructible"; } }
+    public static string Weapon { get { return "weapon"; } }
+
+
+
     //misc
     private int atrPoints;
 
 
     //attributes
+    private string Type;
     private namedStat[] attributeList;
+    private SecondaryStat[] statList;
+
 
     //stats
     private SecondaryStat health; //holds health information
@@ -29,34 +53,31 @@ public class statContainer{
 
 
     //constructors
-    public statContainer()
-    {
-        attributeList = null;
-        health= new SecondaryStat();
-        mana = new SecondaryStat();
-        stamina = new SecondaryStat();
-    }
-
     public statContainer(string type)
     {
-        health = new SecondaryStat();
-        mana = new SecondaryStat();
-        stamina = new SecondaryStat();
-        if (type == "entity")
-        {
-            constructEntity();
-        }
+        if (type == statContainer.Destructible) constructDestructible();
+        if (type == statContainer.Entity) constructEntity();
+        sortAttribute();
+    }
+
+    private void constructDestructible()
+    {
+
     }
     
     private void constructEntity()
     {
+        statList = new SecondaryStat[3];
+        statList[0] = new SecondaryStat(statContainer.Health);
+        statList[1] = new SecondaryStat(statContainer.Mana);
+        statList[2] = new SecondaryStat(statContainer.Stamina);
         attributeList = new namedStat[6];
-        attributeList[0] = new namedStat("Strength");
-        attributeList[1] = new namedStat("Intelligence");
-        attributeList[2] = new namedStat("Agility");
-        attributeList[3] = new namedStat("Dexterity");
-        attributeList[4] = new namedStat("Constitution");
-        attributeList[5] = new namedStat("Wisdom");
+        attributeList[0] = new namedStat(statContainer.Strength);
+        attributeList[1] = new namedStat(statContainer.Intelligence);
+        attributeList[2] = new namedStat(statContainer.Agility);
+        attributeList[3] = new namedStat(statContainer.Endurance);
+        attributeList[4] = new namedStat(statContainer.Constitution);
+        attributeList[5] = new namedStat(statContainer.Wisdom);
     }
 
 
@@ -134,21 +155,23 @@ public class statContainer{
         return new namedStat("error",-1);
     }
 
+
     private void sortAttribute()//heapsorts the attribute list
     {
         int length = attributeList.Length;
-        for(int i = length/2; i > 0; i--)
+        for (int i = length / 2; i > 0; i--)
             heap(i, length);
-        for(int i = length; i > 0; i--)
+        for (int i = length; i > 0; i--)
         {
             swapAttribute(i, 0);
             heap(0, i);
         }
     }
 
-    private void heap(int i,int l)
+    private void heap(int i, int l)
     {
-        if (i * 2 < l) {
+        if (i * 2 < l)
+        {
             if (i * 2 + 1 < l)
             {
                 if (attributeList[i * 2].Name.CompareTo(attributeList[i * 2 + 1]) > 0)
@@ -161,17 +184,17 @@ public class statContainer{
                 }
                 else
                     if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
-                    {
-                        swapAttribute(i, i * 2);
-                        heap(i * 2, l);
-                    }
-            }
-            else
-                if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
                 {
                     swapAttribute(i, i * 2);
                     heap(i * 2, l);
                 }
+            }
+            else
+                if (attributeList[i].Name.CompareTo(attributeList[i * 2]) > 0)
+            {
+                swapAttribute(i, i * 2);
+                heap(i * 2, l);
+            }
         }
         else
         {

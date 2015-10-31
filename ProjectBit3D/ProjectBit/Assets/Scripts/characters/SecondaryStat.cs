@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SecondaryStat{
 
-
+    private string name;
     private int _max;
     private int _current;
     private float _regeneration;
@@ -26,10 +26,8 @@ public class SecondaryStat{
 
 
 
-    void Start () {
-        _max = 0;
-        _current = 0;
-        _regeneration = 0;
+    public SecondaryStat(string name) {
+        this.name = name;
 	}
 	
 	// Update is called once per frame
