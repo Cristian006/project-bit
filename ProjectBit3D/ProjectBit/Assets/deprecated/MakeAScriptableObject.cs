@@ -1,9 +1,9 @@
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections;
 
 public class MakeAScriptableObject {
-    [MenuItem("Assets/Create/GridScriptableObject")]
+   /* [MenuItem("Assets/Create/GridScriptableObject")]
 	public static void CreateMyAsset()
     {
         GridScriptableObjectClass asset = ScriptableObject.CreateInstance<GridScriptableObjectClass>();
@@ -11,4 +11,5 @@ public class MakeAScriptableObject {
         AssetDatabase.SaveAssets();
         EditorUtility.FocusProjectWindow();
     }
+    */
 }

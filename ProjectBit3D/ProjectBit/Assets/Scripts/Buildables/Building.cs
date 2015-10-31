@@ -52,8 +52,11 @@ public class Building : Selectable
         Selected
     }
 
+    [HideInInspector]
     public PositionState currentPositionState = new PositionState();
+    [HideInInspector]
     public BuildingState currentBuildingState = new BuildingState();
+    [HideInInspector]
     public SelectionState selectedState = new SelectionState();
 
     void Awake()
@@ -63,7 +66,7 @@ public class Building : Selectable
     }
 
     void Start()
-    {
+    { 
         cam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
     }
 
@@ -72,25 +75,33 @@ public class Building : Selectable
     {
         Vector3 CurrentPos = transform.position;
         transform.position = new Vector3(Mathf.RoundToInt(CurrentPos.x), CurrentPos.y, Mathf.RoundToInt(CurrentPos.z));
-        
-        if(currentBuildingState == BuildingState.Placed)
+
+
+        if(currentBuildingState == BuildingState.Moving)
         {
+            CheckState();
+
+            if (currentPositionState == PositionState.Possible)
+            {
+                Debug.Log("ChangeColortoGreen");
+                ChangeColor(2);
+            }
+            else if (currentPositionState == PositionState.NotPossible)
+            {
+                Debug.Log("ChangeColortoRed");
+                ChangeColor(3);
+            }
+        }
+        else if (currentBuildingState == BuildingState.Placed)
+        {
+
+            Debug.Log("ChangeColorToNormal");
             ChangeColor(1);
         }
-        else if (currentPositionState == PositionState.Possible)
-        {
-            ChangeColor(2);
-        }
-        else if (currentPositionState == PositionState.NotPossible)
-        {
-            ChangeColor(3);
-        }
-
     }
 
     public void CheckState()
     {
-        
         if (colliders.Count > 0)
         {
             currentPositionState = PositionState.NotPossible;
@@ -147,7 +158,9 @@ public class Building : Selectable
     public void ChangeColor(int color)
     {
         foreach (Transform child in transform)
+        {
             changing(child.gameObject, color);
+        }
     }
 
     public void changing(GameObject c, int color)
@@ -160,7 +173,7 @@ public class Building : Selectable
                 break;
             //green
             case 2:
-                c.GetComponent<Renderer>().material.color = Color.yellow;
+                c.GetComponent<Renderer>().material.color = Color.green;
                 break;
             //red
             case 3:

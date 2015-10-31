@@ -21,8 +21,6 @@ public class MovementMotor : MonoBehaviour
         get { return rotation; }
     }
 
-
-
     void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody>();

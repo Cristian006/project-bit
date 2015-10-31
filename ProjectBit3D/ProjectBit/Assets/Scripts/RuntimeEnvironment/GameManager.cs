@@ -6,9 +6,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject PlayerPrefab;
 
-    public GameObject[,] GridFloor;
-
-    public GridGenerator gg;
+    //public GameObject[,] GridFloor;
+    //public GridGenerator gg;
 
     [HideInInspector]
     public GameObject player;
@@ -42,8 +41,9 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        GetComponent<GridGenerator>().GenerateGrid();
-        GridFloor = GetComponent<GridGenerator>().gridArray;
+        //IF WE NEED THE GRID ARRAY BUT AS OF NOW WE KIND OF DONT.
+        //GetComponent<GridGenerator>().GenerateGrid();
+        //GridFloor = GetComponent<GridGenerator>().gridArray;
         gm = this;
         player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
     }

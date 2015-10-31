@@ -33,6 +33,7 @@ using Pathfinding.RVO;
  * it will use Transform.Translate which is guaranteed to always work.
  */
 [RequireComponent(typeof(Seeker))]
+
 [AddComponentMenu("Pathfinding/AI/AIPath (generic)")]
 public class AIPath : MonoBehaviour {
 

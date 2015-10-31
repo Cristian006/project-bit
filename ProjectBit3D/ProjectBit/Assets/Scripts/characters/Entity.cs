@@ -49,7 +49,7 @@ public class Entity : Destructible {
         }
     }
 
-    public void Death()
+    public virtual void Death()
     {
         //Kill Entity
         Debug.Log("Im hit");

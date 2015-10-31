@@ -1,0 +1,374 @@
+Initialize engine version: 5.2.1f1 (44735ea161b3)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 850M       (ID=0x1391)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+Default GameObject Tag: Player already registered
+ 
+(Filename:  Line: 88)
+
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\ES2.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\ES2.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\MoodkieSecurity.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\MoodkieSecurity.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\Pathfinding.Ionic.Zip.Reduced.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\Pathfinding.Ionic.Zip.Reduced.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\Pathfinding.JsonFx.dll (this message is harmless)
+Loading C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\Pathfinding.JsonFx.dll into Unity Child Domain
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.050 seconds
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: C:\Users\Cristian\Documents\GitHub\ProjectBit\ProjectBit3D\ProjectBit\test_Data\Managed\System.dll (this message is harmless)
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 18dc -> priority: 1 
+  Thread -> id: 474c -> priority: 1 
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.157637 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 323.
+Total: 0.224908 ms (FindLiveObjects: 0.021866 ms CreateObjectMapping: 0.016511 ms MarkObjects: 0.177605 ms  DeleteObjects: 0.008478 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.145551 ms
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 13207.
+Total: 2.324942 ms (FindLiveObjects: 0.461418 ms CreateObjectMapping: 0.173589 ms MarkObjects: 1.664944 ms  DeleteObjects: 0.024543 ms)
+
+Path Completed : Computation Time 3.00 ms Searched Nodes 264 Path Length 30
+Path Number 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 232 Path Length 29
+Path Number 2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 163 Path Length 23
+Path Number 3
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 99 Path Length 17
+Path Number 4
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 39 Path Length 11
+Path Number 5
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 12 Path Length 6
+Path Number 6
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 3 Path Length 3
+Path Number 7
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 1.00 ms Searched Nodes 13 Path Length 7
+Path Number 8
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 16 Path Length 6
+Path Number 9
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 15 Path Length 6
+Path Number 10
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 12 Path Length 5
+Path Number 11
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 10 Path Length 5
+Path Number 12
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 12 Path Length 7
+Path Number 13
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 10 Path Length 6
+Path Number 14
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 7 Path Length 3
+Path Number 15
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 16 Path Length 6
+Path Number 16
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 19 Path Length 6
+Path Number 17
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 22 Path Length 6
+Path Number 18
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 19
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:100
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 4 Path Length 3
+Path Number 20
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 4 Path Length 3
+Path Number 21
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:90
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:80
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 22
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:70
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 23
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:60
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 1.02 ms Searched Nodes 2 Path Length 2
+Path Number 24
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:50
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 6 Path Length 3
+Path Number 25
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 9 Path Length 5
+Path Number 26
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 6 Path Length 4
+Path Number 27
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 5 Path Length 3
+Path Number 28
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:40
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 3 Path Length 3
+Path Number 29
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 30
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:30
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:20
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 31
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:10
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Im hit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.963858 ms
+
+Unloading 196 unused Assets to reduce memory usage. Loaded Objects now: 396.
+Total: 1.111152 ms (FindLiveObjects: 0.018742 ms CreateObjectMapping: 0.024097 ms MarkObjects: 0.650180 ms  DeleteObjects: 0.417686 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.576996 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 455.
+Total: 0.886244 ms (FindLiveObjects: 0.039269 ms CreateObjectMapping: 0.015172 ms MarkObjects: 0.825109 ms  DeleteObjects: 0.006247 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.574764 ms
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 393.
+Total: 0.737198 ms (FindLiveObjects: 0.022758 ms CreateObjectMapping: 0.014726 ms MarkObjects: 0.691681 ms  DeleteObjects: 0.008032 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.609572 ms
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 13237.
+Total: 2.776543 ms (FindLiveObjects: 0.438213 ms CreateObjectMapping: 0.125841 ms MarkObjects: 2.187944 ms  DeleteObjects: 0.023651 ms)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 264 Path Length 30
+Path Number 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 232 Path Length 29
+Path Number 2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 163 Path Length 23
+Path Number 3
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 99 Path Length 17
+Path Number 4
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 39 Path Length 11
+Path Number 5
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 4 Path Length 4
+Path Number 6
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:100
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 7
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:90
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 8
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:80
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:70
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 9
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:60
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:50
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 10
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:40
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:30
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:20
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Path Completed : Computation Time 0.00 ms Searched Nodes 2 Path Length 2
+Path Number 11
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+EnemyCurrent Health:10
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Im hit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+

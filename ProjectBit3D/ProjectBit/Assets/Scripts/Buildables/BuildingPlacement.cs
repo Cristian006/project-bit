@@ -15,8 +15,6 @@ public class BuildingPlacement : MonoBehaviour
     void Update()
     {
         Vector3 p = GameManager.gm.mousePos;
-        Debug.Log(hasPlaced);
-        Debug.Log(currentBuilding);
 
         if (currentBuilding != null && !hasPlaced)
         {
@@ -25,7 +23,6 @@ public class BuildingPlacement : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                currentBuilding.GetComponent<Building>().CheckState();
                 if (currentBuilding.GetComponent<Building>().currentPositionState == Building.PositionState.Possible)
                 {
                     hasPlaced = true;

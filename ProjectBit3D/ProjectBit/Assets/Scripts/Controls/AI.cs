@@ -33,7 +33,6 @@ public class AI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         //controller = GetComponent<CharacterController>();
         targetPosition = GameObject.FindGameObjectWithTag("Player").transform;
-        Debug.Log(targetPosition.position);
         //Start a new path to the targetPosition, return the result to the OnPathComplete function
         seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);
     }
@@ -50,8 +49,10 @@ public class AI : MonoBehaviour
     }
     public void Update()
     {
-
-        transform.LookAt(targetPosition);
+        if (Vector3.Distance(transform.position, targetPosition.position) <= attackDist)
+        {
+            attack.attack();
+        }
         if (path == null)
         {
             //We have no path to move after yet
@@ -75,11 +76,7 @@ public class AI : MonoBehaviour
             currentWaypoint++;
             return;
         }
-
-        if(Vector3.Distance(transform.position, targetPosition.position) <= attackDist)
-        {
-            attack.attack();
-        }
+        
     }
 
 }

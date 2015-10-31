@@ -15,10 +15,19 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if(myCam!=null)
         {
-            Switch();
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                Switch();
+            }
         }
+        else
+        {
+            WorldCam.gameObject.SetActive(true);   
+        }
+        
+
     }
 
     public void Switch()
