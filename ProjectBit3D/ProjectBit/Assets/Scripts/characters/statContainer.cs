@@ -59,9 +59,15 @@ public class statContainer{
     //constructors
     public statContainer(string type)
     {
+        AttributeList = new SecondaryStat[0];
+        StatList = new namedStat[0];
         if (type == statContainer.Destructible) constructDestructible();
         if (type == statContainer.Entity) constructEntity();
-        if (AttributeList.Length == 0) { AttributeList = new SecondaryStat[1]; AttributeList[0] = new SecondaryStat(Health); }
+        if (AttributeList.Length == 0)
+        {
+            AttributeList = new SecondaryStat[1];
+            AttributeList[0] = new SecondaryStat(Health);
+        }
         sortStats();
     }
 
