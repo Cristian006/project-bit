@@ -12,14 +12,14 @@ public class statContainer{
 
     //Type Constants
     //stat types
-    public static string Strength { get { return "str"; } }
-    public static string Intelligence { get { return "int"; } }
-    public static string Agility { get { return "agi"; } }
-    public static string Constitution { get { return "con"; } }
-    public static string Endurance { get { return "dex"; } }
-    public static string Wisdom { get { return "wis"; } }
+    public const string Strength ="str";
+    public const string Intelligence = "int";
+    public const string Agility = "agi";
+    public const string Constitution = "con";
+    public const string Endurance = "dex";
+    public const string Wisdom = "wis";
 
-    public static string Level { get { return "lev"; } }
+    public const string Level = "lev";
     //Derived attributes
     public static string Health { get { return "HP"; } }
     public static string Mana { get { return "MP"; } }
