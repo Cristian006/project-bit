@@ -10,6 +10,8 @@ public class Building : Selectable
    // private bool isSelected;
     public string bName;
 
+    public GameObject BuildingPlatform;
+
     Renderer rend;
     Color normal;
 
@@ -19,7 +21,6 @@ public class Building : Selectable
         {
             GUI.Button(new Rect(Screen.width / 2, Screen.height / 20, 100, 30), bName);
         }
-
     }
 
     Camera cam;
@@ -157,29 +158,20 @@ public class Building : Selectable
 
     public void ChangeColor(int color)
     {
-        foreach (Transform child in transform)
-        {
-            changing(child.gameObject, color);
-        }
-    }
-
-    public void changing(GameObject c, int color)
-    {
         switch (color)
         {
             //normal color
             case 1:
-                c.GetComponent<Renderer>().material.color = normal;
+                BuildingPlatform.SetActive(false);
                 break;
             //green
             case 2:
-                c.GetComponent<Renderer>().material.color = Color.green;
+                BuildingPlatform.GetComponent<Renderer>().material.color = Color.green;
                 break;
             //red
             case 3:
-                c.GetComponent<Renderer>().material.color = Color.red;
+                BuildingPlatform.GetComponent<Renderer>().material.color = Color.red;
                 break;
         }
-
     }
 }

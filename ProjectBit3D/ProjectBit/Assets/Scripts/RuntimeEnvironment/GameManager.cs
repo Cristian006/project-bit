@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         //GridFloor = GetComponent<GridGenerator>().gridArray;
         gm = this;
         player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+        
     }
     // Use this for initialization
     void Start()

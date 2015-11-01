@@ -10,7 +10,14 @@ public class CameraControl : MonoBehaviour
     {
         WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
         myCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        WorldCam.gameObject.SetActive(false);
+        if(GameManager.gm.Mobile())
+        {
+            Destroy(WorldCam);
+        }
+        else
+        {
+            WorldCam.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -26,8 +33,6 @@ public class CameraControl : MonoBehaviour
         {
             WorldCam.gameObject.SetActive(true);   
         }
-        
-
     }
 
     public void Switch()
