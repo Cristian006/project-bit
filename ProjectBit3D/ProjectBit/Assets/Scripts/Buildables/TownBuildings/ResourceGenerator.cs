@@ -4,7 +4,7 @@ using System.Collections;
 public class ResourceGenerator : Building
 {
     private string type;//resource name
-    private SecondaryStat resource;
+    private RegeneratingResource resource;
 
 
     public string Type //says what type of resource this building makes

@@ -2,16 +2,16 @@
 using System.Collections;
 
 public class namedStat{
-    private string name;
-    private int amount;
+    protected string name;
+    protected int current;
 
-
-    public int Amount
+    //Properties
+    public virtual int Current
     {
-        get { return amount; }
+        get { return current; }
         set
         {
-            amount = value;
+            current = value;
         }
     }
 
@@ -20,18 +20,25 @@ public class namedStat{
     {
         get { return name; }
     }
-    
 
-    public namedStat(string _name)
+
+    //Constructor
+    protected namedStat()
     {
-        name = _name;
-        amount = 0;
+        name = "null";
+        current = 0;
+    }
+    
+    public namedStat(string name)
+    {
+        this.name =name;
+        current = 0;
     }
 
     public namedStat(string _name,int _amount)
     {
         name = _name;
-        amount = _amount;
+        current = _amount;
     }
 
 }

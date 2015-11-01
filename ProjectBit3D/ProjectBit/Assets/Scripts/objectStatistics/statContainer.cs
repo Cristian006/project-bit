@@ -21,9 +21,9 @@ public class statContainer{
 
     public const string Level = "lev";
     //Derived attributes
-    public static string Health { get { return "HP"; } }
-    public static string Mana { get { return "MP"; } }
-    public static string Stamina { get { return "Stam"; } }
+    public const string Health="HP";
+    public const string Mana ="MP";
+    public const string Stamina ="Stam";
     public const string Max = "max";
     public const string Current = "current";
     public const string Regeneration = "regen";
@@ -42,13 +42,13 @@ public class statContainer{
     //attributes
     private string Type;
     private namedStat[] StatList;
-    private SecondaryStat[] AttributeList;
+    private RegeneratingResource[] AttributeList;
 
 
     //stats
-    private SecondaryStat health; //holds health information
-    private SecondaryStat mana;
-    private SecondaryStat stamina;
+    private RegeneratingResource health; //holds health information
+    private RegeneratingResource mana;
+    private RegeneratingResource stamina;
     private float _spd;
     private float _dmg;
     private float _mdmg;
@@ -59,22 +59,22 @@ public class statContainer{
     //constructors
     public statContainer(string type)
     {
-        AttributeList = new SecondaryStat[0];
+        AttributeList = new RegeneratingResource[0];
         StatList = new namedStat[0];
         if (type == statContainer.Destructible) constructDestructible();
         if (type == statContainer.Entity) constructEntity();
         if (AttributeList.Length == 0)
         {
-            AttributeList = new SecondaryStat[1];
-            AttributeList[0] = new SecondaryStat(Health);
+            AttributeList = new RegeneratingResource[1];
+            AttributeList[0] = new RegeneratingResource(Health);
         }
         sortStats();
     }
 
     private void constructDestructible()
     {
-        AttributeList = new SecondaryStat[1];
-        AttributeList[0] = new SecondaryStat(Health);
+        AttributeList = new RegeneratingResource[1];
+        AttributeList[0] = new RegeneratingResource(Health);
         StatList = new namedStat[1];
         StatList[0] = new namedStat(Strength);
 
@@ -82,10 +82,10 @@ public class statContainer{
     
     private void constructEntity()
     {
-        AttributeList = new SecondaryStat[3];
-        AttributeList[0] = new SecondaryStat(Health);
-        AttributeList[1] = new SecondaryStat(Mana);
-        AttributeList[2] = new SecondaryStat(Stamina);
+        AttributeList = new RegeneratingResource[3];
+        AttributeList[0] = new RegeneratingResource(Health);
+        AttributeList[1] = new RegeneratingResource(Mana);
+        AttributeList[2] = new RegeneratingResource(Stamina);
         StatList = new namedStat[7];
         StatList[0] = new namedStat(Strength);
         StatList[1] = new namedStat(Intelligence);
@@ -100,8 +100,8 @@ public class statContainer{
     //properties
     public int this[string attribute]
     {
-        get { return findAttribute(attribute).Amount; }
-        private set { findAttribute(attribute).Amount = value; }
+        get { return findAttribute(attribute).Current; }
+        private set { findAttribute(attribute).Current = value; }
     }
 
     
@@ -208,9 +208,9 @@ public class statContainer{
     //setting
     private void calcStats()
     {
-        health.Max = (int)(this["Constitution"] * CONCONS);
-        mana.Max = (int)(this["Wisdom"] * WISCONS);
-        stamina.Max = (int)(this["Endurance"] * ENDCONS);
+        health.setMax((int)(this["Constitution"] * CONCONS));
+        mana.setMax((int)(this["Wisdom"] * WISCONS));
+        stamina.setMax((int)(this["Endurance"] * ENDCONS));
         _spd = (this["Agility"] * AGICONS);
         _dmg = (this["Strength"] * STRCONS);
         _mdmg = (this["Intelligence"] * INTCONS);

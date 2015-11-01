@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Entity : Destructible {
 
-    private SecondaryStat _mana;
-    private SecondaryStat _stamina;
+    private RegeneratingResource _mana;
+    private RegeneratingResource _stamina;
 
     //Properties
     public int this[string statName]

@@ -23,9 +23,9 @@ public class Destructible : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        stats= new statContainer("Entity");
+        stats= new statContainer("Destructible");
     }
 
     // Update is called once per frame
@@ -33,9 +33,9 @@ public class Destructible : MonoBehaviour
     {
 
     }
+    
 
-    //TODO
-    //handle entity death when health <0;
+
     public virtual void TakeDamage(int damage)
     {
         health -= damage;
