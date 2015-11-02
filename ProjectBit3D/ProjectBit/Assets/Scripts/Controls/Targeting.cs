@@ -1,43 +1,30 @@
 using UnityEngine;
+using System.Collections;
+
+[RequireComponent(typeof(AI))]
 public class Targeting : MonoBehaviour
 {
     Transform buildingLayer;
-    public Entity entity;
     private Building currentBuilding;
 
-    public GameObject target;
-    
+    GameObject target;
+    GameObject PlayerMain;
+
+    public float attackDist;
+
+    public bool foundTarget;
+
+    public bool searchingForTarget = false;
+    float searchTime = 1f;
+    float time;
+
+    AI ai;
+
     void Awake()
     {
-        entity = GetComponent<Entity>();
-        Debug.Log(entity.entityType);
+        ai = GetComponent<AI>();
         buildingLayer = GameObject.FindGameObjectWithTag("BuildingLayer").transform;
-        switch (entity.entityType)
-        {
-            case Entity.EntityType.All:
-                target = FindClosestBuilding();
-                break;
-        }
-    }
-    
-    void Start()
-    {
-        switch (entity.entityType)
-        {
-            case Entity.EntityType.All:
-                target = FindClosestBuilding();
-                break;
-        }
-    }
-
-    void FixedUpdate()
-    {
-        switch (entity.entityType)
-        {
-            case Entity.EntityType.All:
-                target = FindClosestBuilding();
-                break;
-        }
+        PlayerMain = GameObject.FindGameObjectWithTag("Player");
     }
 
     /// <summary>
@@ -60,16 +47,7 @@ public class Targeting : MonoBehaviour
                 currentBuilding = b.GetComponent<Building>();
             }
 
-            Vector2 buildingPos = b.position;
-            float curDistance = (buildingPos - position).sqrMagnitude;
-            if (curDistance < distance)
-            {
-                closest = b.gameObject;                                 //set's the GameObject closest to equal the closest enemy
-                distance = curDistance;                                 //and sets the float variable distance to be the current distance
-            }
-
-            /*
-            if (currentBuilding.health>0)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
+            if (currentBuilding.gameObject.activeInHierarchy)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
             {
                 Vector2 buildingPos = b.position;
                 float curDistance = (buildingPos - position).sqrMagnitude;
@@ -77,22 +55,45 @@ public class Targeting : MonoBehaviour
                 {
                     closest = b.gameObject;                                 //set's the GameObject closest to equal the closest enemy
                     distance = curDistance;                                 //and sets the float variable distance to be the current distance
+                    attackDist = currentBuilding.buildingsize;
                 }
             }
             else
             {
                 continue;       //If the building is dead, continue the iteration but don't exit the loop.
             }
-            */
         }
 
-        if(closest == null)
+        if(closest == null && PlayerMain.activeInHierarchy)
         {
-            return closest = GameObject.FindGameObjectWithTag("Player");
+            foundTarget = true;
+            return closest = PlayerMain;
+        }
+        else if(!PlayerMain.activeInHierarchy && closest == null)
+        {
+            foundTarget = false;
+            return null;
         }
         else
         {
+            foundTarget = true;
             return closest;
+        }
+    }
+
+    public IEnumerator TargetSearch()
+    {
+        GameObject searchResult = FindClosestBuilding();
+        if (searchResult == null)
+        {
+            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(TargetSearch());
+        }
+        else
+        {
+            ai.target = searchResult.transform;
+            searchingForTarget = false;
+            yield break;
         }
     }
 }

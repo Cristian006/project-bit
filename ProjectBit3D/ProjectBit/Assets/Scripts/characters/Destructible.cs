@@ -6,7 +6,6 @@ using System.Collections;
 /// </summary>
 public class Destructible : MonoBehaviour
 {
-
     //stats
     protected statContainer stats;
 
@@ -25,23 +24,20 @@ public class Destructible : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        stats= new statContainer("Destructible");
+        stats = new statContainer("Destructible");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    
-
 
     public virtual void TakeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
-            Destroy(this.gameObject);
+            Death();
         Debug.Log("current health is:"+health);
+    }
+
+    public virtual void Death()
+    {
+        Destroy(this.gameObject);
     }
 
 }

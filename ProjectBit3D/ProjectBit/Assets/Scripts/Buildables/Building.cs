@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Building : Selectable
+public class Building : Destructible
 {
     public int buildingsize = 3;
     
@@ -21,8 +21,6 @@ public class Building : Selectable
             GUI.Button(new Rect(Screen.width / 2, Screen.height / 20, 100, 30), bName);
         }
     }
-
-    Camera cam;
 
     public enum BuildingType
     {                       //EXAMPLES
@@ -76,8 +74,8 @@ public class Building : Selectable
     }
 
     void Start()
-    { 
-        cam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
+    {
+
     }
 
 
@@ -183,4 +181,10 @@ public class Building : Selectable
                 break;
         }
     }
+
+    public override void Death()
+    {
+        gameObject.SetActive(false);
+    }
+
 }

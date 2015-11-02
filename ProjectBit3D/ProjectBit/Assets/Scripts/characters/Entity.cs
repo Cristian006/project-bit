@@ -77,10 +77,10 @@ public class Entity : Destructible
         }
     }
 
-    public virtual void Death()
+    public override void Death()
     {
         //Kill Entity
         Debug.Log("Im hit");
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 }

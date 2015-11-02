@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject PlayerPrefab;
 
+    public GameObject enemy;
+
     //public GameObject[,] GridFloor;
     //public GridGenerator gg;
 
@@ -54,6 +56,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(Screen.width / 30, Screen.height / 15, 100, 30), "ENEMY"))
+        {
+            Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -63,6 +73,7 @@ public class GameManager : MonoBehaviour
         if (plane.Raycast(ray, out distance))
         {
             mousePos = ray.GetPoint(distance);
+            
             Debug.DrawRay(ray.origin, ray.direction * distance, Color.green);
         }
         else

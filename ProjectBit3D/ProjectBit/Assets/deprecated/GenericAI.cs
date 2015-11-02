@@ -142,9 +142,12 @@ public class GenericAI : MonoBehaviour
 	 */
     protected virtual void Start()
     {
+        if (Target.searchingForTarget)
+        {
+            return;
+        }
         startHasRun = true;
         OnEnable();
-        target = Target.target.transform;
     }
 
     /** Run at start and when reenabled.
@@ -305,24 +308,34 @@ public class GenericAI : MonoBehaviour
         return tr.position;
     }
 
-    public virtual void Update()
+    public virtual void FixedUpdate()
     {
-
-        if (!canMove) { return; }
-
-        Vector3 dir = CalculateVelocity(GetFeetPosition());
-
-        //Rotate towards targetDirection (filled in by CalculateVelocity)
-        RotateTowards(targetDirection);
-
-        motor.Velocity = dir;
         
-        //ATTACK
-        if(target!=null)
+        if(Target.searchingForTarget)
         {
-            if (Vector3.Distance(transform.position, target.position) <= attackDist)
+            return;
+        }
+        else if(!Target.searchingForTarget)
+        {
+            //target = Target.target.transform;
+
+            if (!canMove) { return; }
+
+            Vector3 dir = CalculateVelocity(GetFeetPosition());
+
+            //Rotate towards targetDirection (filled in by CalculateVelocity)
+            RotateTowards(targetDirection);
+
+            motor.Velocity = dir;
+
+            //ATTACK
+            if (target != null)
             {
-                Attack.attack();
+                attackDist = Target.attackDist;
+                if (Vector3.Distance(transform.position, target.position) <= attackDist)
+                {
+                    Attack.attack();
+                }
             }
         }
     }
@@ -472,4 +485,6 @@ public class GenericAI : MonoBehaviour
         offset = Mathf.Clamp(offset + closest, 0.0F, 1.0F);
         return (b - a) * offset + a;
     }
+
+    
 }
