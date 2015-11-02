@@ -1,6 +1,38 @@
 using UnityEngine;
 
-public class Entity : Destructible {
+public class Entity : Destructible
+{
+    //Add in all player types here
+    public enum EntityType
+    {
+        /// <summary>
+        /// Priority: Player's Control
+        /// EX: The main character
+        /// </summary>
+        Player,
+        /// <summary>
+        /// Priority: Looting all resources
+        /// EX: Fast but weak troops
+        /// </summary>
+        Resource,
+        /// <summary>
+        /// Priority: Attack all defensive structures
+        /// EX: Tanky troops
+        /// </summary>
+        Defense,
+        /// <summary>
+        /// Priority: Closest
+        /// EX: generic troop
+        /// </summary>
+        All,
+        /// <summary>
+        /// Priority: Blockades, Breaching through enemy Defense walls
+        /// Ex: tanky slow troops
+        /// </summary>
+        Breacher
+    }
+
+    public EntityType entityType = new EntityType();
 
     private RegeneratingResource _mana;
     private RegeneratingResource _stamina;

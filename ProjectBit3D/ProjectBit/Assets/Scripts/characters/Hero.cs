@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class Hero : Entity
 {
+    void Awake()
+    {
+        entityType = EntityType.Player;
+    }
+
     void Start()
     {
         stats = new statContainer(statContainer.Entity);

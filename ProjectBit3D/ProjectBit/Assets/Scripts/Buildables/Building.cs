@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Linq;
 using System.Collections.Generic;
 
 public class Building : Selectable
@@ -24,6 +23,18 @@ public class Building : Selectable
     }
 
     Camera cam;
+
+    public enum BuildingType
+    {                       //EXAMPLES
+        TownHall,           //Heart of the city
+        Defense,            //catapults
+        Blockade,           //walls
+        ResourceGenerator,  //mining building
+        ResourceStorage,    //gold storage room
+        Barrack,            //Troop storage house
+        CivilianHome,       //house
+        BuildersHome        //workers house
+    }
 
     /// <summary>
     /// Is the building moving or placed
@@ -53,6 +64,8 @@ public class Building : Selectable
         Selected
     }
 
+    [HideInInspector]
+    public BuildingType buildingType = new BuildingType();
     [HideInInspector]
     public PositionState currentPositionState = new PositionState();
     [HideInInspector]
