@@ -9,6 +9,8 @@ public class BuildingPlacement : MonoBehaviour
 
     public LayerMask buildingsMask;
 
+    public GameObject BuildingLayer;
+
     private Building placeableBuildingOld;
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class BuildingPlacement : MonoBehaviour
                 if (currentBuilding.GetComponent<Building>().currentPositionState == Building.PositionState.Possible)
                 {
                     hasPlaced = true;
+                    currentBuilding.SetParent(BuildingLayer.transform, true);
                     currentBuilding.GetComponent<Building>().currentBuildingState = Building.BuildingState.Placed;
                 }
             }
