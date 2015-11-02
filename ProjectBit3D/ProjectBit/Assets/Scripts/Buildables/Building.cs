@@ -63,14 +63,10 @@ public class Building : Selectable
         UnSelected,
         Selected
     }
-
-    [HideInInspector]
+    
     public BuildingType buildingType = new BuildingType();
-    [HideInInspector]
     public PositionState currentPositionState = new PositionState();
-    [HideInInspector]
     public BuildingState currentBuildingState = new BuildingState();
-    [HideInInspector]
     public SelectionState selectedState = new SelectionState();
 
     void Awake()

@@ -6,6 +6,7 @@ using Pathfinding;
 [RequireComponent(typeof(Seeker))]
 [RequireComponent(typeof(MovementMotor))]
 [RequireComponent(typeof(Attack))]
+[RequireComponent(typeof(Targeting))]
 public class GenericAI : MonoBehaviour
 {
     /** Determines how often it will search for new paths.
@@ -88,6 +89,8 @@ public class GenericAI : MonoBehaviour
     /** Cached MovementMotor component */
     protected Attack Attack;
 
+    protected Targeting Target;
+
     /** Current index in the path which is current target */
     protected int currentWaypointIndex = 0;
 
@@ -125,7 +128,7 @@ public class GenericAI : MonoBehaviour
     protected virtual void Awake()
     {
         seeker = GetComponent<Seeker>();
-
+        Target = GetComponent<Targeting>();
         //This is a simple optimization, cache the transform component lookup
         tr = transform;
         motor = GetComponent<MovementMotor>();
@@ -139,10 +142,9 @@ public class GenericAI : MonoBehaviour
 	 */
     protected virtual void Start()
     {
-        
-        target = GameObject.FindGameObjectWithTag("Player").transform;
         startHasRun = true;
         OnEnable();
+        target = Target.target.transform;
     }
 
     /** Run at start and when reenabled.
