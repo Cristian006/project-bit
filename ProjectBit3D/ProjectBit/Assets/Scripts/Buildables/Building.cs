@@ -22,6 +22,14 @@ public class Building : Destructible
         }
     }
 
+    public enum GeneralType
+    {
+        Building,       //townhall/barracks/buildershuts/civilianbuildings
+        Blockade,       //walls
+        Defence,        //catepults
+        Resource        //resource generator, resource storage
+    }
+
     public enum BuildingType
     {                       //EXAMPLES
         TownHall,           //Heart of the city
@@ -40,8 +48,7 @@ public class Building : Destructible
     public enum BuildingState
     {
         Moving,         //Moving / Repositioning
-        Placed         //Set on ground
-                 
+        Placed         //Set on ground             
     }
 
     /// <summary>
@@ -61,7 +68,8 @@ public class Building : Destructible
         UnSelected,
         Selected
     }
-    
+
+    public GeneralType generalType = new GeneralType();
     public BuildingType buildingType = new BuildingType();
     public PositionState currentPositionState = new PositionState();
     public BuildingState currentBuildingState = new BuildingState();

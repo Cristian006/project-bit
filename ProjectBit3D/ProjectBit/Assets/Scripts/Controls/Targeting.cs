@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(AI))]
 public class Targeting : MonoBehaviour
@@ -10,21 +11,106 @@ public class Targeting : MonoBehaviour
     GameObject target;
     GameObject PlayerMain;
 
-    public float attackDist;
-
-    public bool foundTarget;
-
-    public bool searchingForTarget = false;
-    float searchTime = 1f;
-    float time;
-
     AI ai;
 
-    void Awake()
+    public float attackDist;
+    public bool searchingForTarget = false;
+
+    private List<GameObject> primaryTargetList;
+
+    public void InIt()
     {
+        //REFRENCES
         ai = GetComponent<AI>();
         buildingLayer = GameObject.FindGameObjectWithTag("BuildingLayer").transform;
-        PlayerMain = GameObject.FindGameObjectWithTag("Player");
+        //PRIMARY TARGETS
+        primaryTargetList = new List<GameObject>();
+
+        switch(ai.entity.entityType)
+        {
+            case Entity.EntityType.Player:
+                //player ai targeting system
+                break;
+            case Entity.EntityType.Resource:
+                MakePrimaryList(Building.GeneralType.Resource);
+                break;
+            case Entity.EntityType.Defense:
+                MakePrimaryList(Building.GeneralType.Defence);
+                break;
+            case Entity.EntityType.All:
+                FindNearestStructure();
+                break;
+            case Entity.EntityType.Breacher:
+                //FindNearestBlockades();
+                break;
+            case Entity.EntityType.Troops:
+                //FindNearestDefendingUnit();
+                break;
+        }
+    }
+
+    public void MakePrimaryList(Building.GeneralType generalType)
+    {
+        currentBuilding = null;
+        foreach(Transform b in buildingLayer)
+        {
+            if (b.GetComponent<Building>().generalType == generalType)
+            {
+                primaryTargetList.Add(b.gameObject);
+            }
+        }
+        
+        if(primaryTargetList.Count>0)
+        {
+            FindNearestPrimaryTarget();
+        }
+        else
+        {
+            FindNearestStructure();
+        }
+    }
+    
+    void FindNearestPrimaryTarget()
+    {
+        GameObject t = null;
+        t = FindClosestPrimaryTarget();
+        if(t==null)
+        {
+            FindNearestStructure();
+        }
+        else
+        {
+            ai.target = t.transform;
+        }
+    }
+
+    void FindNearestStructure()
+    {
+        GameObject t = null;
+        t = FindClosestStructure();
+        if (t == null)
+        {
+            t = GameManager.gm.player;
+            if(t==null)
+            {
+                //BEGIN TO ROAM AROUND
+            }
+            else
+            {
+                ai.target = t.transform;
+            }
+        }
+
+    }
+
+    GameObject FindClosestPrimaryTarget()
+    {
+        return null;
+    }
+
+    GameObject FindClosestStructure()
+    {
+        return null;
     }
 
     /// <summary>
@@ -38,16 +124,20 @@ public class Targeting : MonoBehaviour
         Vector2 position = transform.position;
         foreach (Transform b in buildingLayer)
         {
-            if (b.gameObject.name == "BuildingLayer")
-            {
-                continue;
-            }
-            else
-            {
-                currentBuilding = b.GetComponent<Building>();
-            }
+            /* if (b.gameObject.name == "BuildingLayer")
+             {
+                 Debug.LogWarning("ParentFound");
+                 continue;
+             }
+             else
+             {
+                 Debug.LogWarning("ActualBuildingFound");
 
-            if (currentBuilding.gameObject.activeInHierarchy)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
+             }
+             */
+            currentBuilding = b.GetComponent<Building>();
+
+            if (currentBuilding.health > 0)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
             {
                 Vector2 buildingPos = b.position;
                 float curDistance = (buildingPos - position).sqrMagnitude;
@@ -64,19 +154,16 @@ public class Targeting : MonoBehaviour
             }
         }
 
-        if(closest == null && PlayerMain.activeInHierarchy)
+        if (closest == null && PlayerMain.activeInHierarchy)
         {
-            foundTarget = true;
             return closest = PlayerMain;
         }
-        else if(!PlayerMain.activeInHierarchy && closest == null)
+        else if (!PlayerMain.activeInHierarchy && closest == null)
         {
-            foundTarget = false;
             return null;
         }
         else
         {
-            foundTarget = true;
             return closest;
         }
     }

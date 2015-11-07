@@ -11,7 +11,7 @@ public class Entity : Destructible
         /// </summary>
         Player,
         /// <summary>
-        /// Priority: Looting all resources
+        /// Priority: attack resource buildings, looting all resources
         /// EX: Fast but weak troops
         /// </summary>
         Resource,
@@ -21,15 +21,19 @@ public class Entity : Destructible
         /// </summary>
         Defense,
         /// <summary>
-        /// Priority: Closest
+        /// Priority: attack closest
         /// EX: generic troop
         /// </summary>
         All,
         /// <summary>
-        /// Priority: Blockades, Breaching through enemy Defense walls
+        /// Priority: attack Blockades, Breaching through enemy Defense walls
         /// Ex: tanky slow troops
         /// </summary>
-        Breacher
+        Breacher,
+        /// <summary>
+        /// Priority: attack defending enemy troops
+        /// </summary>
+        Troops
     }
 
     public EntityType entityType = new EntityType();

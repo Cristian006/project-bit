@@ -34,32 +34,19 @@ public class AI : MonoBehaviour
 
     private float attackDist = 7f;
     float distanceFromTarget;
+
+    public Entity entity;
     private Attack Attack;
-
-    MovementMotor motor;
-    Targeting Targeting;
-    Entity entity;
-
+    private MovementMotor motor;
+    private Targeting Targeting;
+    
     void Awake()
     {
         entity = GetComponent<Entity>();
         Attack = GetComponent<Attack>();
         motor = GetComponent<MovementMotor>();
         Targeting = GetComponent<Targeting>();
-        switch (entity.entityType)
-        {
-            case Entity.EntityType.All:
-                if (target == null)
-                {
-                    if (!Targeting.searchingForTarget)
-                    {
-                        Targeting.searchingForTarget = true;
-                        StartCoroutine(Targeting.TargetSearch());
-                    }
-                    return;
-                }
-                break;
-        }
+        Targeting.InIt();
     }
 
     void Start()
@@ -147,5 +134,4 @@ public class AI : MonoBehaviour
             Attack.attack();
         }
     }
-
 }
