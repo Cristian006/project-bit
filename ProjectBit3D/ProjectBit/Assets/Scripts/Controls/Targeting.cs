@@ -11,7 +11,8 @@ public class Targeting : MonoBehaviour
     GameObject target;
     GameObject PlayerMain;
 
-    AI ai;
+    //AI ai;
+    newAI nai;
 
     public float attackDist;
     public bool searchingForTarget = false;
@@ -21,12 +22,13 @@ public class Targeting : MonoBehaviour
     public void InIt()
     {
         //REFRENCES
-        ai = GetComponent<AI>();
+        //ai = GetComponent<AI>();
+        nai = GetComponent<newAI>();
         buildingLayer = GameObject.FindGameObjectWithTag("BuildingLayer").transform;
         //PRIMARY TARGETS
         primaryTargetList = new List<GameObject>();
 
-        switch(ai.entity.entityType)
+        switch(/*ai.entity.entityType*/ nai.entity.entityType)
         {
             case Entity.EntityType.Player:
                 //player ai targeting system
@@ -70,7 +72,8 @@ public class Targeting : MonoBehaviour
         }
     }
     
-    void FindNearestPrimaryTarget()
+    //Iterate through primary list, when list is gone, find the closest structure
+    public void FindNearestPrimaryTarget()
     {
         GameObject t = null;
         t = FindClosestPrimaryTarget();
@@ -80,10 +83,13 @@ public class Targeting : MonoBehaviour
         }
         else
         {
-            ai.target = t.transform;
+            nai.target = t;
+            nai.currentBuilding = t.GetComponent<Building>();
+            //ai.AIStart();
         }
     }
-
+    
+    //Iterate through the rest of the buildings to find the closest structure.
     void FindNearestStructure()
     {
         GameObject t = null;
@@ -97,22 +103,69 @@ public class Targeting : MonoBehaviour
             }
             else
             {
-                ai.target = t.transform;
+                nai.target = t;
+                //ai.AIStart();
             }
+        }
+        else
+        {
+            Debug.Log(t.name);
+            nai.target = t;
+            Debug.Log(nai.target.name);
+            nai.currentBuilding = t.GetComponent<Building>();
+            //ai.AIStart();
         }
 
     }
 
     GameObject FindClosestPrimaryTarget()
     {
-        return null;
+        float distance = Mathf.Infinity;
+        GameObject closest = null;
+        foreach (GameObject b in primaryTargetList)
+        {
+            currentBuilding = b.GetComponent<Building>();
+            if(currentBuilding.health>0)
+            {
+                Debug.Log("PrimaryBuilding");
+                float Dist = Vector3.Distance(transform.position, b.transform.position);
+                if (Dist < distance)
+                {
+                    closest = b;
+                    distance = Dist;
+                }
+            }
+        }
+        return closest;
     }
 
     GameObject FindClosestStructure()
     {
-        return null;
+        float distance = Mathf.Infinity;
+        GameObject closest = null;
+        foreach (Transform b in buildingLayer)
+        {
+            currentBuilding = b.GetComponent<Building>();
+            if (currentBuilding.health > 0)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
+            {
+                Debug.Log("Building");
+                float Dist = Vector3.Distance(transform.position, b.transform.position);
+                if (Dist < distance)
+                {
+                    closest = b.gameObject;
+                    distance = Dist;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+       // Debug.Log(closest.name);
+        return closest;
     }
 
+    /*
     /// <summary>
     /// Building Search for the generic troop just finding the closest
     /// </summary>
@@ -124,17 +177,6 @@ public class Targeting : MonoBehaviour
         Vector2 position = transform.position;
         foreach (Transform b in buildingLayer)
         {
-            /* if (b.gameObject.name == "BuildingLayer")
-             {
-                 Debug.LogWarning("ParentFound");
-                 continue;
-             }
-             else
-             {
-                 Debug.LogWarning("ActualBuildingFound");
-
-             }
-             */
             currentBuilding = b.GetComponent<Building>();
 
             if (currentBuilding.health > 0)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
@@ -167,7 +209,8 @@ public class Targeting : MonoBehaviour
             return closest;
         }
     }
-
+    */
+    /*
     public IEnumerator TargetSearch()
     {
         GameObject searchResult = FindClosestBuilding();
@@ -183,4 +226,5 @@ public class Targeting : MonoBehaviour
             yield break;
         }
     }
+    */
 }

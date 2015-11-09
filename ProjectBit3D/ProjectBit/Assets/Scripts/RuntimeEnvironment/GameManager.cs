@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameObject player;
     public Transform spawnPoint;
+    public Transform spawnEnmey;
 
     Plane plane = new Plane(Vector3.up, Vector3.zero);
 
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour
     {
         if (GUI.Button(new Rect(Screen.width / 30, Screen.height / 15, 100, 30), "ENEMY"))
         {
-            Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(enemy, spawnEnmey.position, spawnEnmey.rotation);
         }
     }
 

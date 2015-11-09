@@ -7,9 +7,9 @@ using Pathfinding;
 [RequireComponent(typeof(Entity))]
 public class AI : MonoBehaviour
 {
-
     // What to chase?
-    public Transform target;
+    public GameObject target;
+    public Building currentBuilding;
 
     // How many times each second we will update our path
     public float updateRate = 2f;
@@ -45,18 +45,27 @@ public class AI : MonoBehaviour
         entity = GetComponent<Entity>();
         Attack = GetComponent<Attack>();
         motor = GetComponent<MovementMotor>();
+        seeker = GetComponent<Seeker>();
         Targeting = GetComponent<Targeting>();
         Targeting.InIt();
     }
 
     void Start()
     {
-        seeker = GetComponent<Seeker>();
+        if(target == null)
+        {
+            Debug.Log("NO TARGET");
+            return;
+        }
+        else
+        {
+            Debug.Log("STARTED PATH");
+            // Start a new path to the target position, return the result to the OnPathComplete method
+            seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
 
-        // Start a new path to the target position, return the result to the OnPathComplete method
-        seeker.StartPath(transform.position, target.position, OnPathComplete);
+            StartCoroutine(UpdatePath());
+        }
 
-        StartCoroutine(UpdatePath());
     }
 
     IEnumerator UpdatePath()
@@ -68,7 +77,7 @@ public class AI : MonoBehaviour
         }
 
         // Start a new path to the target position, return the result to the OnPathComplete method
-        seeker.StartPath(transform.position, target.position, OnPathComplete);
+        seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
         Debug.Log("Start Path");
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
@@ -86,17 +95,13 @@ public class AI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (target == null || !target.gameObject.activeInHierarchy)
-        {
-            if (!Targeting.searchingForTarget)
-            {
-                Targeting.searchingForTarget = true;
-                StartCoroutine(Targeting.TargetSearch());
-            }
-            return;
-        }
+        if (target == null) { return; }
 
-        transform.LookAt(target);
+        if (currentBuilding.health <= 0) { return; }
+
+        transform.LookAt(target.transform);
+
+
 
         if (path == null)
         {
@@ -128,7 +133,7 @@ public class AI : MonoBehaviour
             return;
         }
 
-        distanceFromTarget = Vector3.Distance(transform.position, target.position);
+        distanceFromTarget = Vector3.Distance(transform.position, target.transform.position);
         if(distanceFromTarget <= attackDist)
         {
             Attack.attack();

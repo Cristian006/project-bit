@@ -91,6 +91,12 @@ public class GenericAI : MonoBehaviour
 
     protected Targeting Target;
 
+    public Entity entity;
+
+    public Building currentBuilding;
+
+    
+
     /** Current index in the path which is current target */
     protected int currentWaypointIndex = 0;
 
@@ -127,8 +133,10 @@ public class GenericAI : MonoBehaviour
 	  * */
     protected virtual void Awake()
     {
+        entity = GetComponent<Entity>();
         seeker = GetComponent<Seeker>();
         Target = GetComponent<Targeting>();
+        Target.InIt();
         //This is a simple optimization, cache the transform component lookup
         tr = transform;
         motor = GetComponent<MovementMotor>();
@@ -142,10 +150,6 @@ public class GenericAI : MonoBehaviour
 	 */
     protected virtual void Start()
     {
-        if (Target.searchingForTarget)
-        {
-            return;
-        }
         startHasRun = true;
         OnEnable();
     }
@@ -310,16 +314,11 @@ public class GenericAI : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
-        
-        if(Target.searchingForTarget)
-        {
-            return;
-        }
-        else if(!Target.searchingForTarget)
-        {
-            //target = Target.target.transform;
+        //target = Target.target.transform;
 
-            if (!canMove) { return; }
+        if (currentBuilding.health <= 0) { return; }
+
+        if (!canMove) { return; }
 
             Vector3 dir = CalculateVelocity(GetFeetPosition());
 
@@ -331,13 +330,12 @@ public class GenericAI : MonoBehaviour
             //ATTACK
             if (target != null)
             {
-                attackDist = Target.attackDist;
+                attackDist = 7;
                 if (Vector3.Distance(transform.position, target.position) <= attackDist)
                 {
                     Attack.attack();
                 }
             }
-        }
     }
 
     /** Point to where the AI is heading.

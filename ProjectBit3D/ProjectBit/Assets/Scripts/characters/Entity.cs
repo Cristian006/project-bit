@@ -73,7 +73,7 @@ public class Entity : Destructible
     //public methods
     public override void TakeDamage(int damage)
     {
-        Debug.Log(gameObject.name+"Current Health:"+CurrentHealth);
+        //Debug.Log(gameObject.name+"Current Health:"+CurrentHealth);
         CurrentHealth-= damage;
         if (CurrentHealth <= 0)
         {
