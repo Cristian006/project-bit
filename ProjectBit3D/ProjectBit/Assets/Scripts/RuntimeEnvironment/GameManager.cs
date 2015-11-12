@@ -6,37 +6,29 @@ public class GameManager : MonoBehaviour
 
     public GameObject PlayerPrefab;
 
-    public GameObject enemy;
-
-    //public GameObject[,] GridFloor;
-    //public GridGenerator gg;
-
     [HideInInspector]
     public GameObject player;
     public Transform spawnPoint;
-    public Transform spawnEnmey;
+
+    public Transform entityUnitLayer;
 
     Plane plane = new Plane(Vector3.up, Vector3.zero);
 
     public Camera worldCam;
     public Vector3 mousePos;
 
-    private bool ThirdPerson;
+    private bool ThirdPersonView;
 
-    public bool thirdPersonView
+    public bool isInThirdPersonView
     {
-        get { return ThirdPerson; }
-        set { ThirdPerson = value; }
+        get { return ThirdPersonView; }
+        set { ThirdPersonView = value; }
     }
 
     public bool Mobile()
     {
-#if UNITY_EDITOR
-        return false;
-#elif UNITY_ANDROID || UNITY_IOS
+#if UNITY_ANDROID || UNITY_IOS
         return true;
-#elif UNITY_STANDALONE
-        return false;
 #else
         return false;
 #endif
@@ -52,27 +44,16 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        //IF WE NEED THE GRID ARRAY BUT AS OF NOW WE KIND OF DONT.
-        //GetComponent<GridGenerator>().GenerateGrid();
-        //GridFloor = GetComponent<GridGenerator>().gridArray;
         gm = this;
         player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+        player.transform.SetParent(entityUnitLayer,true);
     }
-    // Use this for initialization
+
     void Start()
     {
         
     }
-    /*
-    void OnGUI()
-    {
-        if (GUI.Button(new Rect(Screen.width / 30, Screen.height / 15, 100, 30), "ENEMY"))
-        {
-            Instantiate(enemy, spawnEnmey.position, spawnEnmey.rotation);
-        }
-    }
-    */
-    // Update is called once per frame
+
     void Update()
     {
         Ray ray = worldCam.ScreenPointToRay(Input.mousePosition);

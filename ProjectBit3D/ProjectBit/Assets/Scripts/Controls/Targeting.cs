@@ -9,13 +9,11 @@ public class Targeting : MonoBehaviour
     Transform wallLayer;
     Transform entityUnitLayer;
     private Structure currentBuilding;
+    private Entity currentEntity;
 
     GameObject target;
     GameObject PlayerMain;
-
-    Hero hero;
-
-    PlayerAI pai;
+    
     newAI nai;
 
     public float attackDist;
@@ -43,7 +41,6 @@ public class Targeting : MonoBehaviour
         {
             case Entity.EntityType.Player:
                 FindNearestEnemyUnit();
-                hero = GetComponent<Hero>();
                 break;
             case Entity.EntityType.Resource:
                 MakePrimaryList(Structure.GeneralType.Resource);
@@ -193,16 +190,23 @@ public class Targeting : MonoBehaviour
     {
         float distance = Mathf.Infinity;
         GameObject closest = null;
-        Debug.Log("ATTACKING THE NEAREST UNIT DEFENDERS");
+        //Debug.Log("ATTACKING THE NEAREST UNIT DEFENDERS");
         foreach(Transform t in entityUnitLayer)
         {
-            if(t.GetComponent<Entity>().PlayerID != nai.entity.PlayerID)
+            //Debug.Log("Looking for enemy Unit");
+            if(t.GetComponent<Entity>().entityType != Entity.EntityType.Player && t.gameObject.activeInHierarchy)
             {
-                float Dist = Vector3.Distance(transform.position, t.position);
-                if (Dist < distance)
+                currentEntity = t.GetComponent<Entity>();
+               
+                if (currentEntity.PlayerID != nai.entity.PlayerID)
                 {
-                    closest = t.gameObject;
-                    distance = Dist;
+                    //Debug.LogError("SHOULD GET ENEMY NOW");
+                    float Dist = Vector3.Distance(transform.position, t.position);
+                    if (Dist < distance)
+                    {
+                        closest = t.gameObject;
+                        distance = Dist;
+                    }                    
                 }
             }
         }

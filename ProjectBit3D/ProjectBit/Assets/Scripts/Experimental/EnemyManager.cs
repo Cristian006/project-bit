@@ -14,24 +14,38 @@ public class EnemyManager : MonoBehaviour
     public Transform spwanPoint3;
     public Transform spwanPoint4;
 
+    public Transform entityUnitLayer;
+
+    GameObject obj;
+
     public void Breech()
     {
-        Instantiate(enemyBre, spwanPoint1.position, spwanPoint1.rotation);
+        obj = (GameObject)Instantiate(enemyBre, spwanPoint1.position, spwanPoint1.rotation);
+        obj.transform.SetParent(entityUnitLayer);
+        obj = null;
     }
     public void Troop()
     {
-        Instantiate(enemyTrp, spwanPoint2.position, spwanPoint2.rotation);
+        obj = (GameObject)Instantiate(enemyTrp, spwanPoint2.position, spwanPoint2.rotation);
+        obj.transform.SetParent(entityUnitLayer);
+        obj = null;
     }
     public void All()
     {
-        Instantiate(enemyAll, spwanPoint1.position, spwanPoint1.rotation);
+        obj = (GameObject)Instantiate(enemyAll, spwanPoint1.position, spwanPoint1.rotation);
+        obj.transform.SetParent(entityUnitLayer);
+        obj = null;
     }
     public void Resource()
     {
-        Instantiate(enemyRes, spwanPoint4.position, spwanPoint4.rotation);
+        obj = (GameObject)Instantiate(enemyRes, spwanPoint4.position, spwanPoint4.rotation);
+        obj.transform.SetParent(entityUnitLayer);
+        obj = null;
     }
     public void Defence()
     {
-        Instantiate(enemyDef, spwanPoint3.position, spwanPoint3.rotation);
+        obj = (GameObject)Instantiate(enemyDef, spwanPoint3.position, spwanPoint3.rotation);
+        obj.transform.SetParent(entityUnitLayer);
+        obj = null;
     }
 }

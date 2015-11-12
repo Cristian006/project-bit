@@ -72,6 +72,7 @@ public class Entity : Destructible
     void Awake()
     {
         //gameObject.tag = "Entity";
+        PlayerID = (int)Random.Range(1, 100);
         stats = new statContainer(statContainer.Entity);
         CurrentHealth = maxHealth;
     }

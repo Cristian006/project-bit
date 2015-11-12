@@ -5,11 +5,15 @@ public class Hero : Entity
 {
     Targeting targeting;
     newAI ai;
-
+    ThirdPersonMovement tpm;
+    ThirdPersonMotor tmotor;
     void Awake()
     {
         entityType = EntityType.Player;
         ai = GetComponent<newAI>();
+        targeting = GetComponent<Targeting>();
+        tpm = GetComponent<ThirdPersonMovement>();
+        tmotor = GetComponent<ThirdPersonMotor>();
     }
 
     void Start()
@@ -17,22 +21,31 @@ public class Hero : Entity
         stats = new statContainer(statContainer.Entity);
         maxHealth = 100;
         CurrentHealth = 100;
-        //ai.enabled = true;
     }
     
+    void FixedUpdate()
+    {
+        if(ai.isActiveAndEnabled)
+        {
+            targeting.Begin();
+        }
+    }
+
     void Update()
     {
-        /*if (GameManager.gm.thirdPersonView)
+        //TODO: ENABLE OR DISABLE THE AI SCRIPT COMPLETLY
+        if (GameManager.gm.isInThirdPersonView)
         {
-            ai.AIOn = true;
-            targeting.Begin();
-            StartCoroutine(ai.UpdatePath());
+            ai.AIOn = false;
+            tpm.enabled = true;
+            tmotor.enabled = true;
         }
         else
         {
-            ai.AIOn = false;
-            ai.ShutAIDown();
-        }*/
+            ai.AIOn = true;
+            tpm.enabled = false;
+            tmotor.enabled = false;
+        }
     }
 
     public override void Death()

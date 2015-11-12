@@ -24,7 +24,10 @@ public class ResourceGenerator : Structure
     }
     
     void Awake()
-    {
+    { 
+        stats = new statContainer("Building");
+        maxHealth = 100;
+        health = 100;
         generalType = GeneralType.Resource;
         buildingType = BuildingType.ResourceGenerator;
     }
@@ -32,8 +35,6 @@ public class ResourceGenerator : Structure
     // Use this for initialization
     void Start()
     {
-        stats = new statContainer("Building");
-        maxHealth = 100;
-        health = 100;
+       
     }
 }

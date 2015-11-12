@@ -100,19 +100,19 @@ public class Structure : Destructible
 
             if (currentPositionState == PositionState.Possible)
             {
-                Debug.Log("ChangeColortoGreen");
+                //Debug.Log("ChangeColortoGreen");
                 ChangeColor(2);
             }
             else if (currentPositionState == PositionState.NotPossible)
             {
-                Debug.Log("ChangeColortoRed");
+                //Debug.Log("ChangeColortoRed");
                 ChangeColor(3);
             }
         }
         else if (currentBuildingState == BuildingState.Placed)
         {
 
-            Debug.Log("ChangeColorToNormal");
+            //Debug.Log("ChangeColorToNormal");
             ChangeColor(1);
         }
     }

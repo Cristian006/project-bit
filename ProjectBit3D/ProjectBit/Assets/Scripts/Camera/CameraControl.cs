@@ -3,26 +3,29 @@ using UnityEngine.UI;
 
 public class CameraControl : MonoBehaviour
 {
-    public Camera myCam;
+    public Camera playerCam;
     public Camera WorldCam;
     // Use this for initialization
     void Start()
     {
         WorldCam = GameObject.FindGameObjectWithTag("worldCam").GetComponent<Camera>();
-        myCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        playerCam = GameObject.FindGameObjectWithTag("playerCam").GetComponent<Camera>();
         if(GameManager.gm.Mobile())
         {
+            GameManager.gm.isInThirdPersonView = false;
+            Debug.Log("I am on Mobile");
             Destroy(WorldCam);
         }
         else
         {
+            GameManager.gm.isInThirdPersonView = true;
             WorldCam.gameObject.SetActive(false);
         }
     }
 
     void Update()
     {
-        if(myCam!=null)
+        if(playerCam!=null)
         {
             if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -37,17 +40,17 @@ public class CameraControl : MonoBehaviour
 
     public void Switch()
     {
-        if (myCam.gameObject.activeInHierarchy)
+        if (playerCam.gameObject.activeInHierarchy)
         {
-            GameManager.gm.thirdPersonView = false;
-            myCam.gameObject.SetActive(false);
+            GameManager.gm.isInThirdPersonView = false;
+            playerCam.gameObject.SetActive(false);
             WorldCam.gameObject.SetActive(true);
         }
         else if (WorldCam.gameObject.activeInHierarchy)
         {
-            GameManager.gm.thirdPersonView = true;
+            GameManager.gm.isInThirdPersonView = true;
             WorldCam.gameObject.SetActive(false);
-            myCam.gameObject.SetActive(true);
+            playerCam.gameObject.SetActive(true);
         }
     }
 }

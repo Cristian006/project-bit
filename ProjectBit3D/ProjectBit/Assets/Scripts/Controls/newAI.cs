@@ -12,9 +12,9 @@ public class newAI : MonoBehaviour
     private Targeting targeting;
     public Entity entity;
     public Structure currentBuilding;
-    float updateRate = 1f;
+    public float updateRate = 1f;
     bool canMove = true;
-    float attackDistance = 5f;
+    public float attackDistance = 5f;
 
     //The calculated path
     public Path path;
@@ -32,14 +32,15 @@ public class newAI : MonoBehaviour
         motor = GetComponent<MovementMotor>();
         seeker = GetComponent<Seeker>();
         entity = GetComponent<Entity>();
+        attack = GetComponent<Attack>();
         targeting = GetComponent<Targeting>();
         targeting.InIt();
-        attack = GetComponent<Attack>();
     }
 
     public void Start()
     {
         if(target == null) { return; }
+        Debug.Log("There is a target!");
         //Start a new path to the targetPosition, return the result to the OnPathComplete function
         seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
         StartCoroutine(UpdatePath());
@@ -49,7 +50,6 @@ public class newAI : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.Log("No target");
             yield break;
         }
 
@@ -57,14 +57,6 @@ public class newAI : MonoBehaviour
         seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
-    }
-    
-    public IEnumerator AIRoam()
-    {
-        // Start a new path to the target position, return the result to the OnPathComplete method
-        seeker.StartPath(transform.position, new Vector3(transform.position.x+(Random.Range(2f,8f)),transform.position.y, transform.position.z + (Random.Range(2f,8f))), OnPathComplete);
-        yield return new WaitForSeconds(1f / updateRate);
-        StartCoroutine(AIRoam());
     }
 
     public void OnPathComplete(Path p)
@@ -82,10 +74,17 @@ public class newAI : MonoBehaviour
     {
         if(AIOn)
         {
+            if (target == null)
+            {
+                targeting.Begin();
+                return;
+            }
+
             transform.LookAt(target.transform);
 
             if (target.GetComponent<Destructible>().health <= 0)
             {
+                Debug.Log("Find a new Target");
                 targeting.Begin();
             }
 
@@ -119,6 +118,7 @@ public class newAI : MonoBehaviour
                 //dir *= speed * Time.deltaTime;
 
                 motor.Velocity = dir * speed;
+               // Debug.Log("WE SHOULD BE MOVING");
                 //Check if we are close enough to the next waypoint
                 //If we are, proceed to follow the next waypoint
                 if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
@@ -128,12 +128,6 @@ public class newAI : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void Roam()
-    {
-        StopCoroutine(UpdatePath());
-        StartCoroutine(AIRoam());
     }
 
     public void ShutAIDown()
