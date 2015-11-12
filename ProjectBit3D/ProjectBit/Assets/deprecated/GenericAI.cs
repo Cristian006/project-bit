@@ -93,7 +93,7 @@ public class GenericAI : MonoBehaviour
 
     public Entity entity;
 
-    public Building currentBuilding;
+    public Structure currentBuilding;
 
     
 

@@ -1,7 +1,6 @@
 using UnityEngine;
-using System.Collections;
 
-public class ResourceGenerator : Building
+public class ResourceGenerator : Structure
 {
     private string type;//resource name
     private RegeneratingResource resource;
@@ -17,24 +16,24 @@ public class ResourceGenerator : Building
         get { return Mathf.Floor(resource.Current); }
     }
 
-
-
     public int emptyBuilding()
     {
         int current = Mathf.FloorToInt(resource.Current);
         resource.Current -= current;
         return current;
     }
+    
+    void Awake()
+    {
+        generalType = GeneralType.Resource;
+        buildingType = BuildingType.ResourceGenerator;
+    }
 
     // Use this for initialization
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        stats = new statContainer("Building");
+        maxHealth = 100;
+        health = 100;
     }
 }

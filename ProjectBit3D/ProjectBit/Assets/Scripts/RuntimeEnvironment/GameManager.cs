@@ -21,6 +21,14 @@ public class GameManager : MonoBehaviour
     public Camera worldCam;
     public Vector3 mousePos;
 
+    private bool ThirdPerson;
+
+    public bool thirdPersonView
+    {
+        get { return ThirdPerson; }
+        set { ThirdPerson = value; }
+    }
+
     public bool Mobile()
     {
 #if UNITY_EDITOR
@@ -53,9 +61,9 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        
     }
-
+    /*
     void OnGUI()
     {
         if (GUI.Button(new Rect(Screen.width / 30, Screen.height / 15, 100, 30), "ENEMY"))
@@ -63,7 +71,7 @@ public class GameManager : MonoBehaviour
             Instantiate(enemy, spawnEnmey.position, spawnEnmey.rotation);
         }
     }
-
+    */
     // Update is called once per frame
     void Update()
     {

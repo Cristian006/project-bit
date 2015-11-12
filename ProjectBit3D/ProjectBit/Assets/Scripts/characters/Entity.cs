@@ -36,6 +36,13 @@ public class Entity : Destructible
         Troops
     }
 
+    private int playerID;
+    public int PlayerID
+    {
+        get { return playerID; }
+        set { playerID = value; }
+    }
+
     public EntityType entityType = new EntityType();
 
     private RegeneratingResource _mana;

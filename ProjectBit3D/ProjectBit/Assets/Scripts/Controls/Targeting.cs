@@ -2,16 +2,20 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(AI))]
+[RequireComponent(typeof(newAI))]
 public class Targeting : MonoBehaviour
 {
     Transform buildingLayer;
-    private Building currentBuilding;
+    Transform wallLayer;
+    Transform entityUnitLayer;
+    private Structure currentBuilding;
 
     GameObject target;
     GameObject PlayerMain;
 
-    //AI ai;
+    Hero hero;
+
+    PlayerAI pai;
     newAI nai;
 
     public float attackDist;
@@ -22,41 +26,49 @@ public class Targeting : MonoBehaviour
     public void InIt()
     {
         //REFRENCES
-        //ai = GetComponent<AI>();
         nai = GetComponent<newAI>();
         buildingLayer = GameObject.FindGameObjectWithTag("BuildingLayer").transform;
+        wallLayer = GameObject.FindGameObjectWithTag("WallLayer").transform;
+        entityUnitLayer = GameObject.FindGameObjectWithTag("EntityUnitLayer").transform;
+        
         //PRIMARY TARGETS
         primaryTargetList = new List<GameObject>();
 
-        switch(/*ai.entity.entityType*/ nai.entity.entityType)
+        Begin();
+    }
+
+    public void Begin()
+    {
+        switch (nai.entity.entityType)
         {
             case Entity.EntityType.Player:
-                //player ai targeting system
+                FindNearestEnemyUnit();
+                hero = GetComponent<Hero>();
                 break;
             case Entity.EntityType.Resource:
-                MakePrimaryList(Building.GeneralType.Resource);
+                MakePrimaryList(Structure.GeneralType.Resource);
                 break;
             case Entity.EntityType.Defense:
-                MakePrimaryList(Building.GeneralType.Defence);
+                MakePrimaryList(Structure.GeneralType.Defense);
                 break;
             case Entity.EntityType.All:
                 FindNearestStructure();
                 break;
             case Entity.EntityType.Breacher:
-                //FindNearestBlockades();
+                FindNearestBlockades();
                 break;
             case Entity.EntityType.Troops:
-                //FindNearestDefendingUnit();
+                FindNearestUnit();
                 break;
         }
     }
 
-    public void MakePrimaryList(Building.GeneralType generalType)
+    public void MakePrimaryList(Structure.GeneralType generalType)
     {
         currentBuilding = null;
         foreach(Transform b in buildingLayer)
         {
-            if (b.GetComponent<Building>().generalType == generalType)
+            if (b.GetComponent<Structure>().generalType == generalType)
             {
                 primaryTargetList.Add(b.gameObject);
             }
@@ -84,8 +96,7 @@ public class Targeting : MonoBehaviour
         else
         {
             nai.target = t;
-            nai.currentBuilding = t.GetComponent<Building>();
-            //ai.AIStart();
+            nai.currentBuilding = t.GetComponent<Structure>();
         }
     }
     
@@ -104,7 +115,6 @@ public class Targeting : MonoBehaviour
             else
             {
                 nai.target = t;
-                //ai.AIStart();
             }
         }
         else
@@ -112,8 +122,7 @@ public class Targeting : MonoBehaviour
             Debug.Log(t.name);
             nai.target = t;
             Debug.Log(nai.target.name);
-            nai.currentBuilding = t.GetComponent<Building>();
-            //ai.AIStart();
+            nai.currentBuilding = t.GetComponent<Structure>();
         }
 
     }
@@ -124,7 +133,7 @@ public class Targeting : MonoBehaviour
         GameObject closest = null;
         foreach (GameObject b in primaryTargetList)
         {
-            currentBuilding = b.GetComponent<Building>();
+            currentBuilding = b.GetComponent<Structure>();
             if(currentBuilding.health>0)
             {
                 Debug.Log("PrimaryBuilding");
@@ -145,11 +154,11 @@ public class Targeting : MonoBehaviour
         GameObject closest = null;
         foreach (Transform b in buildingLayer)
         {
-            currentBuilding = b.GetComponent<Building>();
+            currentBuilding = b.GetComponent<Structure>();
             if (currentBuilding.health > 0)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
             {
                 Debug.Log("Building");
-                float Dist = Vector3.Distance(transform.position, b.transform.position);
+                float Dist = Vector3.Distance(transform.position, b.position);
                 if (Dist < distance)
                 {
                     closest = b.gameObject;
@@ -165,51 +174,50 @@ public class Targeting : MonoBehaviour
         return closest;
     }
 
-    /*
-    /// <summary>
-    /// Building Search for the generic troop just finding the closest
-    /// </summary>
-    /// <returns>Closest GameObject</returns>
-    private GameObject FindClosestBuilding()
+    public void FindNearestEnemyUnit()
     {
-        GameObject closest = null;                                          //set the gameObject Closest to null as default
-        float distance = Mathf.Infinity;
-        Vector2 position = transform.position;
-        foreach (Transform b in buildingLayer)
+        GameObject t = null;
+        t = FindNearestUnit();
+        if (t == null)
         {
-            currentBuilding = b.GetComponent<Building>();
-
-            if (currentBuilding.health > 0)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
-            {
-                Vector2 buildingPos = b.position;
-                float curDistance = (buildingPos - position).sqrMagnitude;
-                if (curDistance < distance)
-                {
-                    closest = b.gameObject;                                 //set's the GameObject closest to equal the closest enemy
-                    distance = curDistance;                                 //and sets the float variable distance to be the current distance
-                    attackDist = currentBuilding.buildingsize;
-                }
-            }
-            else
-            {
-                continue;       //If the building is dead, continue the iteration but don't exit the loop.
-            }
-        }
-
-        if (closest == null && PlayerMain.activeInHierarchy)
-        {
-            return closest = PlayerMain;
-        }
-        else if (!PlayerMain.activeInHierarchy && closest == null)
-        {
-            return null;
+            Debug.Log("no enemy to defend agains");
+            //nai.Roam();
         }
         else
         {
-            return closest;
+            nai.target = t;
         }
     }
-    */
+
+    public GameObject FindNearestUnit()
+    {
+        float distance = Mathf.Infinity;
+        GameObject closest = null;
+        Debug.Log("ATTACKING THE NEAREST UNIT DEFENDERS");
+        foreach(Transform t in entityUnitLayer)
+        {
+            if(t.GetComponent<Entity>().PlayerID != nai.entity.PlayerID)
+            {
+                float Dist = Vector3.Distance(transform.position, t.position);
+                if (Dist < distance)
+                {
+                    closest = t.gameObject;
+                    distance = Dist;
+                }
+            }
+        }
+        return closest;
+    }
+
+    public void FindNearestBlockades()
+    {
+        Debug.Log("ATTACKING THE NEAREST DEFENCE STRUCTURES");
+        //find defensive wall structure
+        /*
+        any blockade strucutre that is 3 or more units wide
+        */
+    }
+    
     /*
     public IEnumerator TargetSearch()
     {

@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
-    public GameObject[] buildings;
+    //public GameObject[] buildings;
     private BuildingPlacement buildingPlacement;
 
+    public GameObject building;
+    public GameObject wall;
+    public GameObject defense;
+    public GameObject resource;
+
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         buildingPlacement = GetComponent<BuildingPlacement>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /*
     void OnGUI()
     {
         for (int i = 0; i < buildings.Length; i++)
@@ -26,5 +26,25 @@ public class BuildingManager : MonoBehaviour
                 buildingPlacement.SetItem(buildings[i]);
             }
         }
+    }
+    */
+    public void Wall()
+    {
+        buildingPlacement.SetItem(wall);
+    }
+
+    public void Defense()
+    {
+        buildingPlacement.SetItem(defense);
+    }
+
+    public void Resource()
+    {
+        buildingPlacement.SetItem(resource);
+    }
+
+    public void Building()
+    {
+        buildingPlacement.SetItem(building);
     }
 }

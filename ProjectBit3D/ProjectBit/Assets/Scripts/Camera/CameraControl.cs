@@ -39,11 +39,13 @@ public class CameraControl : MonoBehaviour
     {
         if (myCam.gameObject.activeInHierarchy)
         {
+            GameManager.gm.thirdPersonView = false;
             myCam.gameObject.SetActive(false);
             WorldCam.gameObject.SetActive(true);
         }
         else if (WorldCam.gameObject.activeInHierarchy)
         {
+            GameManager.gm.thirdPersonView = true;
             WorldCam.gameObject.SetActive(false);
             myCam.gameObject.SetActive(true);
         }

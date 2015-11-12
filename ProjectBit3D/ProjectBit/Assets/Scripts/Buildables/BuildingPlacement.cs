@@ -3,15 +3,16 @@ using System.Collections;
 
 public class BuildingPlacement : MonoBehaviour
 {
-    private Building placeableBuilding;
+    private Structure placeableBuilding;
     private Transform currentBuilding;
     private bool hasPlaced;
 
     public LayerMask buildingsMask;
 
     public GameObject BuildingLayer;
+    public GameObject WallLayer;
 
-    private Building placeableBuildingOld;
+    private Structure placeableBuildingOld;
 
     // Update is called once per frame
     void Update()
@@ -20,16 +21,23 @@ public class BuildingPlacement : MonoBehaviour
 
         if (currentBuilding != null && !hasPlaced)
         {
-            currentBuilding.GetComponent<Building>().currentBuildingState = Building.BuildingState.Moving;
+            currentBuilding.GetComponent<Structure>().currentBuildingState = Structure.BuildingState.Moving;
             currentBuilding.position = new Vector3(Mathf.RoundToInt(p.x), 0, Mathf.RoundToInt(p.z));
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (currentBuilding.GetComponent<Building>().currentPositionState == Building.PositionState.Possible)
+                if (currentBuilding.GetComponent<Structure>().currentPositionState == Structure.PositionState.Possible)
                 {
                     hasPlaced = true;
-                    currentBuilding.SetParent(BuildingLayer.transform, true);
-                    currentBuilding.GetComponent<Building>().currentBuildingState = Building.BuildingState.Placed;
+                    if(currentBuilding.GetComponent<Structure>().generalType == Structure.GeneralType.Blockade)
+                    {
+                        currentBuilding.SetParent(WallLayer.transform, true);
+                    }
+                    else
+                    {
+                        currentBuilding.SetParent(BuildingLayer.transform, true);
+                    }
+                    currentBuilding.GetComponent<Structure>().currentBuildingState = Structure.BuildingState.Placed;
                 }
             }
         }
@@ -45,8 +53,8 @@ public class BuildingPlacement : MonoBehaviour
                     {
                         placeableBuildingOld.SetSelected(false);
                     }
-                    hit.collider.gameObject.GetComponent<Building>().SetSelected(true);
-                    placeableBuildingOld = hit.collider.gameObject.GetComponent<Building>();
+                    hit.collider.gameObject.GetComponent<Structure>().SetSelected(true);
+                    placeableBuildingOld = hit.collider.gameObject.GetComponent<Structure>();
                 }
                 else
                 {
@@ -63,6 +71,6 @@ public class BuildingPlacement : MonoBehaviour
     {
         hasPlaced = false;
         currentBuilding = ((GameObject)Instantiate(b)).transform;
-        placeableBuilding = currentBuilding.GetComponent<Building>();
+        placeableBuilding = currentBuilding.GetComponent<Structure>();
     }
 }

@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class TownHall : Structure
+public class Blockade : Structure
 {
     void Awake()
     {
-        generalType = GeneralType.Building;
-        buildingType = BuildingType.TownHall;
+        generalType = GeneralType.Blockade;
+        buildingType = BuildingType.Blockade;
     }
 
     // Use this for initialization

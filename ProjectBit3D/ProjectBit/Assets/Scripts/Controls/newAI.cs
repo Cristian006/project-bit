@@ -11,7 +11,7 @@ public class newAI : MonoBehaviour
     private Attack attack;
     private Targeting targeting;
     public Entity entity;
-    public Building currentBuilding;
+    public Structure currentBuilding;
     float updateRate = 1f;
     bool canMove = true;
     float attackDistance = 5f;
@@ -24,6 +24,8 @@ public class newAI : MonoBehaviour
     public float nextWaypointDistance = 3;
     //The waypoint we are currently moving towards
     private int currentWaypoint = 0;
+    
+    public bool AIOn = true;
 
     public void Awake()
     {
@@ -37,12 +39,13 @@ public class newAI : MonoBehaviour
 
     public void Start()
     {
+        if(target == null) { return; }
         //Start a new path to the targetPosition, return the result to the OnPathComplete function
         seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
         StartCoroutine(UpdatePath());
     }
 
-    IEnumerator UpdatePath()
+    public IEnumerator UpdatePath()
     {
         if (target == null)
         {
@@ -54,6 +57,14 @@ public class newAI : MonoBehaviour
         seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
+    }
+    
+    public IEnumerator AIRoam()
+    {
+        // Start a new path to the target position, return the result to the OnPathComplete method
+        seeker.StartPath(transform.position, new Vector3(transform.position.x+(Random.Range(2f,8f)),transform.position.y, transform.position.z + (Random.Range(2f,8f))), OnPathComplete);
+        yield return new WaitForSeconds(1f / updateRate);
+        StartCoroutine(AIRoam());
     }
 
     public void OnPathComplete(Path p)
@@ -69,50 +80,64 @@ public class newAI : MonoBehaviour
 
     public void Update()
     {
-        transform.LookAt(target.transform);
+        if(AIOn)
+        {
+            transform.LookAt(target.transform);
 
-        if (target.GetComponent<Destructible>().health <= 0)
-        {
-            targeting.FindNearestPrimaryTarget();
-        }
-
-        if (Vector3.Distance(transform.position, target.transform.position) <= attackDistance)
-        {
-            canMove = false;
-            attack.attack();
-        }
-        else
-        {
-            canMove = true;
-        }
-
-        if (canMove)
-        {
-            if (path == null)
+            if (target.GetComponent<Destructible>().health <= 0)
             {
-                //We have no path to move after yet
-                return;
+                targeting.Begin();
             }
 
-
-            if (currentWaypoint >= path.vectorPath.Count)
+            if (Vector3.Distance(transform.position, target.transform.position) <= attackDistance)
             {
-                Debug.Log("End Of Path Reached");
-                return;
+                canMove = false;
+                attack.attack();
+            }
+            else
+            {
+                canMove = true;
             }
 
-            //Direction to the next waypoint
-            Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-            //dir *= speed * Time.deltaTime;
-
-            motor.Velocity = dir * speed;
-            //Check if we are close enough to the next waypoint
-            //If we are, proceed to follow the next waypoint
-            if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
+            if (canMove)
             {
-                currentWaypoint++;
-                return;
+                if (path == null)
+                {
+                    //We have no path to move after yet
+                    return;
+                }
+
+
+                if (currentWaypoint >= path.vectorPath.Count)
+                {
+                    Debug.Log("End Of Path Reached");
+                    return;
+                }
+
+                //Direction to the next waypoint
+                Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+                //dir *= speed * Time.deltaTime;
+
+                motor.Velocity = dir * speed;
+                //Check if we are close enough to the next waypoint
+                //If we are, proceed to follow the next waypoint
+                if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
+                {
+                    currentWaypoint++;
+                    return;
+                }
             }
         }
+    }
+
+    public void Roam()
+    {
+        StopCoroutine(UpdatePath());
+        StartCoroutine(AIRoam());
+    }
+
+    public void ShutAIDown()
+    {
+        StopCoroutine(UpdatePath());
     }
 }

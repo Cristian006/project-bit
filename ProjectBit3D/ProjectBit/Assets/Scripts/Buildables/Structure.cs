@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Pathfinding;
 
-public class Building : Destructible
+public class Structure : Destructible
 {
     public int buildingsize = 3;
     
@@ -26,7 +27,7 @@ public class Building : Destructible
     {
         Building,       //townhall/barracks/buildershuts/civilianbuildings
         Blockade,       //walls
-        Defence,        //catepults
+        Defense,        //catepults
         Resource        //resource generator, resource storage
     }
 
