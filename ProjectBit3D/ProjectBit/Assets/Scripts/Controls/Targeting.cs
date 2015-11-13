@@ -178,10 +178,12 @@ public class Targeting : MonoBehaviour
         if (t == null)
         {
             Debug.Log("no enemy to defend agains");
-            //nai.Roam();
+            nai.target = null;
+            nai.roam = true;
         }
         else
         {
+            nai.roam = false;
             nai.target = t;
         }
     }

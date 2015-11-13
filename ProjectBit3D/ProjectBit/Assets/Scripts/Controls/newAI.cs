@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Pathfinding;
 
+[RequireComponent(typeof(Targeting))]
 public class newAI : MonoBehaviour
 { 
     public GameObject target;
@@ -13,7 +14,7 @@ public class newAI : MonoBehaviour
     public Entity entity;
     public Structure currentBuilding;
     public float updateRate = 1f;
-    bool canMove = true;
+    public bool canMove = true;
     public float attackDistance = 5f;
 
     //The calculated path
@@ -27,6 +28,9 @@ public class newAI : MonoBehaviour
     
     public bool AIOn = true;
 
+    public bool isRoaming = false;
+    public bool roam = false;
+
     public void Awake()
     {
         motor = GetComponent<MovementMotor>();
@@ -39,22 +43,38 @@ public class newAI : MonoBehaviour
 
     public void Start()
     {
-        if(target == null) { return; }
-        Debug.Log("There is a target!");
-        //Start a new path to the targetPosition, return the result to the OnPathComplete function
-        seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
+        if(target == null)
+        {
+            if (!isRoaming)
+            {
+                isRoaming = true;
+                seeker.StartPath(transform.position, new Vector3(transform.position.x + (int)Random.Range(-10f, 10f), transform.position.y, transform.position.z + (int)Random.Range(-10f, 10f)), OnPathComplete);
+            }
+        }
+        else
+        {
+            Debug.Log("There is a target!");
+            //Start a new path to the targetPosition, return the result to the OnPathComplete function
+            seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
+        }
         StartCoroutine(UpdatePath());
     }
 
     public IEnumerator UpdatePath()
     {
-        if (target == null)
+        if (target == null)         //If there is no target, begin to roam
         {
-            yield break;
+            if (!isRoaming)
+            {
+                isRoaming = true;
+                seeker.StartPath(transform.position, new Vector3(transform.position.x + (int)Random.Range(-10f, 10f), transform.position.y, transform.position.z + (int)Random.Range(-10f, 10f)), OnPathComplete);
+            }
         }
-
-        // Start a new path to the target position, return the result to the OnPathComplete method
-        seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
+        else
+        {
+            // Start a new path to the target position, return the result to the OnPathComplete method
+            seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
+        }
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
     }
@@ -70,34 +90,46 @@ public class newAI : MonoBehaviour
         }
     }
 
+    public void FixedUpdate()
+    {
+        if (target == null)
+        {
+            targeting.Begin();
+            return;
+        }
+    }
+
     public void Update()
     {
-        if(AIOn)
+        
+        if (AIOn)
         {
-            if (target == null)
-            {
-                targeting.Begin();
-                return;
-            }
-
-            transform.LookAt(target.transform);
-
-            if (target.GetComponent<Destructible>().health <= 0)
-            {
-                Debug.Log("Find a new Target");
-                targeting.Begin();
-            }
-
-            if (Vector3.Distance(transform.position, target.transform.position) <= attackDistance)
-            {
-                canMove = false;
-                attack.attack();
-            }
-            else
+            if (roam)
             {
                 canMove = true;
             }
-
+            else if (target != null)
+            {
+                transform.LookAt(target.transform);
+                if (target.GetComponent<Destructible>().health <= 0)
+                {
+                    Debug.Log("Find a new Target");
+                    if (!roam)
+                    {
+                        targeting.Begin();
+                    }
+                }
+                if (Vector3.Distance(transform.position, target.transform.position) <= attackDistance)
+                {
+                    canMove = false;
+                    attack.attack();
+                }
+                else
+                {
+                    canMove = true;
+                }
+            }
+            
             if (canMove)
             {
                 if (path == null)
@@ -110,6 +142,13 @@ public class newAI : MonoBehaviour
                 if (currentWaypoint >= path.vectorPath.Count)
                 {
                     Debug.Log("End Of Path Reached");
+                    if(roam)
+                    {
+                        if(isRoaming)
+                        {
+                            isRoaming = false;
+                        }
+                    }
                     return;
                 }
 
@@ -118,7 +157,7 @@ public class newAI : MonoBehaviour
                 //dir *= speed * Time.deltaTime;
 
                 motor.Velocity = dir * speed;
-               // Debug.Log("WE SHOULD BE MOVING");
+                // Debug.Log("WE SHOULD BE MOVING");
                 //Check if we are close enough to the next waypoint
                 //If we are, proceed to follow the next waypoint
                 if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
@@ -128,10 +167,5 @@ public class newAI : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void ShutAIDown()
-    {
-        StopCoroutine(UpdatePath());
     }
 }
