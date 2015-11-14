@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Depending on what your hitting the damage will decrease more or less and the health of the weapon will decrease until broken accordingly
 /// </summary>
-public class Weapon : Destructible
+public class Weapon : Destructible,Equipment
 {
     public Collider lastHit;
     int hitCount=0;
@@ -12,6 +12,7 @@ public class Weapon : Destructible
     int totalhits = 0;
 
     //Max amount of hits a weapon can take before it breaks
+    //TODO put that into statContainer
     private float _durability = 100;
     public int maxDura = 100;
 
@@ -20,8 +21,13 @@ public class Weapon : Destructible
         get { return _durability; }
         set { _durability = Mathf.Clamp(value, 0, maxDura); }
     }
+    public bool broken
+    {
+        get { return !Fix; }
+        protected set { }
+    }
 
-    bool fix = false;
+    bool Fix = false;
     bool usable = true;
 
     public override void TakeDamage(int damage)
@@ -29,14 +35,14 @@ public class Weapon : Destructible
         durability -= damage;
         if (durability <= 0)
         {
-            fix = true;
+            Fix = true;
             Break();
         }
     }
 
     public void Break()
     {
-        if (fix)
+        if (Fix)
         {
             usable = false;
         }
@@ -57,6 +63,20 @@ public class Weapon : Destructible
             list[i].TakeDamage(10);
         }
         hitCount++;
+
+    }
+
+    public void fix()
+    {
+
+    }
+    
+    public void damage()
+    {
+
+    }
+    public void upgrade()
+    {
 
     }
 

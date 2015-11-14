@@ -8,6 +8,22 @@ public class Destructible : MonoBehaviour
 {
     //stats
     protected statContainer stats;
+    protected int iD = 0;
+    protected int level = 0;
+
+
+
+    public int TeamID
+    {
+        protected set { iD = value; }//Protected to prevent accidental team changes.  Use the method to set team value in the rare case of team changes
+        get { return iD; }
+    }
+
+    public int Level
+    {
+        get { return level; }
+    }
+
 
     public int maxHealth
     {
@@ -25,6 +41,11 @@ public class Destructible : MonoBehaviour
     void Awake()
     {
         stats = new statContainer("Destructible");
+    }
+    
+    public void setTeam(int teamID)
+    {
+        this.TeamID = teamID;
     }
 
     public virtual void TakeDamage(int damage)
