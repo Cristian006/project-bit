@@ -53,7 +53,7 @@ public class BuildingPlacement : MonoBehaviour
                     {
                         placeableBuildingOld.SetSelected(false);
                     }
-                    hit.collider.gameObject.GetComponent<Structure>().SetSelected(true);
+                    //hit.collider.gameObject.GetComponent<Structure>().SetSelected(true);
                     placeableBuildingOld = hit.collider.gameObject.GetComponent<Structure>();
                 }
                 else

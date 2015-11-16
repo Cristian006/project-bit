@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface Equipment {
-    bool broken { get; }
+public abstract class Equipment : MonoBehaviour {
 
-    void fix();
-    void damage();
-    void upgrade();
+
+	public bool broken { get{ return false; } }
+
+	public abstract void Fix();
+	public abstract void TakeDamage(int damage);
+	public abstract void Upgrade();
 }

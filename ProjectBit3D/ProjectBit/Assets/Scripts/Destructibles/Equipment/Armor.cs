@@ -1,13 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Armor : Destructible , Equipment
+public class Armor : Equipment
 {
-    public bool broken
-    {
-        get { return false; }
-        protected set { }
-    }
     // Use this for initialization
     void Start()
     {
@@ -22,15 +17,16 @@ public class Armor : Destructible , Equipment
 
     }
 
-    public void fix()
+    public override void Fix()
     {
 
     }
-    public void damage()
-    {
-
+    public override void TakeDamage(int damage)
+    {//pass on damage to destructible attached to gameObject attached to the equipment gameObject
+		Destructible n = this.gameObject.GetComponent<Destructible> ();
+		if(n!=null)n.TakeDamage(damage);
     }
-    public void upgrade()
+	public override void Upgrade()
     {
 
     }
