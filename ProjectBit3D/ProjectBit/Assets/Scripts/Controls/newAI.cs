@@ -12,7 +12,7 @@ public class newAI : MonoBehaviour
     private Attack attack;
     private Targeting targeting;
     public Entity entity;
-    public Structure currentBuilding;
+    public Structure currentStructure;
     public float updateRate = 1f;
     public bool canMove = true;
     public float attackDistance = 5f;
@@ -53,7 +53,6 @@ public class newAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("There is a target!");
             //Start a new path to the targetPosition, return the result to the OnPathComplete function
             seeker.StartPath(transform.position, target.transform.position, OnPathComplete);
         }
@@ -113,7 +112,6 @@ public class newAI : MonoBehaviour
                 transform.LookAt(target.transform);
                 if (target.GetComponent<Destructible>().health <= 0)
                 {
-                    Debug.Log("Find a new Target");
                     if (!roam)
                     {
                         targeting.Begin();
@@ -154,10 +152,9 @@ public class newAI : MonoBehaviour
 
                 //Direction to the next waypoint
                 Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-                //dir *= speed * Time.deltaTime;
 
                 motor.Velocity = dir * speed;
-                // Debug.Log("WE SHOULD BE MOVING");
+
                 //Check if we are close enough to the next waypoint
                 //If we are, proceed to follow the next waypoint
                 if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
