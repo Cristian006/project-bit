@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Entity : Destructible
 {
-    //Add in all player types here
     public enum EntityType
     {
         /// <summary>
@@ -42,9 +41,8 @@ public class Entity : Destructible
         get { return playerID; }
         set { playerID = value; }
     }
-
     public EntityType entityType = new EntityType();
-
+    
     private RegeneratingResource _mana;
     private RegeneratingResource _stamina;
 

@@ -33,22 +33,36 @@ public class GameManager : MonoBehaviour
         return false;
 #endif
     }
-
-    private bool mouseIsOverABuilding;
-
-    public bool isMouseOnABuilding
+    
+    private bool firstLoad;
+    bool isFirstLoad
     {
-        get { return mouseIsOverABuilding; }
-        set { mouseIsOverABuilding = value; }
+        get { return firstLoad; }
+        set { firstLoad = value; }
+    }
+
+    void OnEnable()
+    {
+        Load();
+    }
+
+    void OnDisable()
+    {
+        Save();
     }
 
     void Awake()
     {
         gm = this;
+        if(firstLoad)
+        {
+            InitialGameSetUp();
+        }
         player = (GameObject)Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
         player.transform.SetParent(entityUnitLayer,true);
     }
 
+   
     void Start()
     {
         
@@ -69,5 +83,31 @@ public class GameManager : MonoBehaviour
         {
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
         }
+    }
+
+    void InitialGameSetUp()
+    {
+        firstLoad = true;
+        //INSTANTIATE EVERYTHING SET UP EVERYTHING
+        //THEN - SAVE
+        Save();
+    }
+
+    /// <summary>
+    /// HUGE LOAD FUNCTION
+    /// PURPOSE: Load Everything for the town
+    /// </summary>
+    void Load()
+    {
+        
+    }
+
+    /// <summary>
+    /// HUGE SAVE FUNCTION
+    /// PURPOSE: Save Everything in the town
+    /// </summary>
+    void Save()
+    {
+        
     }
 }

@@ -16,6 +16,14 @@ public class Weapon : Equipment
     private float _durability = 100;
     public int maxDura = 100;
 
+    public Destructible destructible;
+    private Destructible.CivilizationType civType;
+
+    void OnEnable()
+    {
+        civType = destructible.civType;
+    }
+
     public float durability
     {
         get { return _durability; }
@@ -36,11 +44,13 @@ public class Weapon : Equipment
     //if no armor just damage entity
     void OnTriggerEnter(Collider armor)
     {
-		Equipment n = armor.gameObject.GetComponent<Equipment> ();
-		if(n!=null)n.TakeDamage(10);
-        //Debug.Log("hit#"+hitCount+"items" + list.Length);
-        hitCount++;
-
+        if(armor.GetComponent<Destructible>().civType != civType)
+        {
+            Equipment n = armor.gameObject.GetComponent<Equipment>();
+            if (n != null) n.TakeDamage(10);
+            //Debug.Log("hit#"+hitCount+"items" + list.Length);
+            hitCount++;
+        }
     }
 	
 	public override void Fix()

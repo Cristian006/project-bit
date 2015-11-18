@@ -6,8 +6,17 @@ using System.Collections;
 /// </summary>
 public class Destructible : MonoBehaviour
 {
+    //ADD IN ALL CIVILIZATION TYPES HERE
+    public enum CivilizationType
+    {
+        Greece,
+        Japan
+    }
+
+    public CivilizationType civType = new CivilizationType();
+
     //stats
-    protected statContainer stats;
+    protected statContainer stats;    
     protected int iD = 0;
     protected int level = 0;
 

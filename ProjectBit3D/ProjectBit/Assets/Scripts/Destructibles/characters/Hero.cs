@@ -5,15 +5,15 @@ public class Hero : Entity
 {
     Targeting targeting;
     newAI ai;
-    ThirdPersonMovement tpm;
-    ThirdPersonMotor tmotor;
+    PlayerMovementControl tpm;
+    //CameraControlMotor tmotor;
     void Awake()
     {
         entityType = EntityType.Player;
         ai = GetComponent<newAI>();
         targeting = GetComponent<Targeting>();
-        tpm = GetComponent<ThirdPersonMovement>();
-        tmotor = GetComponent<ThirdPersonMotor>();
+        tpm = GetComponent<PlayerMovementControl>();
+        //tmotor = GetComponent<CameraControlMotor>();
     }
 
     void Start()
@@ -38,13 +38,13 @@ public class Hero : Entity
         {
             ai.AIOn = false;
             tpm.enabled = true;
-            tmotor.enabled = true;
+            //tmotor.enabled = true;
         }
         else
         {
             ai.AIOn = true;
             tpm.enabled = false;
-            tmotor.enabled = false;
+            //tmotor.enabled = false;
         }
     }
 

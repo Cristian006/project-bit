@@ -89,20 +89,14 @@ public class newAI : MonoBehaviour
         }
     }
 
-    public void FixedUpdate()
-    {
-        if (target == null)
-        {
-            targeting.Begin();
-            return;
-        }
-    }
-
     public void Update()
     {
-        
         if (AIOn)
         {
+            if (target == null)
+            {
+                targeting.Begin();
+            }
             if (roam)
             {
                 canMove = true;
@@ -112,11 +106,11 @@ public class newAI : MonoBehaviour
                 transform.LookAt(target.transform);
                 if (target.GetComponent<Destructible>().health <= 0)
                 {
-                    if (!roam)
-                    {
-                        targeting.Begin();
-                    }
+                    target = null;
+                    currentStructure = null;
+                    return;
                 }
+
                 if (Vector3.Distance(transform.position, target.transform.position) <= attackDistance)
                 {
                     canMove = false;

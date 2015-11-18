@@ -1,0 +1,32 @@
+using UnityEngine;
+
+public class CameraMotor : MonoBehaviour
+{
+
+    public GameObject target;
+    public float damping = 10f;
+    float offset = 5f;
+    float height = 2f;
+    public Vector3 direction;
+
+    void Start()
+    {
+        Transform temp=this.transform.parent;
+        if(temp!= null)
+        {
+            target = temp.gameObject;
+        }
+    }
+
+    void LateUpdate()
+    {
+        direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * target.transform.rotation.eulerAngles.y), 0, Mathf.Cos(Mathf.Deg2Rad * target.transform.rotation.eulerAngles.y));
+        direction = -direction / direction.magnitude;
+        Vector3 desiredPosition = target.transform.position + direction * offset + Vector3.up * height;
+        
+        transform.position = desiredPosition;
+        transform.LookAt(target.transform.position);
+    }
+
+}
+

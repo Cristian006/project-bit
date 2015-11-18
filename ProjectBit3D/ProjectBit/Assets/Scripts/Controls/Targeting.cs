@@ -8,29 +8,33 @@ public class Targeting : MonoBehaviour
     Transform buildingLayer;
     Transform wallLayer;
     Transform entityUnitLayer;
-    private Structure currentBuilding;
-    private Entity currentEntity;
-
-    GameObject target;
     
-    newAI nai;
+    GameObject target;
 
-    public float attackDist;
-    public bool searchingForTarget = false;
+    private Structure currentStructure;
+    private Entity currentEntity;
 
     private List<GameObject> primaryTargetList;
 
+    //CASHE A FEW THINGS
+    private newAI nai;
+    private Destructible.CivilizationType civType;
+
     public void InIt()
     {
-        //REFRENCES
+        //THIS GAME OBJECT REFRENCES
         nai = GetComponent<newAI>();
+        civType = GetComponent<Destructible>().civType;
+        
+        //IN GAME SCENE REFRENCES
         buildingLayer = GameObject.FindGameObjectWithTag("BuildingLayer").transform;
         wallLayer = GameObject.FindGameObjectWithTag("WallLayer").transform;
         entityUnitLayer = GameObject.FindGameObjectWithTag("EntityUnitLayer").transform;
-        
+
         //PRIMARY TARGETS
         primaryTargetList = new List<GameObject>();
 
+        //Initialize Player Targeting System
         Begin();
     }
 
@@ -59,13 +63,13 @@ public class Targeting : MonoBehaviour
         }
     }
 
-    #region NULL CHECKS
+    #region NULL CHECKS AND INITIAL SEARCH CALL
     public void MakePrimaryList(Structure.GeneralType generalType)
     {
-        currentBuilding = null;
+        currentStructure = null;
         foreach(Transform b in buildingLayer)
         {
-            if (b.GetComponent<Structure>().generalType == generalType)
+            if (b.GetComponent<Structure>().generalType == generalType && b.GetComponent<Destructible>().civType != civType)
             {
                 primaryTargetList.Add(b.gameObject);
             }
@@ -82,8 +86,10 @@ public class Targeting : MonoBehaviour
             FindNearestStructure();
         }
     }
-    
-    //Iterate through primary list, when list is gone, find the closest structure
+
+    /// <summary>
+    ///Iterate through primary list, when list is gone, find the closest structure
+    /// </summary>
     public void FindNearestPrimaryTarget()
     {
         GameObject t = null;
@@ -95,12 +101,14 @@ public class Targeting : MonoBehaviour
         else
         {
             nai.target = t;
-            nai.currentStructure = t.GetComponent<Structure>();
+            nai.currentStructure = currentStructure;
             nai.roam = false;
         }
     }
-    
-    //Iterate through the rest of the buildings to find the closest structure.
+
+    /// <summary>
+    ///Iterate through the rest of the buildings to find the closest structure.
+    /// </summary>
     void FindNearestStructure()
     {
         GameObject t = null;
@@ -112,7 +120,7 @@ public class Targeting : MonoBehaviour
         else
         {
             nai.target = t;
-            nai.currentStructure = t.GetComponent<Structure>();
+            nai.currentStructure = currentStructure;
             nai.roam = false;
         }
 
@@ -129,7 +137,7 @@ public class Targeting : MonoBehaviour
         else
         {
             nai.target = t;
-            nai.currentStructure = t.GetComponent<Structure>();
+            nai.currentStructure = currentStructure;
             nai.roam = false;
         }
     }
@@ -158,15 +166,18 @@ public class Targeting : MonoBehaviour
         GameObject closest = null;
         foreach (GameObject b in primaryTargetList)
         {
-            currentBuilding = b.GetComponent<Structure>();
-            if (currentBuilding.health > 0)
+            if(b.GetComponent<Destructible>().civType != civType)
             {
-                Debug.Log("PrimaryBuilding");
-                float Dist = Vector3.Distance(transform.position, b.transform.position);
-                if (Dist < distance)
+                currentStructure = b.GetComponent<Structure>();
+                if (currentStructure.health > 0)
                 {
-                    closest = b;
-                    distance = Dist;
+                    Debug.Log("PrimaryBuilding");
+                    float Dist = Vector3.Distance(transform.position, b.transform.position);
+                    if (Dist < distance)
+                    {
+                        closest = b;
+                        distance = Dist;
+                    }
                 }
             }
         }
@@ -179,99 +190,68 @@ public class Targeting : MonoBehaviour
         GameObject closest = null;
         foreach (Transform b in buildingLayer)
         {
-            currentBuilding = b.GetComponent<Structure>();
-            if (currentBuilding.health > 0)                                   //It needs to be if(currentBuilding.health>0) {search} else {continue;}
+            if(b.GetComponent<Destructible>().civType != civType)
             {
-                Debug.Log("Building");
-                float Dist = Vector3.Distance(transform.position, b.position);
-                if (Dist < distance)
+                currentStructure = b.GetComponent<Structure>();
+                if (currentStructure.health > 0)
                 {
-                    closest = b.gameObject;
-                    distance = Dist;
-                }
-                else
-                {
-                    continue;
+                    Debug.Log("Building");
+                    float Dist = Vector3.Distance(transform.position, b.position);
+                    if (Dist < distance)
+                    {
+                        closest = b.gameObject;
+                        distance = Dist;
+                    }
                 }
             }
         }
-       // Debug.Log(closest.name);
         return closest;
     }
-
-    
-    GameObject FindNearestUnit()
-    {
-        float distance = Mathf.Infinity;
-        GameObject closest = null;
-        //Debug.Log("ATTACKING THE NEAREST UNIT DEFENDERS");
-        foreach(Transform t in entityUnitLayer)
-        {
-            if(t.gameObject.activeInHierarchy)
-            {
-                Debug.Log("Looking for enemy Unit");
-                if (t.GetComponent<Entity>().entityType != GetComponent<Entity>().entityType)
-                {
-                    currentEntity = t.GetComponent<Entity>();
-                    //TODO: This is where we check player ID's
-                    //if (currentEntity.PlayerID != nai.entity.PlayerID)
-                    //{
-                        //Debug.LogError("SHOULD GET ENEMY NOW");
-                        float Dist = Vector3.Distance(transform.position, t.position);
-                        if (Dist < distance)
-                        {
-                            closest = t.gameObject;
-                            distance = Dist;
-                        }
-                    //}
-                }
-            }
-            
-        }
-        return closest;
-    }
-
 
     GameObject FindBlockades()
     {
         float distance = Mathf.Infinity;
         GameObject closest = null;
-        //Debug.Log("ATTACKING THE NEAREST UNIT DEFENDERS");
         foreach (Transform t in wallLayer)
         {
-            //Debug.Log("Looking for enemy Unit");
-            if (t.GetComponent<Structure>().generalType == Structure.GeneralType.Blockade && t.gameObject.activeInHierarchy)
+            if(t.GetComponent<Destructible>().civType != civType)
             {
-                currentBuilding = t.GetComponent<Structure>();
-                
-                //Debug.LogError("SHOULD GET ENEMY NOW");
-                float Dist = Vector3.Distance(transform.position, t.position);
-                if (Dist < distance)
+                currentStructure = t.GetComponent<Structure>();
+                if (currentStructure.health > 0)
                 {
-                    closest = t.gameObject;
-                    distance = Dist;
+                    float Dist = Vector3.Distance(transform.position, t.position);
+                    if (Dist < distance)
+                    {
+                        closest = t.gameObject;
+                        distance = Dist;
+                    }
                 }
             }
         }
         return closest;
     }
-    #endregion
 
-    /*
-    public IEnumerator TargetSearch()
+    GameObject FindNearestUnit()
     {
-        GameObject searchResult = FindClosestBuilding();
-        if (searchResult == null)
+        float distance = Mathf.Infinity;
+        GameObject closest = null;
+        foreach(Transform e in entityUnitLayer)
         {
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(TargetSearch());
+            if (e.GetComponent<Destructible>().civType != civType)
+            {
+                currentEntity = e.GetComponent<Entity>();
+                if (currentEntity.health > 0)
+                {
+                    float Dist = Vector3.Distance(transform.position, e.position);
+                    if (Dist < distance)
+                    {
+                        closest = e.gameObject;
+                        distance = Dist;
+                    }
+                }
+            }            
         }
-        else
-        {
-            ai.target = searchResult.transform;
-            searchingForTarget = false;
-            yield break;
-        }
+        return closest;
     }
-    */
+    #endregion
 }
