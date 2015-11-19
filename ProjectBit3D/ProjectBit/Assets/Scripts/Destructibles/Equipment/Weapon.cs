@@ -44,13 +44,13 @@ public class Weapon : Equipment
     //if no armor just damage entity
     void OnTriggerEnter(Collider armor)
     {
-        if(armor.GetComponent<Destructible>().civType != civType)
-        {
+        //if(armor.GetComponent<Destructible>().civType != civType)
+        //{
             Equipment n = armor.gameObject.GetComponent<Equipment>();
             if (n != null) n.TakeDamage(10);
             //Debug.Log("hit#"+hitCount+"items" + list.Length);
             hitCount++;
-        }
+        //}
     }
 	
 	public override void Fix()

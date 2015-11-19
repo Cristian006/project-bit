@@ -30,32 +30,30 @@ public class CameraDrag : MonoBehaviour
 
     public void Update()
     {
-        //float distanceToIntersection;
-        //Ray mouseRay = _camera.ScreenPointToRay(Input.mousePosition);
+        float distanceToIntersection;
+        Ray mouseRay = _camera.ScreenPointToRay(Input.mousePosition);
 
         
-        /*
         // start drag
-        if (Input.GetKeyDown(dragKey) && !GameManager.gm.isMouseOnABuilding)
+        if (Input.GetKeyDown(dragKey))
         {
             _groundPlane.Raycast(mouseRay, out distanceToIntersection);
             _dragOrigin = mouseRay.GetPoint(distanceToIntersection);
         }
 
         // continue drag
-        if (Input.GetKey(dragKey) && !GameManager.gm.isMouseOnABuilding)
+        if (Input.GetKey(dragKey))
         {
             _groundPlane.Raycast(mouseRay, out distanceToIntersection);
             Vector3 intersection = mouseRay.GetPoint(distanceToIntersection);
             _transform.position += _dragOrigin - intersection;
         }
-        */
     }
 
     void OnDrawGizmos()
     {
         //Create Collision Box
-        //Gizmos.DrawLine(Vector3.zero,new Vector3(10,10,10));
+        Gizmos.DrawLine(Vector3.zero,new Vector3(10,10,10));
     }
     
 }

@@ -80,7 +80,7 @@ public class newAI : MonoBehaviour
 
     public void OnPathComplete(Path p)
     {
-        Debug.Log("Yay, we got a path back. Did it have an error? " + p.error);
+        //Debug.Log("Yay, we got a path back. Did it have an error? " + p.error);
         if (!p.error)
         {
             path = p;
@@ -133,7 +133,7 @@ public class newAI : MonoBehaviour
 
                 if (currentWaypoint >= path.vectorPath.Count)
                 {
-                    Debug.Log("End Of Path Reached");
+                    //Debug.Log("End Of Path Reached");
                     if(roam)
                     {
                         if(isRoaming)

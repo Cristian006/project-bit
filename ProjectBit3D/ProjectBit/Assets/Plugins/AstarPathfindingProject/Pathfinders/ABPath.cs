@@ -406,14 +406,14 @@ while the end has not been found and no error has ocurred
 			}
 
 			var text = new System.Text.StringBuilder ();
-
+            /*//CHANGED!!!!!!!!!!!!!!!!
 			text.Append (error ? "Path Failed : " : "Path Completed : ");
 			text.Append ("Computation Time ");
 
 			text.Append ((duration).ToString (logMode == PathLog.Heavy ? "0.000" : "0.00"));
 			text.Append (" ms Searched Nodes ");
 			text.Append (searchedNodes);
-
+            */
 			if (!error) {
 				text.Append (" Path Length ");
 				text.Append (path == null ? "Null" : path.Count.ToString ());

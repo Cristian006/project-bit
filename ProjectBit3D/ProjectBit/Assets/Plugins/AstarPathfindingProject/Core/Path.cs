@@ -611,14 +611,14 @@ public override void Recycle () {
 			// Get a cached string builder for this thread
 			System.Text.StringBuilder text = pathHandler.DebugStringBuilder;
 			text.Length = 0;
-
+            /*//CHANGED!!!!!!!!!!!!!!!!!
 			text.Append (error ? "Path Failed : " : "Path Completed : ");
 			text.Append ("Computation Time ");
 
 			text.Append ((duration).ToString (logMode == PathLog.Heavy ? "0.000 ms " : "0.00 ms "));
 			text.Append ("Searched Nodes ");
 			text.Append (searchedNodes);
-
+            */
 			if (!error) {
 				text.Append (" Path Length ");
 				text.Append (path == null ? "Null" : path.Count.ToString ());
