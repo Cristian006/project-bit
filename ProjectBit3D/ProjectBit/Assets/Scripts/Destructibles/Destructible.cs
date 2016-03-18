@@ -13,6 +13,19 @@ public class Destructible : MonoBehaviour
         Japan
     }
 
+    public enum ATTRIBUTE
+    {
+        STRENGTH,
+        INTELLECT,
+        AGILITY,
+        DAMAGE
+    }
+    public enum STAT
+    {
+        HEALTH,
+        STAMINA
+    }
+
     public CivilizationType civType = new CivilizationType();
 
     //stats
